@@ -31,7 +31,7 @@ class CntGender(object):
 class CntSyllabusYear(object):
     _SyllabusYear = collections.namedtuple('_SyllabusYear', ['label', 'name'])
 
-    Y2012 = _SyllabusYear(u'2012版', u'2012')
+    Y2012 = _SyllabusYear(u'2012', u'2012版')
 
     _objects = [Y2012]
 

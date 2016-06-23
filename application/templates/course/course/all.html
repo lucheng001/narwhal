@@ -8,7 +8,6 @@
 
 {% block page_content %}
 <input value="{{ currentPage }}" type="hidden" name="currentPage" id="currentPage">
-<input value="{{ currentTeacher }}" type="hidden" name="currentTeacher" id="currentTeacher">
 <div class="row">
   <div class="col-md-12">
     <div class="portlet light portlet-fit bordered">
@@ -26,6 +25,7 @@
               <tr class="heading">
                 <th class="text-center"> # </th>
                 <th> 名 称 </th>
+                <th class="text-center"> 教 师 </th>
                 <th> 班 级 </th>
                 <th class="text-center"> 学 期 </th>
                 <th class="text-center"> 教研室 </th>
@@ -35,6 +35,14 @@
               <tr class="filter">
                 <th class="text-center"> &nbsp; </th>
                 <th> &nbsp; </th>
+                <th class="text-center">
+                  <select class="form-control form-filter input-sm" name="currentTeacher" id="currentTeacher">
+                    <option value="0" {% if currentTeacher == 0 %}selected{% endif %}>全部</option>
+                    {%- for teacher in teachers %}
+                    <option value="{{ teacher.id }}" {% if currentTeacher == teacher.id %}selected{% endif %}>{{ teacher.chineseName }}</option>
+                    {%- endfor %}
+                  </select>
+                </th>
                 <th> &nbsp; </th>
                 <th class="text-center">
                   <select class="form-control form-filter input-sm" name="currentSemester" id="currentSemester">
@@ -72,6 +80,7 @@
               <tr>
                 <td class="text-center"> {{ loop.index }} </td>
                 <td> {{ course.name }} </td>
+                <td class="text-center"> {{ course.teacher.chineseName }} </td>
                 <td> {{ course.klass }} </td>
                 <td class="text-center"> {{ course.semester }} </td>
                 <td class="text-center"> {{ course.getDepartmentName() }} </td>
@@ -96,7 +105,7 @@
           <ul class="pagination">
              {% if pagination.has_previous %}
             <li>
-              <a href="{{ url_for('.taught', currentPage=pagination.previous, currentTeacher=currentTeacher, currentDepartment=currentDepartment, currentSemester=currentSemester, currentSyllabusYear=currentSyllabusYear) }}">
+              <a href="{{ url_for('.all', currentPage=pagination.previous, currentTeacher=currentTeacher, currentDepartment=currentDepartment, currentSemester=currentSemester, currentSyllabusYear=currentSyllabusYear) }}">
                 <i class="fa fa-angle-left"></i>
               </a>
             </li>
@@ -108,7 +117,7 @@
             </li>
             {% endif %}
             <li>
-              <a href="{{ url_for('.taught', currentPage=1, currentTeacher=currentTeacher, currentDepartment=currentDepartment, currentSemester=currentSemester, currentSyllabusYear=currentSyllabusYear) }}"> 首页 </a>
+              <a href="{{ url_for('.all', currentPage=1, currentTeacher=currentTeacher, currentDepartment=currentDepartment, currentSemester=currentSemester, currentSyllabusYear=currentSyllabusYear) }}"> 首页 </a>
             </li>
 
             {% for page in pagination.pages %}
@@ -116,17 +125,17 @@
               {% if page == pagination.current %}
               <a class="disabled-link font-grey-salsa" href="javascript:;"> {{ page }} </a>
               {% else %}
-              <a href="{{ url_for('.taught', currentPage=page, currentTeacher=currentTeacher, currentDepartment=currentDepartment, currentSemester=currentSemester, currentSyllabusYear=currentSyllabusYear) }}"> {{ page }} </a>
+              <a href="{{ url_for('.all', currentPage=page, currentTeacher=currentTeacher, currentDepartment=currentDepartment, currentSemester=currentSemester, currentSyllabusYear=currentSyllabusYear) }}"> {{ page }} </a>
               {% endif %}
             </li>
             {% endfor %}
 
             <li>
-              <a href="{{ url_for('.taught', currentPage=pagination.page_num, currentTeacher=currentTeacher, currentDepartment=currentDepartment, currentSemester=currentSemester, currentSyllabusYear=currentSyllabusYear) }}"> 末页 </a>
+              <a href="{{ url_for('.all', currentPage=pagination.page_num, currentTeacher=currentTeacher, currentDepartment=currentDepartment, currentSemester=currentSemester, currentSyllabusYear=currentSyllabusYear) }}"> 末页 </a>
             </li>
              {% if pagination.has_next %}
             <li>
-              <a href="{{ url_for('.taught', currentPage=pagination.next, currentTeacher=currentTeacher, currentDepartment=currentDepartment, currentSemester=currentSemester, currentSyllabusYear=currentSyllabusYear) }}">
+              <a href="{{ url_for('.all', currentPage=pagination.next, currentTeacher=currentTeacher, currentDepartment=currentDepartment, currentSemester=currentSemester, currentSyllabusYear=currentSyllabusYear) }}">
                 <i class="fa fa-angle-right"></i>
               </a>
             </li>
@@ -153,7 +162,7 @@
 {% block page_internal_script %}
 <script type="text/javascript">
   jQuery(document).ready(function() {
-    filterConditions.setUrl('{{ url_for('.taught') }}');
+    filterConditions.setUrl('{{ url_for('.all') }}');
   });
 </script>
 {% endblock %}
