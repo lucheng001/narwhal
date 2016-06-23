@@ -137,89 +137,16 @@
         <li class="heading">
           <h3 class="uppercase">Course</h3>
         </li>
-        {% if current_user.hasPermission(cPermission.INSTRUCTOR) %}
+        {% if current_user.hasPermission(cPermission.NORMAL) %}
         <li class="nav-item">
           <a href="{{ url_for('bpCourse.taught') }}" class="nav-link">
             <i class="icon-layers"></i>
             <span class="title">我的课程</span>
           </a>
         </li>
-        <li class="nav-item">
-          <a href="{{ url_for('bpCourse.add') }}" class="nav-link">
-            <i class="icon-puzzle"></i>
-            <span class="title">添加课程</span>
-          </a>
-        </li>
-        {% elif current_user.hasPermission(cPermission.STUDENT) %}
-        <li class="nav-item">
-          <a href="{{ url_for('bpCourse.studied') }}" class="nav-link">
-            <i class="icon-layers"></i>
-            <span class="title">我的课程</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="{{ url_for('bpCourse.all') }}" class="nav-link">
-            <i class="icon-puzzle"></i>
-            <span class="title">所有课程</span>
-          </a>
-        </li>
-        {% endif %}
-        <li class="heading">
-          <h3 class="uppercase">Assignment</h3>
-        </li>
-        {% if current_user.hasPermission(cPermission.INSTRUCTOR) %}
-        <li class="nav-item">
-          <a href="{{ url_for('bpTask.all') }}" class="nav-link">
-            <i class="icon-docs"></i>
-            <span class="title">我的作业</span>
-          </a>
-        </li>
-        {% elif current_user.hasPermission(cPermission.STUDENT) %}
-        <li class="nav-item">
-          <a href="{{ url_for('bpWork.all') }}" class="nav-link">
-            <i class="icon-docs"></i>
-            <span class="title">我的作业</span>
-          </a>
-        </li>
-        {% endif %}
-        <li class="heading">
-          <h3 class="uppercase">Attendance</h3>
-        </li>
-        {% if current_user.hasPermission(cPermission.INSTRUCTOR) %}
-        <li class="nav-item">
-          <a href="{{ url_for('bpAttendance.all') }}" class="nav-link">
-            <i class="icon-bulb"></i>
-            <span class="title">我的考勤</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="{{ url_for('bpAttendance.monthly') }}" class="nav-link">
-            <i class="icon-feed"></i>
-            <span class="title">数据下载</span>
-          </a>
-        </li>
-        {% elif current_user.hasPermission(cPermission.STUDENT) %}
-        <li class="nav-item">
-          <a href="{{ url_for('bpSign.all') }}" class="nav-link">
-            <i class="icon-bulb"></i>
-            <span class="title">我的考勤</span>
-          </a>
-        </li>
         {% endif %}
         <li class="heading">
           <h3 class="uppercase">Feature</h3>
-        </li>
-        <li class="nav-item">
-          <a href="{{ url_for('bpMain.checkQRCode') }}" class="nav-link" target="_blank">
-            <i class="icon-compass"></i>
-            <span class="title">GPS测试</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="{{ url_for('bpMain.version') }}" class="nav-link" target="_blank">
-            <i class="icon-grid"></i>
-            <span class="title">系统信息</span>
-          </a>
         </li>
       </ul>
       <!-- END SIDEBAR MENU -->

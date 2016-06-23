@@ -2,21 +2,12 @@
 
 import collections
 
-_all_ = ['CntAllowedExtensions', 'CntGender', 'CntPermission', 'CntRoles', 'CntSyllabusYear']
-
-
-class CntSyllabusYear(object):
-    _SyllabusYear = collections.namedtuple('_SyllabusYear', ['label', 'name'])
-
-    Y2012 = _SyllabusYear(u'2012版', u'2012')
-
-    _objects = [Y2012]
-
-    _labels = [obj.label for obj in _objects]
-    _maps = dict(zip(_labels, _objects))
-
-    choices = [(obj.label, obj.name) for obj in _objects]
-    labels = _labels
+_all_ = ['CntAllowedExtensions',
+         'CntGender',
+         'CntPermission',
+         'CntRoles',
+         'CntSyllabusYear',
+         'CntDepartment']
 
 
 class CntAllowedExtensions(object):
@@ -35,6 +26,48 @@ class CntGender(object):
 
     choices = [(obj, obj) for obj in _objects]
     labels = _objects
+
+
+class CntSyllabusYear(object):
+    _SyllabusYear = collections.namedtuple('_SyllabusYear', ['label', 'name'])
+
+    Y2012 = _SyllabusYear(u'2012版', u'2012')
+
+    _objects = [Y2012]
+
+    _labels = [obj.label for obj in _objects]
+    _maps = dict(zip(_labels, _objects))
+
+    choices = [(obj.label, obj.name) for obj in _objects]
+    labels = _labels
+
+    @classmethod
+    def getSyllabusYearName(cls, syllabusYear_label):
+        syllabusYear = cls._maps[syllabusYear_label]
+        return syllabusYear.name if syllabusYear_label in cls._labels else u'未知方案'
+
+
+class CntDepartment(object):
+    _Department = collections.namedtuple('_Department', ['label', 'name'])
+
+    CS = _Department(u'cs', u'计算机科学与技术')
+    EST = _Department(u'est', u'电子科学与技术')
+    EIE = _Department(u'eie', u'电子信息工程')
+    IE = _Department(u'ie', u'信息工程')
+    PUB = _Department(u'pub', u'公共')
+
+    _objects = [CS]
+
+    _labels = [obj.label for obj in _objects]
+    _maps = dict(zip(_labels, _objects))
+
+    choices = [(obj.label, obj.name) for obj in _objects]
+    labels = _labels
+
+    @classmethod
+    def getDepartmentName(cls, department_label):
+        department = cls._maps[department_label]
+        return department.name if department_label in cls._labels else u'未知教研室'
 
 
 class CntPermission(object):
@@ -111,6 +144,6 @@ class CntRoles(object):
     @classmethod
     def getRoleName(cls, role_label):
         role = cls._maps[role_label]
-        return role.name if role_label in cls._labels else u'无角色'
+        return role.name if role_label in cls._labels else u'未知角色'
 
 

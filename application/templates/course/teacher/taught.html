@@ -24,8 +24,10 @@
               <tr>
                 <th class="text-center"> # </th>
                 <th> 名 称 </th>
-                <th class="text-center"> 班 级 </th>
+                <th> 班 级 </th>
                 <th class="text-center"> 学 期 </th>
+                <th class="text-center"> 教研室 </th>
+                <th class="text-center"> 培养方案 </th>
                 <th class="text-center"> 操 作 </th></tr>
             </thead>
             <tbody>
@@ -33,8 +35,10 @@
               <tr>
                 <td class="text-center"> {{ loop.index }} </td>
                 <td> {{ course.name }} </td>
+                <td> {{ course.klass }} </td>
                 <td class="text-center"> {{ course.semester }} </td>
-                <td class="text-center"> {{ course.klass }} </td>
+                <td class="text-center"> {{ course.getDepartmentName() }} </td>
+                <td class="text-center"> {{ course.getSyllabusYearName() }} </td>
                 <td class="text-center">
                   <div class="btn-group btn-group-xs btn-group-solid">
                   <a href="#" class="btn btn-outline blue">名单</a>

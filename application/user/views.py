@@ -29,6 +29,7 @@ def register():
             userName=re.sub('[\s+]', '', form.userName.data),
             chineseName=re.sub('[\s+]', '', form.chineseName.data),
             role=CntRoles.TEACHER.label,
+            permission=CntRoles.getRolePermission(CntRoles.TEACHER.label),
             password=form.password.data,
             passwordHash=generate_password_hash(form.password.data)
         )
@@ -50,7 +51,6 @@ def profile():
 @login_required
 def changePassword():
     user = current_user._get_current_object()
-
     form = ChangePasswordForm()
     if form.validate_on_submit():
         from werkzeug.security import generate_password_hash
@@ -71,7 +71,6 @@ def changePassword():
 @login_required
 def changeChineseName():
     user = current_user._get_current_object()
-
     form = ChangeChineseNameForm()
     if form.validate_on_submit():
         import re

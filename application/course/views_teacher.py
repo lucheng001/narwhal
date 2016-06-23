@@ -19,7 +19,7 @@ def taught():
     currentPage = request.args.get('currentPage', 1, type=int)
     numOfCourses = (Course
                     .select()
-                    .where(Course.creator == me.id)
+                    .where(Course.teacher == me.id)
                     .count())
     numOfPerPage = current_app.config['APP_ITEMS_PER_PAGE']
     numOfPages = int(math.ceil(float(numOfCourses) / float(numOfPerPage)))
