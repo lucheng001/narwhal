@@ -35,7 +35,3 @@ var filterConditions = function() {
     };
 
 }();
-
-jQuery(document).ready(function() {
-    filterConditions.init();
-});
