@@ -15,11 +15,9 @@ class Configuration(object):
     APP_LOG_SIZE = 4 * 1024 * 1024
     APP_LOG_FORMATTER = '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'
     APP_ITEMS_PER_PAGE = 20
+    APP_ITEMS_PER_PAGE_MD = 100
     APP_ITEMS_PER_PAGE_LG = 200
     APP_UPLOAD_FOLDER = os.path.join(APP_DIR, 'uploads')
-    APP_COURSE_MAX_DURATION = 180
-    APP_QRCODE_MAX_DURATION = 240
-    APP_QRCODE_MIN_INTERVAL = 600
 
     @staticmethod
     def init_app(app):

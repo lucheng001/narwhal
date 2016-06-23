@@ -56,7 +56,7 @@ class CntDepartment(object):
     IE = _Department(u'ie', u'信息工程')
     PUB = _Department(u'pub', u'公共')
 
-    _objects = [CS]
+    _objects = [CS, EST, EIE, IE, PUB]
 
     _labels = [obj.label for obj in _objects]
     _maps = dict(zip(_labels, _objects))

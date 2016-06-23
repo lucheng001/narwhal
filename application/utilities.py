@@ -7,6 +7,12 @@ from functools import wraps
 from flask import abort
 from flask_login import current_user
 
+_all_ = ['permission_required',
+         'role_required',
+         'generate_random_string',
+         'get_object'
+         'Paginator']
+
 
 def permission_required(permission):
     def decorator(f):
@@ -32,6 +38,27 @@ def role_required(role):
 
 def generate_random_string(length=8, characters=string.ascii_lowercase+string.digits):
     return ''.join(random.choice(characters) for _ in range(length))
+
+
+class Struct(object):
+    def __init__(self, adict):
+        """Convert a dictionary to a class
+
+        @param :adict Dictionary
+        """
+        self.__dict__.update(adict)
+        for k, v in adict.items():
+            if isinstance(v, dict):
+                self.__dict__[k] = Struct(v)
+
+
+def get_object(adict):
+    """Convert a dictionary to a class
+
+    @param :adict Dictionary
+    @return :class:Struct
+    """
+    return Struct(adict)
 
 
 class Paginator(object):

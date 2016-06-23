@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block page_external_css %}
+<link href="{{ url_for('static', filename='global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block page_breadcrumb_1 %}课程{% endblock %}
+{% block page_breadcrumb_2 %}错误数据{% endblock %}
+
+{% block page_title_1 %}错误数据{% endblock %}
+{% block page_title_2 %}Bad Courses Data{% endblock %}
+
+{% block page_content %}
+<div class="row">
+  <div class="col-md-12">
+    <div class="portlet light portlet-fit portlet-form bordered">
+      <div class="portlet-title">
+        <div class="caption">
+          <i class="icon-settings font-blue-sharp"></i>
+          <span class="caption-subject font-blue-sharp sbold uppercase">Bad Courses Data</span>
+        </div>
+      </div>
+      <div class="portlet-body">
+        <!-- BEGIN FORM-->
+          <div class="form-body">
+            <div class="alert alert-danger display-hide">
+              <button data-close="alert" class="close"></button>
+              <span></span>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="control-label">
+                  错误数据
+                  </label>
+                  <textarea name="courseData" rows="20" class="form-control" readonly>{{ badData|join('\n') }}</textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        <!-- END FORM-->
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+

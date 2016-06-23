@@ -9,18 +9,18 @@ from ..constants import CntPermission
 from ..utilities import Paginator, permission_required
 from . import bpCourse
 
-_all_ = ['taught']
+_all_ = ['all']
 
-@bpCourse.route('/taught', methods=['GET'])
+
+@bpCourse.route('/all', methods=['GET'])
 @login_required
-@permission_required(CntPermission.NORMAL)
-def taught():
+@permission_required(CntPermission.COLLEGE)
+def all():
     me = current_user
 
     currentPage = request.args.get('currentPage', 1, type=int)
     numOfCourses = (Course
                     .select()
-                    .where(Course.teacher == me.id)
                     .count())
     numOfPerPage = current_app.config['APP_ITEMS_PER_PAGE']
     numOfPages = int(math.ceil(float(numOfCourses) / float(numOfPerPage)))
@@ -29,16 +29,14 @@ def taught():
     pagination = Paginator(object_num=numOfCourses, current=currentPage, per_page=numOfPerPage)
 
     if numOfCourses <= 0:
-        return render_template('course/teacher/taught.html', pagination=pagination,
+        return render_template('course/college/all.html', pagination=pagination,
                                courses=[])
     query = (Course
-             .where(Course.teacher == me.id)
+             .select(Course, User.chineseName)
+             .join(User)
              .order_by(Course.createTime.desc())
              .paginate(currentPage, numOfPerPage))
     courses = [row for row in query]
-    return render_template('course/teacher/taught.html', pagination=pagination,
+    return render_template('course/college/all.html', pagination=pagination,
                            courses=courses)
-
-
-
 
