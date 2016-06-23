@@ -1,4 +1,4 @@
-var filterConditions = function() {
+var filterConditionsAll = function() {
 
     var url = '#';
 

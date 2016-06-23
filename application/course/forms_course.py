@@ -56,6 +56,11 @@ class AddCourseForm(Form):
         match = re.match(pattern, filed.data)
         if not match:
             raise ValidationError(u'学期格式错误.')
+        y1, y2, _ = filed.data.split('-')
+        y1 = int(y1)
+        y2 = int(y2)
+        if y2 != y1 + 1:
+            raise ValidationError(u'学期格式错误.')
 
     @staticmethod
     def validate_syllabusYear(form, filed):

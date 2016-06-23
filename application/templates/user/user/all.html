@@ -135,14 +135,14 @@
 {% endblock %}
 
 {% block page_external_script %}
-<script src="{{ url_for('static', filename='user/script/filterConditions.js') }}" type="text/javascript"></script>
+<script src="{{ url_for('static', filename='user/script/filterConditionsAll.js') }}" type="text/javascript"></script>
 {% endblock %}
 
 {% block page_internal_script %}
 <script type="text/javascript">
   jQuery(document).ready(function() {
-    filterConditions.setUrl('{{ url_for('.all') }}');
-    filterConditions.init();
+    filterConditionsAll.setUrl('{{ url_for('.all') }}');
+    filterConditionsAll.init();
   });
 </script>
 {% endblock %}
