@@ -5,7 +5,7 @@ from flask_login import UserMixin
 from werkzeug.security import check_password_hash
 from peewee import *
 from .extensions import db
-from .constants import CntRoles, CntSyllabusYear, CntDepartment
+from .constants import CntGender, CntRoles, CntSyllabusYear, CntDepartment
 
 _all_ = ['User', 'Course', 'Practice']
 
@@ -14,6 +14,7 @@ class User(UserMixin, Model):
     id = PrimaryKeyField()
     userName = CharField(max_length=16, unique=True, index=True)
     chineseName = CharField(max_length=32, index=True)
+    gender = CharField(max_length=8, choices=CntGender.choices, default=CntGender.MALE.label)
     role = CharField(max_length=32, index=True, choices=CntRoles.choices, default=CntRoles.TEACHER.label)
     permission = IntegerField(default=0)
     password = CharField(max_length=32)
@@ -29,6 +30,9 @@ class User(UserMixin, Model):
 
     def getRoleName(self):
         return CntRoles.getRoleName(self.role)
+
+    def getGenderName(self):
+        return CntGender.getGenderName(self.gender)
 
     class Meta:
         database = db.database

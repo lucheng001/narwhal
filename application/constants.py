@@ -19,13 +19,22 @@ class CntAllowedExtensions(object):
 
 
 class CntGender(object):
-    MALE = u'男'
-    FEMALE = u'女'
+    _Gender = collections.namedtuple('_Gender', ['label', 'name'])
+
+    MALE = _Gender(u'male', u'男')
+    FEMALE = _Gender(u'female', u'女')
 
     _objects = [MALE, FEMALE]
 
-    choices = [(obj, obj) for obj in _objects]
-    labels = _objects
+    _labels = [obj.label for obj in _objects]
+    _maps = dict(zip(_labels, _objects))
+
+    choices = [(obj.label, obj.name) for obj in _objects]
+    labels = _labels
+
+    @classmethod
+    def getGenderName(cls, label):
+        return cls._maps[label].name if label in cls._labels else u'未知'
 
 
 class CntSyllabusYear(object):
@@ -42,9 +51,8 @@ class CntSyllabusYear(object):
     labels = _labels
 
     @classmethod
-    def getSyllabusYearName(cls, syllabusYear_label):
-        syllabusYear = cls._maps[syllabusYear_label]
-        return syllabusYear.name if syllabusYear_label in cls._labels else u'未知方案'
+    def getSyllabusYearName(cls, label):
+        return cls._maps[label].name if label in cls._labels else u'未知'
 
 
 class CntDepartment(object):
@@ -65,9 +73,8 @@ class CntDepartment(object):
     labels = _labels
 
     @classmethod
-    def getDepartmentName(cls, department_label):
-        department = cls._maps[department_label]
-        return department.name if department_label in cls._labels else u'未知教研室'
+    def getDepartmentName(cls, label):
+        return cls._maps[label].name if label in cls._labels else u'未知'
 
 
 class CntPermission(object):
@@ -137,13 +144,11 @@ class CntRoles(object):
     labels = _labels
 
     @classmethod
-    def getRolePermission(cls, role_label):
-        role = cls._maps[role_label]
-        return role.permissions if role_label in cls._labels else 0b0
+    def getRolePermission(cls, label):
+        return cls._maps[label].permissions if label in cls._labels else 0b0
 
     @classmethod
-    def getRoleName(cls, role_label):
-        role = cls._maps[role_label]
-        return role.name if role_label in cls._labels else u'未知角色'
+    def getRoleName(cls, label):
+        return cls._maps[label].name if label in cls._labels else u'未知'
 
 

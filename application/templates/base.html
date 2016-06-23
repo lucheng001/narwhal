@@ -145,9 +145,22 @@
           </a>
         </li>
         {% endif %}
-        <li class="heading">
-          <h3 class="uppercase">Feature</h3>
+        {% if current_user.hasPermission(cPermission.COURSE) %}
+        <li class="nav-item">
+          <a href="{{ url_for('bpCourse.addByBatch') }}" class="nav-link">
+            <i class="icon-plus"></i>
+            <span class="title">添加课程</span>
+          </a>
         </li>
+        {% endif %}
+        <li class="heading">
+          <h3 class="uppercase">Operation</h3>
+        </li>
+        {% if current_user.hasPermission(cPermission.COURSE) %}
+        <li class="heading">
+          <h3 class="uppercase">User</h3>
+        </li>
+        {% endif %}
       </ul>
       <!-- END SIDEBAR MENU -->
     </div>

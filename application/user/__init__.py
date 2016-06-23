@@ -7,5 +7,6 @@ _all_ = ['bpUser']
 bpUser = Blueprint('bpUser', __name__)
 
 from . import views
+from . import views_user
 
 

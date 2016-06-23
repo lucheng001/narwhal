@@ -38,7 +38,7 @@
                 <th> &nbsp; </th>
                 <th class="text-center">
                   <select class="form-control form-filter input-sm" name="currentSemester" id="currentSemester">
-                    <option value="all" {% if currentSemester == 'all' %}selected{% endif %}>全部</option>
+                    <option value="all" {% if currentSemester == 'all' %}selected="selected"{% endif %}>全部</option>
                     {%- for semester in semesters %}
                     <option value="{{ semester }}"  {% if currentSemester == semester %}selected{% endif %}>{{ semester }}</option>
                     {%- endfor %}
@@ -46,7 +46,7 @@
                 </th>
                 <th class="text-center">
                   <select class="form-control form-filter input-sm" name="currentDepartment" id="currentDepartment">
-                    <option value="all" {% if currentDepartment == 'all' %}selected{% endif %}>全部</option>
+                    <option value="all" {% if currentDepartment == 'all' %}selected="selected"{% endif %}>全部</option>
                     {%- for department in cDepartment.choices %}
                     <option value="{{ department[0] }}"  {% if currentDepartment == department[0] %}selected{% endif %}>{{ department[1] }}</option>
                     {%- endfor %}
@@ -54,7 +54,7 @@
                 </th>
                 <th class="text-center">
                   <select class="form-control form-filter input-sm" name="currentSyllabusYear" id="currentSyllabusYear">
-                    <option value="all" {% if currentSyllabusYear == 'all' %}selected{% endif %}>全部</option>
+                    <option value="all" {% if currentSyllabusYear == 'all' %}selected="selected"{% endif %}>全部</option>
                     {%- for syllabusYear in cSyllabusYear.choices %}
                     <option value="{{ syllabusYear[0] }}"  {% if currentSyllabusYear == syllabusYear[0] %}selected{% endif %}>{{ syllabusYear[1] }}</option>
                     {%- endfor %}
