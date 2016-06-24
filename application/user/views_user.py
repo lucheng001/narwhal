@@ -10,27 +10,7 @@ from ..constants import CntGender, CntRoles, CntPermission
 from .forms_user import AddUserForm
 from . import bpUser
 
-_all_ = ['all']
-
-
-@bpUser.route('/add', methods=['GET', 'POST'])
-@permission_required(CntPermission.USER)
-def add():
-    form = AddUserForm()
-    if form.validate_on_submit():
-        import re
-        from werkzeug.security import generate_password_hash
-        User.create(
-            userName=re.sub('[\s+]', '', form.userName.data),
-            chineseName=re.sub('[\s+]', '', form.chineseName.data),
-            role=form.role.data,
-            password=form.password.data,
-            passwordHash=generate_password_hash(form.password.data)
-        )
-        flash(u'注册成功，请重新登录', 'success')
-        return redirect(url_for('bpAuth.login'))
-
-    return render_template('user/instructor/register.html', form=form)
+_all_ = ['all', 'add', 'resetPassword']
 
 
 @bpUser.route('/resetPassword/<int:userId>', methods=['GET'])
@@ -102,4 +82,26 @@ def all():
                            currentGender=currentGender, currentRole=currentRole,
                            users=users)
 
+
+@bpUser.route('/add', methods=['GET', 'POST'])
+@login_required
+@permission_required(CntPermission.USER)
+def add():
+    form = AddUserForm()
+
+    if form.validate_on_submit():
+        import re
+        from werkzeug.security import generate_password_hash
+        User.create(
+            userName=re.sub('[\s+]', '', form.userName.data),
+            chineseName=re.sub('[\s+]', '', form.chineseName.data),
+            role=form.role.data,
+            permission=CntRoles.getRolePermission(form.role.data),
+            password=form.password.data,
+            passwordHash=generate_password_hash(form.password.data)
+        )
+        flash(u'添加成功', 'success')
+        return redirect(url_for('.all'))
+
+    return render_template('user/user/add.html', form=form)
 

@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from flask_wtf import Form
-from wtforms import StringField, PasswordField, SelectField
+from wtforms import StringField, PasswordField, SelectField, RadioField
 from wtforms import ValidationError
 from wtforms.validators import DataRequired, Length, EqualTo
-from ..constants import CntRoles
+from ..constants import CntRoles, CntGender
 from ..models import User
 
 _all_ = ['AddUserForm']
@@ -42,11 +42,14 @@ class AddUserForm(Form):
     )
     role = SelectField(
         u'角色',
-        coerce=int,
         validators=[DataRequired(u'必须制定一个角色.')],
         choices=CntRoles.choices
     )
-
+    gender = RadioField(
+        u'性别',
+        validators=[DataRequired(u'性别不能为空')],
+        choices=CntGender.choices
+    )
     @staticmethod
     def validate_userName(form, filed):
         user = None

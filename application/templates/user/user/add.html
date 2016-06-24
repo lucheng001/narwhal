@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+
+{% block page_breadcrumb_1 %}用户{% endblock %}
+{% block page_breadcrumb_2 %}添加用户{% endblock %}
+
+{% block page_title_1 %}添加用户{% endblock %}
+{% block page_title_2 %}Add User{% endblock %}
+
+{% block page_content %}
+<div class="row">
+  <div class="col-md-12">
+    <div class="portlet light portlet-fit portlet-form bordered">
+      <div class="portlet-title">
+        <div class="caption">
+          <i class="icon-settings font-blue-sharp"></i>
+          <span class="caption-subject font-blue-sharp sbold uppercase">Create a Course</span>
+        </div>
+      </div>
+      <div class="portlet-body">
+        <!-- BEGIN FORM-->
+        <form action="{{ url_for('.add') }}" id="form" class="form-horizontal" role="form" method="post">
+          {{ form.csrf_token }}
+          <div class="form-body">
+            <div class="alert alert-danger display-hide">
+              <button data-close="alert" class="close"></button>
+              <span></span>
+            </div>
+            <div class="form-group {% if form.userName.errors %}has-error{% endif %}">
+              <label class="control-label col-md-3">
+              用户名
+              <span class="required" aria-required="true"> * </span>
+              </label>
+              <div class="col-md-4">
+                <input name="userName" type="text" class="form-control" required>
+                {% if form.userName.errors %}
+                <span class="help-block help-block-error">
+                {{ form.userName.errors|join('<br>')|safe }}
+                </span>
+                {% endif %}
+              </div>
+            </div>
+            <div class="form-group {% if form.chineseName.errors %}has-error{% endif %}">
+              <label class="control-label col-md-3">
+              姓 名
+              <span class="required" aria-required="true"> * </span>
+              </label>
+              <div class="col-md-4">
+                <input name="chineseName" type="text" class="form-control" required>
+                {% if form.chineseName.errors %}
+                <span class="help-block help-block-error">
+                {{ form.chineseName.errors|join('<br>')|safe }}
+                </span>
+                {% endif %}
+              </div>
+            </div>
+            <div class="form-group form-md-radios  {% if form.gender.errors %}has-error{% endif %}">
+              <label class="control-label col-md-3" style="color: #34495e;">
+                性 别
+                <span class="required" aria-required="true"> * </span>
+              </label>
+              <div class="md-radio-inline col-md-4">
+                <div class="md-radio">
+                  <input type="radio" value="male" id="male" name="gender" class="md-radiobtn" checked>
+                  <label for="male">
+                    <span></span>
+                    <span class="check"></span>
+                    <span class="box"></span> 男 </label>
+                </div>
+                <div class="md-radio">
+                  <input type="radio" value="female" id="female" name="gender" class="md-radiobtn">
+                  <label for="female">
+                    <span></span>
+                    <span class="check"></span>
+                    <span class="box"></span> 女 </label>
+                </div>
+                {% if form.gender.errors %}
+                <span class="help-block help-block-error">
+                {{ form.gender.errors|join('<br>')|safe }}
+                </span>
+                {% endif %}
+              </div>
+            </div>
+            <div class="form-group {% if form.role.errors %}has-error{% endif %}">
+              <label class="control-label col-md-3">
+              角 色
+              <span class="required" aria-required="true"> * </span>
+              </label>
+              <div class="col-md-4">
+                <select class="form-control form-filter input-sm" name="role">
+                  {%- for role in cRoles.choices %}
+                  <option value="{{ role[0] }}"  {% if loop.last %}selected="selected"{% endif %}>{{ role[1] }}</option>
+                  {%- endfor %}
+                </select>
+                {% if form.role.errors %}
+                <span class="help-block help-block-error">
+                {{ form.role.errors|join('<br>')|safe }}
+                </span>
+                {% endif %}
+              </div>
+            </div>
+            <div class="form-group {% if form.password.errors %}has-error{% endif %}">
+              <label class="control-label col-md-3">
+              密 码
+              <span class="required" aria-required="true"> * </span>
+              </label>
+              <div class="col-md-4">
+                <input name="password" id="password" type="password" class="form-control" required>
+                {% if form.password.errors %}
+                <span class="help-block help-block-error">
+                {{ form.password.errors|join('<br>')|safe }}
+                </span>
+                {% endif %}
+              </div>
+            </div>
+            <div class="form-group {% if form.confirmPassword.errors %}has-error{% endif %}">
+              <label class="control-label col-md-3">
+              确认密码
+              <span class="required" aria-required="true"> * </span>
+              </label>
+              <div class="col-md-4">
+                <input name="confirmPassword" type="password" class="form-control" required>
+                {% if form.confirmPassword.errors %}
+                <span class="help-block help-block-error">
+                {{ form.confirmPassword.errors|join('<br>')|safe }}
+                </span>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          <div class="form-actions">
+            <div class="row">
+              <div class="col-md-offset-3 col-md-9">
+                <button class="btn green" type="submit"> 提 交 </button>
+              </div>
+            </div>
+          </div>
+        </form>
+        <!-- END FORM-->
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block page_external_script %}
+<script src="{{ url_for('static', filename='user/script/add.js') }}" type="text/javascript"></script>
+{% endblock %}
+
+
+{% block page_internal_script %}
+{% if form.errors %}
+<script type="text/javascript">
+  jQuery(document).ready(function() {
+    var formJel = $('#form');
+    var errorJel = $('.alert-danger', formJel);
+    $('span', errorJel).html('填写内容有错误，请仔细检查');
+    errorJel.show();
+  });
+</script>
+{% endif %}
+{% endblock %}
