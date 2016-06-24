@@ -50,7 +50,7 @@
               <div class="form-group">
                 <label class="control-label col-md-3">旧的材料</label>
                 <div class="col-md-4">
-                <a href="#" class="btn btn-primary" target="_blank">
+                <a href="{{ url_for('.downloadMaterials', category=category, courseId=course.id) }}" class="btn btn-primary" target="_blank">
                   <i class="fa fa-download"></i>下载
                 </a>
                 </div>

@@ -2,6 +2,7 @@
 
 import os
 import math
+from urllib.parse import quote
 from werkzeug.utils import secure_filename
 from flask import render_template, redirect, url_for, flash, current_app, request, abort, send_from_directory
 from playhouse.flask_utils import get_object_or_404
@@ -150,9 +151,11 @@ def downloadMaterials(category, courseId):
                             course.semester, course.getDepartmentName(),
                             u'{}-{}'.format(me.chineseName, course.klass))
     fileName = getattr(course, category)
+    encodeFileName = quote(fileName.encode('UTF-8'))
     if fileName and os.path.isfile(os.path.join(filePath, fileName)):
         return send_from_directory(filePath, fileName,
-                                   as_attachment=True, attachment_filename=fileName)
+                                   as_attachment=True,
+                                   attachment_filename=encodeFileName)
     else:
         abort(404)
 
