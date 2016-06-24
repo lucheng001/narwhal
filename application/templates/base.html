@@ -135,12 +135,28 @@
           <!-- END SIDEBAR TOGGLER BUTTON -->
         </li>
         <li class="heading">
-          <h3 class="uppercase">Course</h3>
+          <h3 class="uppercase">课堂教学</h3>
         </li>
+        {% if current_user.hasPermission(cPermission.COLLEGE) %}
+        <li class="nav-item">
+          <a href="{{ url_for('bpCourse.all') }}" class="nav-link">
+            <i class="icon-layers"></i>
+            <span class="title">全院课程</span>
+          </a>
+        </li>
+        {% endif %}
+        {% if current_user.hasPermission(cPermission.DEPARTMENT) %}
+        <li class="nav-item">
+          <a href="{{ url_for('bpCourse.resources') }}" class="nav-link">
+            <i class="icon-grid"></i>
+            <span class="title">本系课程</span>
+          </a>
+        </li>
+        {% endif %}
         {% if current_user.hasPermission(cPermission.NORMAL) %}
         <li class="nav-item">
           <a href="{{ url_for('bpCourse.taught') }}" class="nav-link">
-            <i class="icon-layers"></i>
+            <i class="icon-puzzle"></i>
             <span class="title">我的课程</span>
           </a>
         </li>
@@ -153,12 +169,9 @@
           </a>
         </li>
         {% endif %}
-        <li class="heading">
-          <h3 class="uppercase">Operation</h3>
-        </li>
         {% if current_user.hasPermission(cPermission.COURSE) %}
         <li class="heading">
-          <h3 class="uppercase">User</h3>
+          <h3 class="uppercase">用户管理</h3>
         </li>
         <li class="nav-item">
           <a href="{{ url_for('bpUser.all') }}" class="nav-link">
