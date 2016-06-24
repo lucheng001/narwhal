@@ -85,9 +85,9 @@ def uploadMaterials(category, courseId):
     if category not in CntCourseMaterials.labels:
         abort(404)
 
-    filePath = os.path.join(current_app.config['APP_UPLOAD_FOLDER'],
+    filePath = os.path.join(current_app.config['APP_COURSE_FOLDER'],
                             course.semester, course.getDepartmentName(),
-                            u'{}-{}'.format(me.chineseName, course.klass))
+                            u'{}-{}-{}'.format(me.chineseName, course.name, course.klass))
 
     form = UploadMaterialsForm()
     if form.validate_on_submit():
@@ -161,9 +161,9 @@ def downloadMaterials(category, courseId):
 
     fileName = u'{}-{:02d}.{}'.format(CntCourseMaterials.getMaterialName(category), idx1, ext)
     encodeFileName = quote(fileName.encode('UTF-8'))
-    filePath = os.path.join(current_app.config['APP_UPLOAD_FOLDER'],
+    filePath = os.path.join(current_app.config['APP_COURSE_FOLDER'],
                             course.semester, course.getDepartmentName(),
-                            u'{}-{}'.format(me.chineseName, course.klass))
+                            u'{}-{}-{}'.format(me.chineseName, course.name, course.klass))
 
     return send_from_directory(filePath, fileName,
                                as_attachment=True,

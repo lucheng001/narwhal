@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import re
 import shutil
 from flask import render_template, redirect, url_for, flash, current_app
 from playhouse.flask_utils import get_object_or_404
@@ -75,9 +76,9 @@ def addByBatch():
                 badData.append(line)
                 continue
 
-            filePath = os.path.join(current_app.config['APP_UPLOAD_FOLDER'],
+            filePath = os.path.join(current_app.config['APP_COURSE_FOLDER'],
                                     semester, departmentName,
-                                    u'{}-{}'.format(teacherName, klass))
+                                    u'{}-{}-{}'.format(teacherName, name, klass))
             if os.path.isdir(filePath):
                 badData.append(line)
                 continue
@@ -112,7 +113,7 @@ def delete(courseId):
 
     filePath = os.path.join(current_app.config['APP_UPLOAD_FOLDER'],
                             course.semester, course.getDepartmentName(),
-                            u'{}-{}'.format(teacher.chineseName, course.klass))
+                            u'{}-{}-{}'.format(teacher.chineseName, course.name, course.klass))
 
     if os.path.isdir(filePath):
         shutil.rmtree(filePath)

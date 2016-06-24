@@ -1,29 +1,38 @@
 # -*- coding: utf-8 -*-
 
 import math
-from flask import render_template, current_app, request
+from flask import render_template, current_app, request, abort
 from flask_login import current_user, login_required
 from ..models import User, Course
 from ..constants import CntPermission, CntDepartment, CntSyllabusYear
 from ..utilities import Paginator, permission_required
 from . import bpCourse
 
-_all_ = ['all']
+_all_ = ['resources']
 
 
-@bpCourse.route('/all', methods=['GET'])
+@bpCourse.route('/resources/<department>', methods=['GET'])
 @login_required
-@permission_required(CntPermission.COURSE)
-def all():
+@permission_required(CntPermission.DEPARTMENT)
+def resources(department):
     me = current_user
 
+    if department in CntDepartment.labels:
+        abort(404)
+
+    if not CntDepartment.isDirector(me.userName, department):
+        abort(403)
+
     query = (User
-             .select(User.id, User.chineseName))
+             .select(User.id, User.chineseName)
+             .join(Course)
+             .where(Course.department == department))
     teachers = [row for row in query]
     teacherIds = [teacher.id for teacher in teachers]
 
     query = (Course
              .select(Course.semester)
+             .where(Course.department == department)
              .distinct())
     semesters = [row.semester for row in query]
     semesterLabels = [semester for semester in semesters]

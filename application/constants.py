@@ -165,14 +165,20 @@ class CntCourseMaterials(object):
     LECTURES = _Material(u'lectures', u'03教案')
     SCHEDULE = _Material(u'schedule', u'04教学进程表')
     REPORT = _Material(u'report', u'05学生实验报告')
-    PAPERSA = _Material(u'papersA', u'06试卷Ａ')
-    ANSWERSA = _Material(u'answersA', u'07参考答案A')
-    PAPERSB = _Material(u'papersB', u'08试卷B')
-    ANSWERSB = _Material(u'answersB', u'09参考答案B')
-    SUMMARY = _Material(u'summary', u'09参考答案B')
+    PAPERS1 = _Material(u'papers1', u'06试卷Ａ')
+    ANSWERS1 = _Material(u'answers1', u'07参考答案A')
+    PAPERS2 = _Material(u'papers2', u'08试卷B')
+    ANSWERS2 = _Material(u'answers2', u'09参考答案B')
+    EXAMINATION1 = _Material(u'examination1', u'10考卷')
+    SCORE1 = _Material(u'score1', u'11成绩表')
+    EXAMINATION2 = _Material(u'examination2', u'12补考卷')
+    SCORE2 = _Material(u'score2', u'13补考成绩表')
+    SUMMARY = _Material(u'summary', u'教学小结')
 
     _objects = [SYLLABUS, EVALUATION, LECTURES, SCHEDULE, REPORT,
-                PAPERSA, ANSWERSA, PAPERSB, ANSWERSB]
+                PAPERS1, ANSWERS1, PAPERS2, ANSWERS2,
+                EXAMINATION1, SCORE1, EXAMINATION2, SCORE2,
+                SUMMARY]
 
     _labels = [obj.label for obj in _objects]
     _maps = dict(zip(_labels, _objects))
@@ -182,7 +188,33 @@ class CntCourseMaterials(object):
 
     @classmethod
     def getMaterialName(cls, label):
-        return cls._maps[label].name if label in cls._labels else u'0未知'
+        return cls._maps[label].name if label in cls._labels else u'00未知'
+
+
+class CntPracticeMaterials(object):
+    _Material = collections.namedtuple('_Material', ['label', 'name'])
+
+    SYLLABUS = _Material(u'syllabus', u'01实习大纲')
+    SCHEDULE = _Material(u'schedule', u'02实习计划')
+    INSTRUCTION = _Material(u'instruction', u'03指导书')
+    ROSTER = _Material(u'roster', u'04名单及分组表')
+    REPORT = _Material(u'report', u'05学生实习报告')
+    ACHIEVEMENT = _Material(u'achievement', u'06实习成果')
+    SUMMARY = _Material(u'summary', u'07实习总结')
+
+    _objects = [SYLLABUS, SCHEDULE, INSTRUCTION,
+                ROSTER, REPORT,
+                ACHIEVEMENT, SUMMARY]
+
+    _labels = [obj.label for obj in _objects]
+    _maps = dict(zip(_labels, _objects))
+
+    choices = [(obj.label, obj.name) for obj in _objects]
+    labels = _labels
+
+    @classmethod
+    def getMaterialName(cls, label):
+        return cls._maps[label].name if label in cls._labels else u'00未知'
 
 
 
