@@ -3,7 +3,7 @@
 import os
 import math
 from werkzeug.utils import secure_filename
-from flask import render_template, redirect, url_for, flash, current_app, request, abort
+from flask import render_template, redirect, url_for, flash, current_app, request, abort, send_from_directory
 from playhouse.flask_utils import get_object_or_404
 from flask_login import current_user, login_required
 from ..models import Course
@@ -12,7 +12,7 @@ from ..utilities import Paginator, permission_required
 from .forms_teacher import UploadMaterialsForm
 from . import bpCourse
 
-_all_ = ['taught']
+_all_ = ['taught', 'uploadMaterials', 'downloadMaterials']
 
 
 @bpCourse.route('/taught', methods=['GET'])
@@ -123,5 +123,39 @@ def uploadMaterials(category, courseId):
 
     return render_template('course/teacher/uploadMaterials.html', form=form,
                            course=course, category=category)
+
+
+@bpCourse.route('/download/materials/<category>/<int:courseId>/', methods=['GET', 'POST'])
+@login_required
+@permission_required(CntPermission.NORMAL)
+def downloadMaterials(category, courseId):
+    course = get_object_or_404(Course, (Course.id == courseId))
+    me = current_user
+
+    if category not in CntCourseMaterials.labels:
+        abort(404)
+
+    canDownload = False
+    me = current_user
+    if course.teacher_id != me.id:
+        canDownload = True
+    elif me.hasPermission(CntPermission.COLLEGE):
+        canDownload = True
+    elif me.hasPermission(CntPermission.DEPARTMENT):
+        canDownload = True
+    else:
+        canDownload = False
+
+    filePath = os.path.join(current_app.config['APP_UPLOAD_FOLDER'],
+                            course.semester, course.getDepartmentName(),
+                            u'{}-{}'.format(me.chineseName, course.klass))
+    fileName = getattr(course, category)
+    if fileName and os.path.isfile(os.path.join(filePath, fileName)):
+        return send_from_directory(filePath, fileName,
+                                   as_attachment=True, attachment_filename=fileName)
+    else:
+        abort(404)
+
+
 
 
