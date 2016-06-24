@@ -153,8 +153,6 @@
 {% block page_internal_script %}
 <script type="text/javascript">
   jQuery(document).ready(function() {
-    filterConditionsTaught.setUrl('{{ url_for('.taught') }}');
-    filterConditionsTaught.init();
 
     var pt = $('#table').powertable({
       allowMoving: false,
@@ -163,6 +161,9 @@
       fixedRows: [0],
       showHideDisabled: ['name']
     });
+
+    filterConditionsTaught.setActionUrl('{{ url_for('.taught') }}');
+    filterConditionsTaught.init();
 
   });
 </script>

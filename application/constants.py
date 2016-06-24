@@ -169,6 +169,7 @@ class CntCourseMaterials(object):
     ANSWERSA = _Material(u'answersA', u'07参考答案A')
     PAPERSB = _Material(u'papersB', u'08试卷B')
     ANSWERSB = _Material(u'answersB', u'09参考答案B')
+    SUMMARY = _Material(u'summary', u'09参考答案B')
 
     _objects = [SYLLABUS, EVALUATION, LECTURES, SCHEDULE, REPORT,
                 PAPERSA, ANSWERSA, PAPERSB, ANSWERSB]

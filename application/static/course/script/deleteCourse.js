@@ -4,7 +4,7 @@ var deleteCourse = function() {
     var objId = '';
 
     var bindEvent = function() {
-        $('button.deleteCourse').click(function(e) {
+        $('a.deleteCourse').click(function(e) {
             objId = $(this).attr('data-courseId');
             handleAction();
             e.preventDefault();

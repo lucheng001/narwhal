@@ -87,7 +87,7 @@
                 <td class="text-center"> {{ course.getSyllabusYearName() }} </td>
                 <td class="text-center">
                   <div class="btn-group btn-group-xs btn-group-solid">
-                  <a href="#" class="btn btn-outline blue">名单</a>
+                  <button data-courseId="{{ course.id }}" class="deleteCourse btn btn-outline red">删除</button>
                   </div>
                 </td>
               </tr>
@@ -158,13 +158,12 @@
 {% block page_external_script %}
 <script src="{{ url_for('static', filename='global/plugins/jquery-powertable/jquery-powertable.js') }}" type="text/javascript"></script>
 <script src="{{ url_for('static', filename='course/script/filterConditionsAll.js') }}" type="text/javascript"></script>
+<script src="{{ url_for('static', filename='course/script/delete.js') }}" type="text/javascript"></script>
 {% endblock %}
 
 {% block page_internal_script %}
 <script type="text/javascript">
   jQuery(document).ready(function() {
-    filterConditionsAll.setUrl('{{ url_for('.all') }}');
-    filterConditionsAll.init();
 
     var pt = $('#table').powertable({
       allowMoving: false,
@@ -173,6 +172,13 @@
       fixedRows: [0],
       showHideDisabled: ['name']
     });
+
+    filterConditionsAll.setActionUrl('{{ url_for('.all') }}');
+    filterConditionsAll.init();
+
+    deleteCourse.setActionUrl('/course/delete/');
+    deleteCourse.init();
+
   });
 </script>
 {% endblock %}

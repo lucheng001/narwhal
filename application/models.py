@@ -54,7 +54,8 @@ class Course(Model):
     answersA = CharField(max_length=128, null=True)
     papersB = CharField(max_length=128, null=True)
     answersB = CharField(max_length=128, null=True)
-    syllabusYear = CharField(max_length=32, index=True, choices=CntSyllabusYear, default=CntSyllabusYear.Y2012.label)
+    # summary = CharField(max_length=128, null=True)
+    syllabusYear = CharField(max_length=32, index=True, choices=CntSyllabusYear.choices, default=CntSyllabusYear.Y2012.label)
     createTime = DateTimeField(default=datetime.datetime.now, formats='%Y-%m-%d %H:%M:%S')
 
     def getDepartmentName(self):

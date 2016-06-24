@@ -26,7 +26,7 @@ var filterConditionsAll = function() {
     };
 
     return {
-        setUrl: function(u){
+        setActionUrl: function(u){
           url = u;
         },
         init: function() {

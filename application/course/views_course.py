@@ -11,7 +11,7 @@ from ..utilities import permission_required
 from .forms_course import AddCourseForm, AddCourseDataForm
 from . import bpCourse
 
-_all_ = ['addByBatch', 'all']
+_all_ = ['addByBatch', 'all', 'delete']
 
 
 @bpCourse.route('/add/batch', methods=['GET', 'POST'])
@@ -27,7 +27,6 @@ def addByBatch():
         lines = form.courseData.data.splitlines()
         badData = []
         goodData = []
-        goodDict = []
         for line in lines:
             data = line.split(',')
             if len(data) != 6:
@@ -104,5 +103,23 @@ def addByBatch():
     return render_template('course/course/addByBatch.html', form=form)
 
 
+@bpCourse.route('/delete/<int:courseId>/', methods=['GET'])
+@login_required
+@permission_required(CntPermission.NORMAL)
+def delete(courseId):
+    course = get_object_or_404(Course, (Course.id == courseId))
+    teacher = course.teacher
+
+    filePath = os.path.join(current_app.config['APP_UPLOAD_FOLDER'],
+                            course.semester, course.getDepartmentName(),
+                            u'{}-{}'.format(teacher.chineseName, course.klass))
+
+    if os.path.isdir(filePath):
+        shutil.rmtree(filePath)
+
+    course.delete_instance()
+
+    flash(u'删除成功', 'success')
+    return redirect(url_for('.all'))
 
 
