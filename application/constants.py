@@ -57,13 +57,13 @@ class CntSyllabusYear(object):
 
 
 class CntDepartment(object):
-    _Department = collections.namedtuple('_Department', ['label', 'name'])
+    _Department = collections.namedtuple('_Department', ['label', 'name', 'director'])
 
-    CS = _Department(u'cs', u'计算机科学与技术')
-    EST = _Department(u'est', u'电子科学与技术')
-    EIE = _Department(u'eie', u'电子信息工程')
-    IE = _Department(u'ie', u'信息工程')
-    PUB = _Department(u'pub', u'公共')
+    CS = _Department(u'cs', u'计算机科学与技术', u'zhaojiagang')
+    EST = _Department(u'est', u'电子科学与技术', u'xuquanyuan')
+    EIE = _Department(u'eie', u'电子信息工程', u'lvdanju')
+    IE = _Department(u'ie', u'信息工程', u'hukunrong')
+    PUB = _Department(u'pub', u'公共', u'kouweili')
 
     _objects = [CS, EST, EIE, IE, PUB]
 
@@ -76,6 +76,10 @@ class CntDepartment(object):
     @classmethod
     def getDepartmentName(cls, label):
         return cls._maps[label].name if label in cls._labels else u'未知'
+
+    @classmethod
+    def isDirector(cls, label, userName):
+        return cls._maps[label].director == userName if label in cls._labels else False
 
 
 class CntPermission(object):
@@ -156,15 +160,15 @@ class CntRoles(object):
 class CntCourseMaterials(object):
     _Material = collections.namedtuple('_Material', ['label', 'name'])
 
-    SYLLABUS = _Material(u'syllabus', u'0教学大纲')
-    EVALUATION = _Material(u'evaluation', u'1考核大纲')
-    LECTURES = _Material(u'lectures', u'2教案')
-    SCHEDULE = _Material(u'schedule', u'3教学进程表')
-    REPORT = _Material(u'report', u'4学生实验报告')
-    PAPERSA = _Material(u'papersA', u'5试卷Ａ')
-    ANSWERSA = _Material(u'answersA', u'6参考答案A')
-    PAPERSB = _Material(u'papersB', u'7试卷B')
-    ANSWERSB = _Material(u'answersB', u'8参考答案B')
+    SYLLABUS = _Material(u'syllabus', u'01教学大纲')
+    EVALUATION = _Material(u'evaluation', u'02考核大纲')
+    LECTURES = _Material(u'lectures', u'03教案')
+    SCHEDULE = _Material(u'schedule', u'04教学进程表')
+    REPORT = _Material(u'report', u'05学生实验报告')
+    PAPERSA = _Material(u'papersA', u'06试卷Ａ')
+    ANSWERSA = _Material(u'answersA', u'07参考答案A')
+    PAPERSB = _Material(u'papersB', u'08试卷B')
+    ANSWERSB = _Material(u'answersB', u'09参考答案B')
 
     _objects = [SYLLABUS, EVALUATION, LECTURES, SCHEDULE, REPORT,
                 PAPERSA, ANSWERSA, PAPERSB, ANSWERSB]

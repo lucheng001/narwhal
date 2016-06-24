@@ -91,8 +91,8 @@ def uploadMaterials(category, courseId):
 
     form = UploadMaterialsForm()
     if form.validate_on_submit():
-        fName = 'untitled'
-        fExtension = 'unknown'
+        fName = u'untitled'
+        fExtension = u'unknown'
         secureFileName = secure_filename(form.materials.data.filename)
         if secureFileName:
             res = secureFileName.rsplit('.', 1)
@@ -101,22 +101,25 @@ def uploadMaterials(category, courseId):
             else:
                 fName, fExtension = '', res[0]
 
-        fileName = u'{}.{}'.format(CntCourseMaterials.getMaterialName(category), fExtension)
-        if os.path.isfile(os.path.join(filePath, fileName)):
-            os.remove(os.path.join(filePath, fileName))
+        newFileInfo = None
+        idx1 = 1
+        oldFileInfo = getattr(course, category)
+        if oldFileInfo is None:
+            newFileInfo = u'{:02d}|{}'.format(1, fExtension)
+        else:
+            idx, _ = oldFileInfo.split(u'|')
+            idx1 = int(idx) + 1
+            newFileInfo = u'{:02d}|{}'.format(idx1, fExtension)
 
-        oldFileName = getattr(course, category)
-        if oldFileName and os.path.isfile(os.path.join(filePath, oldFileName)):
-            os.remove(os.path.join(filePath, oldFileName))
-
+        fileName = u'{}-{:02d}.{}'.format(CntCourseMaterials.getMaterialName(category), idx1, fExtension)
         form.materials.data.save(os.path.join(filePath, fileName))
 
         tplFileName = u'{}.{}'.format(CntCourseMaterials.getMaterialName(category), u'未交')
         if os.path.isfile(os.path.join(filePath, tplFileName)):
             os.remove(os.path.join(filePath, tplFileName))
 
-        params = dict(zip([category], [fileName]))
-        query = Course.update(**params)
+        params = dict(zip([category], [newFileInfo]))
+        query = Course.update(**params).where(Course.id == course.id)
         query.execute()
 
         flash(u'资料上传成功', 'success')
@@ -142,22 +145,29 @@ def downloadMaterials(category, courseId):
         canDownload = True
     elif me.hasPermission(CntPermission.COLLEGE):
         canDownload = True
-    elif me.hasPermission(CntPermission.DEPARTMENT):
+    elif me.hasPermission(CntPermission.DEPARTMENT) and CntDepartment.isDirector(category, me.userName):
         canDownload = True
     else:
         canDownload = False
 
+    idx1 = 0
+    ext = u'unknown'
+    fileInfo = getattr(course, category)
+    if fileInfo is None:
+        abort(404)
+    else:
+        idx, ext = fileInfo.split(u'|')
+        idx1 = int(idx)
+
+    fileName = u'{}-{:02d}.{}'.format(CntCourseMaterials.getMaterialName(category), idx1, ext)
+    encodeFileName = quote(fileName.encode('UTF-8'))
     filePath = os.path.join(current_app.config['APP_UPLOAD_FOLDER'],
                             course.semester, course.getDepartmentName(),
                             u'{}-{}'.format(me.chineseName, course.klass))
-    fileName = getattr(course, category)
-    encodeFileName = quote(fileName.encode('UTF-8'))
-    if fileName and os.path.isfile(os.path.join(filePath, fileName)):
-        return send_from_directory(filePath, fileName,
-                                   as_attachment=True,
-                                   attachment_filename=encodeFileName)
-    else:
-        abort(404)
+
+    return send_from_directory(filePath, fileName,
+                               as_attachment=True,
+                               attachment_filename=encodeFileName)
 
 
 

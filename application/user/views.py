@@ -4,9 +4,11 @@ import hashlib
 from flask import render_template, redirect, url_for, flash, request
 from flask_login import current_user, login_required, logout_user
 from ..models import User
-from ..constants import CntRoles, CntPermission
+from ..constants import CntRoles
 from .forms import RegisterForm, ChangePasswordForm, ChangeChineseNameForm
 from . import bpUser
+
+_all_ = ['register', 'profile', 'changePassword', 'changeChineseName']
 
 
 @bpUser.route('/register', methods=['GET', 'POST'])

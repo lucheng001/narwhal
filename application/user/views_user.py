@@ -10,7 +10,7 @@ from ..constants import CntGender, CntRoles, CntPermission
 from .forms_user import AddUserForm
 from . import bpUser
 
-_all_ = ['all', 'add', 'resetPassword']
+_all_ = ['all', 'add', 'resetPassword', 'delete']
 
 
 @bpUser.route('/resetPassword/<int:userId>', methods=['GET'])
