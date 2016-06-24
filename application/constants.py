@@ -7,11 +7,12 @@ _all_ = ['CntAllowedExtensions',
          'CntPermission',
          'CntRoles',
          'CntSyllabusYear',
-         'CntDepartment']
+         'CntDepartment'
+         'CntCourseMaterials']
 
 
 class CntAllowedExtensions(object):
-    _extensions = ['txt', 'doc', 'docx', 'pdf', 'rar', 'zip']
+    _extensions = ['txt', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'pdf', 'rar', 'zip']
     _objects = list(set(_extensions + [ext.upper() for ext in _extensions]))
 
     choices = _objects
@@ -150,5 +151,33 @@ class CntRoles(object):
     @classmethod
     def getRoleName(cls, label):
         return cls._maps[label].name if label in cls._labels else u'未知'
+
+
+class CntCourseMaterials(object):
+    _Material = collections.namedtuple('_Material', ['label', 'name'])
+
+    SYLLABUS = _Material(u'syllabus', u'0教学大纲')
+    EVALUATION = _Material(u'evaluation', u'1考核大纲')
+    LECTURES = _Material(u'lectures', u'2教案')
+    SCHEDULE = _Material(u'schedule', u'3教学进程表')
+    REPORT = _Material(u'report', u'4学生实验报告')
+    PAPERSA = _Material(u'papersA', u'5试卷Ａ')
+    ANSWERSA = _Material(u'answersA', u'6参考答案A')
+    PAPERSB = _Material(u'papersB', u'7试卷B')
+    ANSWERSB = _Material(u'answersB', u'8参考答案B')
+
+    _objects = [SYLLABUS, EVALUATION, LECTURES, SCHEDULE, REPORT,
+                PAPERSA, ANSWERSA, PAPERSB, ANSWERSB]
+
+    _labels = [obj.label for obj in _objects]
+    _maps = dict(zip(_labels, _objects))
+
+    choices = [(obj.label, obj.name) for obj in _objects]
+    labels = _labels
+
+    @classmethod
+    def getMaterialName(cls, label):
+        return cls._maps[label].name if label in cls._labels else u'0未知'
+
 
 

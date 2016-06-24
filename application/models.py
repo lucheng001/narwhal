@@ -5,7 +5,7 @@ from flask_login import UserMixin
 from werkzeug.security import check_password_hash
 from peewee import *
 from .extensions import db
-from .constants import CntGender, CntRoles, CntSyllabusYear, CntDepartment
+from .constants import CntGender, CntRoles, CntSyllabusYear, CntDepartment, CntCourseMaterials
 
 _all_ = ['User', 'Course', 'Practice']
 
@@ -46,14 +46,14 @@ class Course(Model):
     semester = CharField(max_length=32, index=True)
     department = CharField(max_length=32, index=True)
     syllabus = CharField(max_length=128, null=True)
-    plans = CharField(max_length=128, null=True)
+    evaluation = CharField(max_length=128, null=True)
+    lectures = CharField(max_length=128, null=True)
     schedule = CharField(max_length=128, null=True)
     report = CharField(max_length=128, null=True)
-    evaluation = CharField(max_length=128, null=True)
-    examinationA = CharField(max_length=128, null=True)
-    answerA = CharField(max_length=128, null=True)
-    examinationB = CharField(max_length=128, null=True)
-    answerB = CharField(max_length=128, null=True)
+    papersA = CharField(max_length=128, null=True)
+    answersA = CharField(max_length=128, null=True)
+    papersB = CharField(max_length=128, null=True)
+    answersB = CharField(max_length=128, null=True)
     syllabusYear = CharField(max_length=32, index=True, choices=CntSyllabusYear, default=CntSyllabusYear.Y2012.label)
     createTime = DateTimeField(default=datetime.datetime.now, formats='%Y-%m-%d %H:%M:%S')
 
@@ -62,6 +62,9 @@ class Course(Model):
 
     def getSyllabusYearName(self):
         return CntSyllabusYear.getSyllabusYearName(self.syllabusYear)
+
+    def getMaterialName(self, label):
+        return CntCourseMaterials.getMaterialName(label)
 
     class Meta:
         database = db.database

@@ -89,6 +89,8 @@ def addByBatch():
 
             Course.create(**courseDict)
 
+            goodData.append(line)
+
         msg = u'共提交数据{}条，添加成功{}条，失败添加{}条'
         if badData:
             flash(msg.format(len(lines), len(goodData), len(badData)), 'error')
