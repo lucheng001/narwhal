@@ -5,7 +5,7 @@ from flask import render_template, redirect, url_for, flash, current_app, reques
 from playhouse.flask_utils import get_object_or_404
 from flask_login import current_user, login_required
 from ..models import User, Course
-from ..constants import CntPermission
+from ..constants import CntPermission, CntDepartment, CntSyllabusYear
 from ..utilities import Paginator, permission_required
 from . import bpCourse
 

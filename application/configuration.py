@@ -19,6 +19,7 @@ class Configuration(object):
     APP_ITEMS_PER_PAGE_LG = 200
     APP_DEFAULT_PASSWORD = u'1a2b3c4d5e'
     APP_UPLOAD_FOLDER = os.path.join(APP_DIR, 'uploads')
+    APP_COURSE_TPL = os.path.join(APP_UPLOAD_FOLDER, '.tpl', 'course')
 
     @staticmethod
     def init_app(app):

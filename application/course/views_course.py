@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 
-import math
-from flask import render_template, redirect, url_for, flash, current_app, request, abort
+import os
+import shutil
+from flask import render_template, redirect, url_for, flash, current_app
 from playhouse.flask_utils import get_object_or_404
 from flask_login import current_user, login_required
 from ..models import User, Course
 from ..constants import CntPermission, CntDepartment, CntSyllabusYear
-from ..utilities import Paginator, permission_required
+from ..utilities import permission_required
 from .forms_course import AddCourseForm, AddCourseDataForm
 from . import bpCourse
 
@@ -71,20 +72,27 @@ def addByBatch():
             courseForm.department.data = courseDict['department']
             courseForm.syllabusYear.data = courseDict['syllabusYear']
 
-            if courseForm.validate():
-                goodDict.append(courseDict)
-                goodData.append(line)
-            else:
+            if not courseForm.validate():
                 badData.append(line)
+                continue
 
-        from ..extensions import db
-        with db.database.atomic():
-            Course.insert_many(goodDict).execute()
+            filePath = os.path.join(current_app.config['APP_UPLOAD_FOLDER'],
+                                    semester, departmentName,
+                                    u'{}-{}'.format(teacherName, klass))
+            if os.path.isdir(filePath):
+                badData.append(line)
+                continue
+
+            # os.makedirs(filePath)
+            tplPath = current_app.config['APP_COURSE_TPL']
+            shutil.copytree(tplPath, filePath)
+
+            Course.create(**courseDict)
 
         msg = u'共提交数据{}条，添加成功{}条，失败添加{}条'
         if badData:
             flash(msg.format(len(lines), len(goodData), len(badData)), 'error')
-            return render_template('course/course/../templates/course/college/badData.html', badData=badData)
+            return render_template('course/course/badData.html', badData=badData)
         else:
             flash(msg.format(len(lines), len(goodData), len(badData)), 'success')
             return redirect(url_for('.all'))

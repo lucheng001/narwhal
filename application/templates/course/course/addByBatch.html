@@ -29,12 +29,17 @@
               <button data-close="alert" class="close"></button>
               <span></span>
             </div>
-              <p class="form-section">
-                格式为：<code>课程名称,任课教师,班级名称,学期,教研室,培养方案</code>
-                <br>注意1：逗号为<code>英文逗号</code>
-                <br>注意2：学期格式为 <code>2015-2016-1</code>
-                <br>注意3：培养方案格式为 <code>2012</code>
-              </p>
+            <div class="form-section" style="margin-top: 0px;">
+              <ul>
+                <li>格式为：<code>课程名称,任课教师,班级名称,学期,教研室,培养方案</code>
+                  <ul>
+                    <li>注意1：逗号为<code>英文逗号</code></li>
+                    <li>注意2：学期格式为 <code>2015-2016-1</code></li>
+                    <li>注意3：培养方案格式为 <code>2012</code></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group {% if form.courseData.errors %}has-error{% endif %}">
