@@ -66,7 +66,7 @@
                 <td class="text-center"> {{ user.getRoleName() }} </td>
                 <td class="text-center">
                   <div class="btn-group btn-group-xs btn-group-solid">
-                  <button data-userId="{{ user.id }}" class="resetPassword btn btn-outline red">删除</button>
+                  <button data-userId="{{ user.id }}" class="deleteUser btn btn-outline red">删除</button>
                   <button data-userId="{{ user.id }}" class="resetPassword btn btn-outline yellow-gold">重置密码</button>
                   </div>
                 </td>
@@ -149,6 +149,9 @@
 
     resetPassword.setActionUrl('/user/resetPassword/');
     resetPassword.init();
+
+    deleteUser.setActionUrl('/user/delete/');
+    deleteUser.init();
 
   });
 </script>

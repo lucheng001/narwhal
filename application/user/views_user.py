@@ -26,7 +26,9 @@ def resetPassword(userId):
     user.passwordHash = newPasswordHash
     user.save()
 
-    msg = u'<span class="label label-primary">{}</span> 的密码已经重置为：<span class="label label-danger">{}</span>'
+    msg = (u'<span class="label label-primary">{}</span> '
+           u'的密码已经重置为：'
+           u'<span class="label label-danger">{}</span>')
     flash(msg.format(user.chineseName, newPassword), 'success')
     return redirect(url_for('.all'))
 
@@ -104,4 +106,24 @@ def add():
         return redirect(url_for('.all'))
 
     return render_template('user/user/add.html', form=form)
+
+
+@bpUser.route('/delete/<int:userId>', methods=['GET'])
+@login_required
+@permission_required(CntPermission.USER)
+def delete(userId):
+    user = get_object_or_404(User, (User.id == userId))
+
+    numOfCourses = (Course
+                    .select()
+                    .where(Course.teacher == user.id)
+                    .count())
+    if numOfCourses == 0:
+        user.delete_instance()
+        flash(u'删除成功', 'success')
+    else:
+        flash(u'删除失败，用户存在课程数据', 'error')
+
+    return redirect(url_for('.all'))
+
 
