@@ -18,18 +18,18 @@
         </div>
       </div>
       <div class="portlet-body">
-        <div class="flip-scroll">
+        <div class="table-scrollable">
           {% if courses %}
-          <table class="table table-bordered table-hover table-striped flip-content">
-            <thead class="flip-content">
+          <table id="table" class="table table-bordered table-hover table-striped">
+            <thead class="">
               <tr class="heading">
-                <th class="text-center"> # </th>
-                <th> 名 称 </th>
-                <th> 班 级 </th>
-                <th class="text-center"> 学 期 </th>
-                <th class="text-center"> 教研室 </th>
-                <th class="text-center"> 培养方案 </th>
-                <th class="text-center"> 操 作 </th>
+                <th data-ptcolumn="index" class="text-center"> # </th>
+                <th data-ptcolumn="name"> 名 称 </th>
+                <th data-ptcolumn="klass"> 班 级 </th>
+                <th data-ptcolumn="semester" class="text-center"> 学 期 </th>
+                <th data-ptcolumn="department" class="text-center"> 教研室 </th>
+                <th data-ptcolumn="syllabusYear" class="text-center"> 培养方案 </th>
+                <th data-ptcolumn="operations" class="text-center"> 操 作 </th>
               </tr>
               <tr class="filter">
                 <th class="text-center"> &nbsp; </th>
@@ -146,6 +146,7 @@
 {% endblock %}
 
 {% block page_external_script %}
+<script src="{{ url_for('static', filename='global/plugins/jquery-powertable/jquery-powertable.js') }}" type="text/javascript"></script>
 <script src="{{ url_for('static', filename='course/script/filterConditionsTaught.js') }}" type="text/javascript"></script>
 {% endblock %}
 
@@ -154,6 +155,15 @@
   jQuery(document).ready(function() {
     filterConditionsTaught.setUrl('{{ url_for('.taught') }}');
     filterConditionsTaught.init();
+
+    var pt = $('#table').powertable({
+      allowMoving: false,
+      showHideHandleText: '<i class="fa fa-gg"></i>',
+      fixedColumns: ['name'],
+      fixedRows: [0],
+      showHideDisabled: ['name']
+    });
+
   });
 </script>
 {% endblock %}
