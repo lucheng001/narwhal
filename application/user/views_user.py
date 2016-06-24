@@ -26,8 +26,8 @@ def resetPassword(userId):
     user.passwordHash = newPasswordHash
     user.save()
 
-    msg = u'{}的密码已经重置为：{}'.format(user.chineseName, newPassword)
-    flash(msg, 'success')
+    msg = u'<span class="label label-primary">{}</span> 的密码已经重置为：<span class="label label-danger">{}</span>'
+    flash(msg.format(user.chineseName, newPassword), 'success')
     return redirect(url_for('.all'))
 
 

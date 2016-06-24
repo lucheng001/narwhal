@@ -91,7 +91,9 @@ def addByBatch():
 
             goodData.append(line)
 
-        msg = u'共提交数据{}条，添加成功{}条，失败添加{}条'
+        msg = (u'共提交数据<span class="badge badge-primary">{}</span>条，'
+               u'添加成功<span class="badge badge-success">{}</span>条，'
+               u'失败添加<span class="badge badge-danger">{}</span>条')
         if badData:
             flash(msg.format(len(lines), len(goodData), len(badData)), 'error')
             return render_template('course/course/badData.html', badData=badData)

@@ -3,3 +3,7 @@
 .btn-group > a.btn{
     margin-right: 0px;
 }
+
+.btn-group > button.btn{
+    margin-right: 0px;
+}

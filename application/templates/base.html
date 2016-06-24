@@ -205,22 +205,22 @@
         {% if category == 'error' %}
           <div class="note note-danger">
           <h4>错误：</h4>
-          <p>{{ message }}</p>
+          <p>{{ message|safe }}</p>
           </div>
         {% elif category == 'warning' %}
           <div class="note note-warning">
           <h4>警告：</h4>
-          <p>{{ message }}</p>
+          <p>{{ messagev }}</p>
           </div>
         {% elif category == 'success' %}
           <div class="note note-success">
           <h4>成功：</h4>
-          <p>{{ message }}</p>
+          <p>{{ message|safe }}</p>
           </div>
         {% else %}
           <div class="note note-info">
           <h4>通知：</h4>
-          <p>{{ message }}</p>
+          <p>{{ message|safe }}</p>
           </div>
         {% endif %}
         {% endfor %}
