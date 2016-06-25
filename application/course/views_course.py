@@ -29,11 +29,13 @@ def addByBatch():
         badData = []
         goodData = []
         for line in lines:
-            data = line.split(',')
-            if len(data) != 6:
+            data1 = line.split(',')
+            if len(data1) != 6:
                 badData.append(line)
                 continue
 
+            data2 = [re.sub('[\s+]', '', d) for d in data1]
+            data = [re.sub('[()]', '', d) for d in data2]
             name, teacherName, klass, semester, departmentName, syllabusYear = data
 
             teacherId = 0

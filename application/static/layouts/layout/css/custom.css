@@ -7,3 +7,17 @@
 .btn-group > button.btn{
     margin-right: 0px;
 }
+
+.subtable {
+    font-size: 12px;
+    margin-bottom: 0px !important;
+}
+
+.subtable thead tr th {
+  font-size: 12px !important;
+  font-weight: normal !important;
+}
+
+.table td, .table th {
+  font-size: 12px !important;
+}

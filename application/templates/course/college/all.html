@@ -70,7 +70,7 @@
                 </th>
                 <th class="text-center">
                   <button id="filter" class="btn btn-sm btn-success filter-submit margin-bottom">
-                    <i class="fa fa-search"></i>  搜 索
+                    <i class="fa fa-search"></i>  查 询
                   </button>
                 </th>
               </tr>
@@ -89,6 +89,114 @@
                   <div class="btn-group btn-group-xs btn-group-solid">
                   <button data-courseId="{{ course.id }}" class="deleteCourse btn btn-outline red">删除</button>
                   </div>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="8">
+                  <table class="table subtable">
+                    <thead>
+                      <tr class="heading">
+                        <th class="text-center">
+                          {%- if course.syllabus -%}
+                          <a href="{{ url_for('.downloadMaterials', category='syllabus', courseId=course.id) }}" class="font-blue">教学大纲 <i class="fa fa-angle-double-down"></i></a>
+                          {%- else -%}
+                          教学大纲 <i class="font-red fa fa-exclamation"></i>
+                          {%- endif -%}
+                        </th>
+                        <th class="text-center">
+                          {%- if course.evaluation -%}
+                          <a href="{{ url_for('.downloadMaterials', category='evaluation', courseId=course.id) }}" class="font-blue">考核大纲 <i class="fa fa-angle-double-down"></i></a>
+                          {%- else -%}
+                          考核大纲 <i class="font-red fa fa-exclamation"></i>
+                          {%- endif -%}
+                        </th>
+                        <th class="text-center">
+                          {%- if course.lectures -%}
+                          <a href="{{ url_for('.downloadMaterials', category='lectures', courseId=course.id) }}" class="font-blue">教案 <i class="fa fa-angle-double-down"></i></a>
+                          {%- else -%}
+                          教案 <i class="font-red fa fa-exclamation"></i>
+                          {%- endif -%}
+                        </th>
+                        <th class="text-center">
+                          {%- if course.schedule -%}
+                          <a href="{{ url_for('.downloadMaterials', category='schedule', courseId=course.id) }}" class="font-blue">教学进程表 <i class="fa fa-angle-double-down"></i></a>
+                          {%- else -%}
+                          教学进程表 <i class="font-red fa fa-exclamation"></i>
+                          {%- endif -%}
+                        </th>
+                        <th class="text-center">
+                          {%- if course.report -%}
+                          <a href="{{ url_for('.downloadMaterials', category='report', courseId=course.id) }}" class="font-blue">学生实验报告 <i class="fa fa-angle-double-down"></i></a>
+                          {%- else -%}
+                          学生实验报告 <i class="font-red fa fa-exclamation"></i>
+                          {%- endif -%}
+                        </th>
+                        <th class="text-center">
+                          {%- if course.papers1 -%}
+                          <a href="{{ url_for('.downloadMaterials', category='papers1', courseId=course.id) }}" class="font-blue">试卷Ａ <i class="fa fa-angle-double-down"></i></a>
+                          {%- else -%}
+                          试卷Ａ <i class="font-red fa fa-exclamation"></i>
+                          {%- endif -%}
+                        </th>
+                        <th class="text-center">
+                          {%- if course.answers1 -%}
+                          <a href="{{ url_for('.downloadMaterials', category='answers1', courseId=course.id) }}" class="font-blue">参考答案A <i class="fa fa-angle-double-down"></i></a>
+                          {%- else -%}
+                          <span class="">参考答案A <i class="font-red fa fa-exclamation"></i></span>
+                          {%- endif -%}
+                        </th>
+                        <th class="text-center">
+                          {%- if course.papers2 -%}
+                          <a href="{{ url_for('.downloadMaterials', category='papers2', courseId=course.id) }}" class="font-blue">试卷B <i class="fa fa-angle-double-down"></i></a>
+                          {%- else -%}
+                          试卷B <i class="font-red fa fa-exclamation"></i>
+                          {%- endif -%}
+                        </th>
+                        <th class="text-center">
+                          {%- if course.answers2 -%}
+                          <a href="{{ url_for('.downloadMaterials', category='answers2', courseId=course.id) }}" class="font-blue">参考答案B <i class="fa fa-angle-double-down"></i></a>
+                          {%- else -%}
+                          <span class="">参考答案B <i class="font-red fa fa-exclamation"></i></span>
+                          {%- endif -%}
+                        </th>
+                        <th class="text-center">
+                          {%- if course.examination1 -%}
+                          <a href="{{ url_for('.downloadMaterials', category='examination1', courseId=course.id) }}" class="font-blue">考卷 <i class="fa fa-angle-double-down"></i></a>
+                          {%- else -%}
+                          <span class="">考卷 <i class="font-red fa fa-exclamation"></i></span>
+                          {%- endif -%}
+                        </th>
+                        <th class="text-center">
+                          {%- if course.score1 -%}
+                          <a href="{{ url_for('.downloadMaterials', category='score1', courseId=course.id) }}" class="font-blue">成绩表 <i class="fa fa-angle-double-down"></i></a>
+                          {%- else -%}
+                          <span class="">成绩表 <i class="font-red fa fa-exclamation"></i></span>
+                          {%- endif -%}
+                        </th>
+                        <th class="text-center">
+                          {%- if course.examination2 -%}
+                          <a href="{{ url_for('.downloadMaterials', category='examination2', courseId=course.id) }}" class="font-blue">补考卷 <i class="fa fa-angle-double-down"></i></a>
+                          {%- else -%}
+                          <span class="">补考卷 <i class="font-red fa fa-exclamation"></i></span>
+                          {%- endif -%}
+                        </th>
+                        <th class="text-center">
+                          {%- if course.score2 -%}
+                          <a href="{{ url_for('.downloadMaterials', category='score2', courseId=course.id) }}" class="font-blue">补考成绩表 <i class="fa fa-angle-double-down"></i></a>
+                          {%- else -%}
+                          <span class="">补考成绩表 <i class="font-red fa fa-exclamation"></i></span>
+                          {%- endif -%}
+                        </th>
+                        <th class="text-center">
+                          {%- if course.summary -%}
+                          <a href="{{ url_for('.downloadMaterials', category='summary', courseId=course.id) }}" class="font-blue">教学小结 <i class="fa fa-angle-double-down"></i></a>
+                          {%- else -%}
+                          <span class="">教学小结 <i class="font-red fa fa-exclamation"></i></span>
+                          {%- endif -%}
+                        </th>
+                     </tr>
+                    </thead>
+                  </table>
                 </td>
               </tr>
               {% endfor %}
@@ -165,6 +273,7 @@
 <script type="text/javascript">
   jQuery(document).ready(function() {
 
+    /*
     var pt = $('#table').powertable({
       allowMoving: false,
       showHideHandleText: '<i class="fa fa-gg"></i>',
@@ -172,6 +281,7 @@
       fixedRows: [0],
       showHideDisabled: ['name']
     });
+    */
 
     filterConditionsAll.setActionUrl('{{ url_for('.all') }}');
     filterConditionsAll.init();
