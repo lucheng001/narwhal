@@ -113,12 +113,19 @@ def delete(courseId):
     course = get_object_or_404(Course, (Course.id == courseId))
     teacher = course.teacher
 
-    filePath = os.path.join(current_app.config['APP_UPLOAD_FOLDER'],
+    import datetime
+    timeString = '{0:%Y%m%d%H%M%S}'.format(datetime.datetime.now())
+    fileString = u'{}-{}-{}'.format(teacher.chineseName, course.name, course.klass)
+    recyclePath = os.path.join(current_app.config['APP_RECYCLE_FOLDER'],
+                               u'{}_{}'.format(timeString, fileString))
+    filePath = os.path.join(current_app.config['APP_COURSE_FOLDER'],
                             course.semester, course.getDepartmentName(),
-                            u'{}-{}-{}'.format(teacher.chineseName, course.name, course.klass))
+                            fileString)
 
-    if os.path.isdir(filePath):
-        shutil.rmtree(filePath)
+    # if os.path.isdir(filePath):
+    #     shutil.rmtree(filePath)
+
+    shutil.copytree(filePath, recyclePath)
 
     course.delete_instance()
 

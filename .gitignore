@@ -62,6 +62,7 @@ target/
 
 # uploads
 application/uploads/20*/
+application/uploads/.recycle/
 
 # run
 run/
