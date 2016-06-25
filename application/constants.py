@@ -106,7 +106,6 @@ class _CntRoleLeader(object):
     name = u'院领导'
     permissions = (CntPermission.NORMAL |
                    CntPermission.COURSE |
-                   CntPermission.DEPARTMENT |
                    CntPermission.COLLEGE |
                    CntPermission.USER)
 
@@ -116,7 +115,6 @@ class _CntRoleSecretary(object):
     name = u'教学秘书'
     permissions = (CntPermission.NORMAL |
                    CntPermission.COURSE |
-                   CntPermission.DEPARTMENT |
                    CntPermission.COLLEGE |
                    CntPermission.USER)
 
