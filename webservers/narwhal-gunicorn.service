@@ -1,0 +1,17 @@
+[Unit]
+Description=Gunicorn instance to server Narwhal
+After=syslog.target network.target
+
+[Service]
+User=passta
+Group=passta
+Type=forking
+PIDFile=/home/narwhal/pysite/narwhal/run/app.pid
+WorkingDirectory=/home/narwhal/pysite/narwhal
+ExecStart=/home/narwhal/pysite/narwhal/webservers/start-app.sh
+ExecStop=/home/narwhal/pysite/narwhal/webservers/stop-app.sh
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
+

@@ -1,0 +1,28 @@
+/* here you can put your own css to customize and override the theme */
+
+.btn-group > a.btn{
+    margin-right: 0px;
+}
+
+.btn-group > button.btn{
+    margin-right: 0px;
+}
+
+.subtable {
+    font-size: 12px;
+    margin-bottom: 0px !important;
+}
+
+.subtable thead tr th {
+  font-size: 12px !important;
+  font-weight: normal !important;
+}
+
+.subtable td, .table th {
+  font-size: 12px !important;
+}
+
+.subtable a:focus, .subtable a:hover {
+  text-decoration: none !important;
+}
+
