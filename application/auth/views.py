@@ -32,7 +32,7 @@ def login():
 
             if user.password == current_app.config['APP_DEFAULT_PASSWORD']:
                 flash(u'请修改密码', 'info')
-                return redirect(url_for('user.changePassword'))
+                return redirect(url_for('bpUser.changePassword'))
 
             if user.hasPermission(CntPermission.NORMAL):
                 return redirect(url_for('bpCourse.taught'))
