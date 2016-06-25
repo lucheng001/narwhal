@@ -10,8 +10,8 @@ class Configuration(object):
     SECRET_KEY = 'ZVRymCEV7NRSpujp'
     MAX_CONTENT_LENGTH = 256 * 1024 * 1024
     APP_LOG_DIR = os.path.join(BASE_DIR, 'logs')
-    APP_LOG_INFO = 'info.application.log'
-    APP_LOG_ERROR = 'error.application.log'
+    APP_LOG_INFO = 'info.app.log'
+    APP_LOG_ERROR = 'error.app.log'
     APP_LOG_SIZE = 4 * 1024 * 1024
     APP_LOG_FORMATTER = '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'
     APP_ITEMS_PER_PAGE = 20

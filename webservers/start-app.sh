@@ -5,9 +5,9 @@ APPDIR=$(dirname "$BASEDIR")
 VENV="$APPDIR/venv"
 
 GUNICORN="$VENV/bin/gunicorn"
-CONFIGFILE="$APPDIR/webservers/application-gunicorn-cfg.py"
+CONFIGFILE="$APPDIR/webservers/app-gunicorn-cfg.py"
 
-PIDFILE="$APPDIR/run/application.pid"
+PIDFILE="$APPDIR/run/app.pid"
 
 if [ -e "$PIDFILE" ]; then
     exit 0
