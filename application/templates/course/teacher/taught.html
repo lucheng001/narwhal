@@ -76,7 +76,9 @@
                 <td class="text-center"> {{ course.getDepartmentName() }} </td>
                 <td class="text-center"> {{ course.getSyllabusYearName() }} </td>
                 <td class="text-center">
-                  &nbsp;
+                  <div class="btn-group btn-group-xs btn-group-solid">
+                    <a href="{{ url_for('.archiveCourse', courseId=course.id) }}" class="btn btn-outline blue">下载</a>
+                  </div>
                 </td>
               </tr>
               <tr>

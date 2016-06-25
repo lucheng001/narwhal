@@ -2,6 +2,7 @@
 
 import os
 import re
+import datetime
 import shutil
 from flask import render_template, redirect, url_for, flash, current_app
 from playhouse.flask_utils import get_object_or_404
@@ -113,7 +114,6 @@ def delete(courseId):
     course = get_object_or_404(Course, (Course.id == courseId))
     teacher = course.teacher
 
-    import datetime
     timeString = '{0:%Y%m%d%H%M%S}'.format(datetime.datetime.now())
     fileString = u'{}-{}-{}'.format(teacher.chineseName, course.name, course.klass)
     recyclePath = os.path.join(current_app.config['APP_RECYCLE_FOLDER'],

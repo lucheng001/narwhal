@@ -87,7 +87,8 @@
                 <td class="text-center"> {{ course.getSyllabusYearName() }} </td>
                 <td class="text-center">
                   <div class="btn-group btn-group-xs btn-group-solid">
-                  <button data-courseId="{{ course.id }}" class="deleteCourse btn btn-outline red">删除</button>
+                    <a href="{{ url_for('.archiveCourse', courseId=course.id) }}" class="btn btn-outline blue">下载</a>
+                    <button data-courseId="{{ course.id }}" class="deleteCourse btn btn-outline red">删除</button>
                   </div>
                 </td>
               </tr>

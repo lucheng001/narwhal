@@ -2,6 +2,8 @@
 
 import os
 import math
+import datetime
+import shutil
 from urllib.parse import quote
 from werkzeug.utils import secure_filename
 from flask import render_template, redirect, url_for, flash, current_app, request, abort, send_from_directory
@@ -13,7 +15,7 @@ from ..utilities import Paginator, permission_required
 from .forms_teacher import UploadMaterialsForm
 from . import bpCourse
 
-_all_ = ['taught', 'uploadMaterials', 'downloadMaterials']
+_all_ = ['taught', 'uploadMaterials', 'downloadMaterials', 'archiveCourse']
 
 
 @bpCourse.route('/taught', methods=['GET'])
@@ -136,18 +138,18 @@ def uploadMaterials(category, courseId):
 @permission_required(CntPermission.NORMAL)
 def downloadMaterials(category, courseId):
     course = get_object_or_404(Course, (Course.id == courseId))
+    teacher = course.teacher
     me = current_user
 
     if category not in CntCourseMaterials.labels:
         abort(404)
 
     canDownload = False
-    me = current_user
-    if course.teacher_id != me.id:
+    if course.teacher_id == me.id:
         canDownload = True
     elif me.hasPermission(CntPermission.COLLEGE):
         canDownload = True
-    elif me.hasPermission(CntPermission.DEPARTMENT) and CntDepartment.isDirector(category, me.userName):
+    elif me.hasPermission(CntPermission.DEPARTMENT) and CntDepartment.isDirector(course.department, me.userName):
         canDownload = True
     else:
         canDownload = False
@@ -165,12 +167,47 @@ def downloadMaterials(category, courseId):
     encodeFileName = quote(fileName.encode('UTF-8'))
     filePath = os.path.join(current_app.config['APP_COURSE_FOLDER'],
                             course.semester, course.getDepartmentName(),
-                            u'{}-{}-{}'.format(me.chineseName, course.name, course.klass))
+                            u'{}-{}-{}'.format(teacher.chineseName, course.name, course.klass))
 
     return send_from_directory(filePath, fileName,
                                as_attachment=True,
                                attachment_filename=encodeFileName)
 
 
+@bpCourse.route('/archive/<int:courseId>/', methods=['GET', 'POST'])
+@login_required
+@permission_required(CntPermission.NORMAL)
+def archiveCourse(courseId):
+    course = get_object_or_404(Course, (Course.id == courseId))
+    teacher = course.teacher
+    me = current_user
+
+    canDownload = False
+    if course.teacher_id == me.id:
+        canDownload = True
+    elif me.hasPermission(CntPermission.COLLEGE):
+        canDownload = True
+    elif me.hasPermission(CntPermission.DEPARTMENT) and CntDepartment.isDirector(course.department, me.userName):
+        canDownload = True
+    else:
+        canDownload = False
+
+    fileString = u'{}-{}-{}'.format(teacher.chineseName, course.name, course.klass)
+    filePath = os.path.join(current_app.config['APP_COURSE_FOLDER'],
+                            course.semester, course.getDepartmentName(),
+                            fileString)
+
+    timeString = u'{0:%Y%m%d%H%M%S}'.format(datetime.datetime.now())
+    archiveName = u'{}_{}'.format(timeString, fileString)
+    archivePath = os.path.join(current_app.config['APP_ARCHIVE_FOLDER'], archiveName)
+    shutil.make_archive(archivePath, 'zip', filePath)
+
+    zipName = u'{}.zip'.format(archiveName)
+    encodeZipName = quote(zipName.encode('UTF-8'))
+    zipPath = current_app.config['APP_ARCHIVE_FOLDER']
+
+    return send_from_directory(zipPath, zipName,
+                               as_attachment=True,
+                               attachment_filename=encodeZipName)
 
 
