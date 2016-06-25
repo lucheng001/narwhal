@@ -59,7 +59,8 @@ def taught():
 
     if numOfCourses <= 0:
         return render_template('course/teacher/taught.html', pagination=pagination, currentPage=currentPage,
-                               currentDepartment=currentDepartment, currentSemester=currentSemester, currentSyllabusYear=currentSyllabusYear,
+                               currentDepartment=currentDepartment, currentTeacher=currentTeacher,
+                               currentSemester=currentSemester, currentSyllabusYear=currentSyllabusYear,
                                courses=[], semesters=semesters)
 
     query = (Course
@@ -69,7 +70,8 @@ def taught():
     query = query.where(conditions) if conditions is not None else query
     courses = [row for row in query]
     return render_template('course/teacher/taught.html', pagination=pagination, currentPage=currentPage,
-                           currentDepartment=currentDepartment, currentSemester=currentSemester, currentSyllabusYear=currentSyllabusYear,
+                           currentDepartment=currentDepartment, currentTeacher=currentTeacher,
+                           currentSemester=currentSemester, currentSyllabusYear=currentSyllabusYear,
                            courses=courses, semesters=semesters)
 
 

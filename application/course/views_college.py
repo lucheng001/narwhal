@@ -13,7 +13,7 @@ _all_ = ['all']
 
 @bpCourse.route('/all', methods=['GET'])
 @login_required
-@permission_required(CntPermission.COURSE)
+@permission_required(CntPermission.COLLEGE)
 def all():
     me = current_user
 

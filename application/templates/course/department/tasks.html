@@ -74,12 +74,9 @@
                 <td class="text-center"> {{ course.teacher.chineseName }} </td>
                 <td> {{ course.klass }} </td>
                 <td class="text-center"> {{ course.semester }} </td>
-                <td class="text-center"> {{ course.getDepartmentName() }} </td>
                 <td class="text-center"> {{ course.getSyllabusYearName() }} </td>
                 <td class="text-center">
-                  <div class="btn-group btn-group-xs btn-group-solid">
-                  <button data-courseId="{{ course.id }}" class="deleteCourse btn btn-outline red">删除</button>
-                  </div>
+                  &nbsp;
                 </td>
               </tr>
               <tr>
@@ -271,7 +268,6 @@
 {% block page_external_script %}
 <script src="{{ url_for('static', filename='global/plugins/jquery-powertable/jquery-powertable.js') }}" type="text/javascript"></script>
 <script src="{{ url_for('static', filename='course/script/filterConditionsDepartment.js') }}" type="text/javascript"></script>
-<script src="{{ url_for('static', filename='course/script/delete.js') }}" type="text/javascript"></script>
 {% endblock %}
 
 {% block page_internal_script %}
@@ -288,11 +284,8 @@
     });
     */
 
-    filterConditionsAll.setActionUrl('{{ url_for('.all') }}');
-    filterConditionsAll.init();
-
-    deleteCourse.setActionUrl('/course/delete/');
-    deleteCourse.init();
+    filterConditionsDepartment.setActionUrl('{{ url_for('.tasks') }}');
+    filterConditionsDepartment.init();
 
   });
 </script>

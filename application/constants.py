@@ -132,7 +132,6 @@ class _CntRoleDirector(object):
     label = u'director'
     name = u'教研室主任'
     permissions = (CntPermission.NORMAL |
-                   CntPermission.COURSE |
                    CntPermission.DEPARTMENT)
 
 
