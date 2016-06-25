@@ -30,7 +30,11 @@ def login():
             user.save()
             login_user(user)
 
-            if user.hasPermission(CntPermission.COURSE):
+            if user.password == current_app.config['APP_DEFAULT_PASSWORD']:
+                flash(u'请修改密码', 'info')
+                return redirect(url_for('user.changePassword'))
+
+            if user.hasPermission(CntPermission.NORMAL):
                 return redirect(url_for('bpCourse.taught'))
             else:
                 abort(403)
