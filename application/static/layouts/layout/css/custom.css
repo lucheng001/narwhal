@@ -18,6 +18,11 @@
   font-weight: normal !important;
 }
 
-.table td, .table th {
+.subtable td, .table th {
   font-size: 12px !important;
 }
+
+.subtable a:focus, .subtable a:hover {
+  text-decoration: none !important;
+}
+

@@ -81,6 +81,15 @@ class CntDepartment(object):
     def isDirector(cls, label, userName):
         return cls._maps[label].director == userName if label in cls._labels else False
 
+    @classmethod
+    def witchDepartment(cls, userName):
+        label = u''
+        for o in cls._objects:
+            if userName == o.director:
+                label = o.label
+                break
+        return label
+
 
 class CntPermission(object):
     NOPERMISSION = 0b00000000

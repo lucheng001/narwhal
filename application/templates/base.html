@@ -147,7 +147,7 @@
         {% endif %}
         {% if current_user.hasPermission(cPermission.DEPARTMENT) %}
         <li class="nav-item">
-          <a href="#" class="nav-link">
+          <a href="{{ url_for('bpCourse.tasks') }}" class="nav-link">
             <i class="icon-grid"></i>
             <span class="title">本系课程</span>
           </a>
@@ -169,7 +169,7 @@
           </a>
         </li>
         {% endif %}
-        {% if current_user.hasPermission(cPermission.COURSE) %}
+        {% if current_user.hasPermission(cPermission.USER) %}
         <li class="heading">
           <h3 class="uppercase">用户管理</h3>
         </li>

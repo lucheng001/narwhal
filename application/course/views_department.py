@@ -8,15 +8,16 @@ from ..constants import CntPermission, CntDepartment, CntSyllabusYear
 from ..utilities import Paginator, permission_required
 from . import bpCourse
 
-_all_ = ['resources']
+_all_ = ['tasks']
 
 
-@bpCourse.route('/resources/<department>', methods=['GET'])
+@bpCourse.route('/tasks', methods=['GET'])
 @login_required
 @permission_required(CntPermission.DEPARTMENT)
-def resources(department):
+def tasks():
     me = current_user
 
+    department = CntDepartment.witchDepartment(me.userName)
     if department in CntDepartment.labels:
         abort(404)
 
@@ -39,13 +40,13 @@ def resources(department):
 
     currentPage = request.args.get('currentPage', 1, type=int)
     currentTeacher = request.args.get('currentTeacher', 0, type=int)
-    currentDepartment = request.args.get('currentDepartment', 'all')
+    currentDepartment = department
     currentSemester = request.args.get('currentSemester', 'all')
     currentSyllabusYear = request.args.get('currentSyllabusYear', 'all')
 
     condition1 = (Course.teacher == currentTeacher) if currentTeacher in teacherIds else None
     condition2 = (Course.semester == currentSemester) if currentSemester in semesterLabels else None
-    condition3 = (Course.department == currentDepartment) if currentDepartment in CntDepartment.labels else None
+    condition3 = (Course.department == department)
     condition4 = (Course.syllabusYear == currentSyllabusYear) if currentSyllabusYear in CntSyllabusYear.labels else None
 
     conditionArray1 = [condition1, condition2, condition3, condition4]
@@ -67,9 +68,8 @@ def resources(department):
     pagination = Paginator(object_num=numOfCourses, current=currentPage, per_page=numOfPerPage)
 
     if numOfCourses <= 0:
-        return render_template('course/college/all.html', pagination=pagination, currentPage=currentPage,
-                               currentTeacher=currentTeacher, currentDepartment=currentDepartment,
-                               currentSemester=currentSemester, currentSyllabusYear=currentSyllabusYear,
+        return render_template('course/department/tasks.html', pagination=pagination, currentPage=currentPage,
+                               currentTeacher=currentTeacher, currentSemester=currentSemester, currentSyllabusYear=currentSyllabusYear,
                                courses=[], teachers=teachers, semesters=semesters)
 
     query = (Course
@@ -79,9 +79,8 @@ def resources(department):
              .paginate(currentPage, numOfPerPage))
     query = query.where(conditions) if conditions is not None else query
     courses = [row for row in query]
-    return render_template('course/college/all.html', pagination=pagination, currentPage=currentPage,
-                           currentTeacher=currentTeacher, currentDepartment=currentDepartment,
-                           currentSemester=currentSemester, currentSyllabusYear=currentSyllabusYear,
+    return render_template('course/department/tasks.html', pagination=pagination, currentPage=currentPage,
+                           currentTeacher=currentTeacher, currentSemester=currentSemester, currentSyllabusYear=currentSyllabusYear,
                            courses=courses, teachers=teachers, semesters=semesters)
 
 

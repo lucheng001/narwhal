@@ -9,5 +9,6 @@ bpCourse = Blueprint('bpCourse', __name__)
 from . import views_teacher
 from . import views_course
 from . import views_college
+from . import views_department
 
 

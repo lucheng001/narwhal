@@ -28,7 +28,6 @@
                 <th data-ptcolumn="teacher" class="text-center"> 教 师 </th>
                 <th data-ptcolumn="klass"> 班 级 </th>
                 <th data-ptcolumn="semester" class="text-center"> 学 期 </th>
-                <th data-ptcolumn="department" class="text-center"> 教研室 </th>
                 <th data-ptcolumn="syllabusYear" class="text-center"> 培养方案 </th>
                 <th data-ptcolumn="operations" class="text-center"> 操 作 </th>
               </tr>
@@ -49,14 +48,6 @@
                     <option value="all" {% if currentSemester == 'all' %}selected="selected"{% endif %}>全部</option>
                     {%- for semester in semesters %}
                     <option value="{{ semester }}"  {% if currentSemester == semester %}selected{% endif %}>{{ semester }}</option>
-                    {%- endfor %}
-                  </select>
-                </th>
-                <th class="text-center">
-                  <select class="form-control form-filter input-sm" name="currentDepartment" id="currentDepartment">
-                    <option value="all" {% if currentDepartment == 'all' %}selected="selected"{% endif %}>全部</option>
-                    {%- for department in cDepartment.choices %}
-                    <option value="{{ department[0] }}"  {% if currentDepartment == department[0] %}selected{% endif %}>{{ department[1] }}</option>
                     {%- endfor %}
                   </select>
                 </th>
@@ -279,7 +270,7 @@
 
 {% block page_external_script %}
 <script src="{{ url_for('static', filename='global/plugins/jquery-powertable/jquery-powertable.js') }}" type="text/javascript"></script>
-<script src="{{ url_for('static', filename='course/script/filterConditionsAll.js') }}" type="text/javascript"></script>
+<script src="{{ url_for('static', filename='course/script/filterConditionsDepartment.js') }}" type="text/javascript"></script>
 <script src="{{ url_for('static', filename='course/script/delete.js') }}" type="text/javascript"></script>
 {% endblock %}
 
