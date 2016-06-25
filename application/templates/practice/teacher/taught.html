@@ -8,6 +8,7 @@
 
 {% block page_content %}
 <input value="{{ currentPage }}" type="hidden" name="currentPage" id="currentPage">
+<input value="{{ currentTeacher }}" type="hidden" name="currentTeacher" id="currentTeacher">
 <div class="row">
   <div class="col-md-12">
     <div class="portlet light portlet-fit bordered">
@@ -220,7 +221,7 @@
 
 {% block page_external_script %}
 <script src="{{ url_for('static', filename='global/plugins/jquery-powertable/jquery-powertable.js') }}" type="text/javascript"></script>
-<script src="{{ url_for('static', filename='practice/script/filterConditionsTaught.js') }}" type="text/javascript"></script>
+<script src="{{ url_for('static', filename='practice/script/filterConditions.js') }}" type="text/javascript"></script>
 <script src="{{ url_for('static', filename='practice/script/delete.js') }}" type="text/javascript"></script>
 {% endblock %}
 
@@ -238,11 +239,11 @@
     });
     */
 
-    filterConditionsAll.setActionUrl('{{ url_for('.all') }}');
-    filterConditionsAll.init();
+    filterConditions.setActionUrl('{{ url_for('.all') }}');
+    filterConditions.init();
 
-    deletepractice.setActionUrl('/practice/delete/');
-    deletepractice.init();
+    deletePractice.setActionUrl('/practice/delete/');
+    deletePractice.init();
 
   });
 </script>

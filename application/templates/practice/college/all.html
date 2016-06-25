@@ -224,7 +224,7 @@
 
 {% block page_external_script %}
 <script src="{{ url_for('static', filename='global/plugins/jquery-powertable/jquery-powertable.js') }}" type="text/javascript"></script>
-<script src="{{ url_for('static', filename='practice/script/filterConditionsAll.js') }}" type="text/javascript"></script>
+<script src="{{ url_for('static', filename='practice/script/filterConditions.js') }}" type="text/javascript"></script>
 <script src="{{ url_for('static', filename='practice/script/delete.js') }}" type="text/javascript"></script>
 {% endblock %}
 
@@ -242,8 +242,8 @@
     });
     */
 
-    filterConditionsAll.setActionUrl('{{ url_for('.all') }}');
-    filterConditionsAll.init();
+    filterConditions.setActionUrl('{{ url_for('.all') }}');
+    filterConditions.init();
 
     deletePractice.setActionUrl('/practice/delete/');
     deletePractice.init();

@@ -280,7 +280,7 @@
 
 {% block page_external_script %}
 <script src="{{ url_for('static', filename='global/plugins/jquery-powertable/jquery-powertable.js') }}" type="text/javascript"></script>
-<script src="{{ url_for('static', filename='course/script/filterConditionsAll.js') }}" type="text/javascript"></script>
+<script src="{{ url_for('static', filename='course/script/filterConditions.js') }}" type="text/javascript"></script>
 <script src="{{ url_for('static', filename='course/script/delete.js') }}" type="text/javascript"></script>
 {% endblock %}
 
@@ -298,8 +298,8 @@
     });
     */
 
-    filterConditionsAll.setActionUrl('{{ url_for('.all') }}');
-    filterConditionsAll.init();
+    filterConditions.setActionUrl('{{ url_for('.all') }}');
+    filterConditions.init();
 
     deleteCourse.setActionUrl('/course/delete/');
     deleteCourse.init();
