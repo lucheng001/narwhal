@@ -7,26 +7,26 @@ import shutil
 from flask import render_template, redirect, url_for, flash, current_app
 from playhouse.flask_utils import get_object_or_404
 from flask_login import login_required
-from ..models import User, Course
+from ..models import User, Practice
 from ..constants import CntPermission, CntDepartment
 from ..utilities import permission_required
-from .forms_course import AddCourseForm, AddCourseDataForm
-from . import bpCourse
+from .forms_practice import AddPracticeForm, AddPracticeDataForm
+from . import bpPractice
 
 _all_ = ['addByBatch', 'all', 'delete']
 
 
-@bpCourse.route('/add/batch', methods=['GET', 'POST'])
+@bpPractice.route('/add/batch', methods=['GET', 'POST'])
 @login_required
-@permission_required(CntPermission.COURSE)
+@permission_required(CntPermission.PRACTICE)
 def addByBatch():
-    form = AddCourseDataForm()
+    form = AddPracticeDataForm()
     if form.validate_on_submit():
         query = (User
                  .select(User.id, User.chineseName))
         teachers = [row for row in query]
 
-        lines = form.courseData.data.splitlines()
+        lines = form.practiceData.data.splitlines()
         badData = []
         goodData = []
         for line in lines:
@@ -57,7 +57,7 @@ def addByBatch():
                 badData.append(line)
                 continue
 
-            courseDict = dict(
+            practiceDict = dict(
                 name=name,
                 teacher=teacherId,
                 klass=klass,
@@ -66,20 +66,20 @@ def addByBatch():
                 syllabusYear=syllabusYear
             )
 
-            courseForm = AddCourseForm()
-            courseForm.teacher.choices = [(teacher.id, teacher.chineseName) for teacher in teachers]
-            courseForm.name.data = courseDict['name']
-            courseForm.teacher.data = courseDict['teacher']
-            courseForm.klass.data = courseDict['klass']
-            courseForm.semester.data = courseDict['semester']
-            courseForm.department.data = courseDict['department']
-            courseForm.syllabusYear.data = courseDict['syllabusYear']
+            practiceForm = AddPracticeForm()
+            practiceForm.teacher.choices = [(teacher.id, teacher.chineseName) for teacher in teachers]
+            practiceForm.name.data = practiceDict['name']
+            practiceForm.teacher.data = practiceDict['teacher']
+            practiceForm.klass.data = practiceDict['klass']
+            practiceForm.semester.data = practiceDict['semester']
+            practiceForm.department.data = practiceDict['department']
+            practiceForm.syllabusYear.data = practiceDict['syllabusYear']
 
-            if not courseForm.validate():
+            if not practiceForm.validate():
                 badData.append(line)
                 continue
 
-            filePath = os.path.join(current_app.config['APP_COURSE_FOLDER'],
+            filePath = os.path.join(current_app.config['APP_PRACTICE_FOLDER'],
                                     semester, departmentName,
                                     u'{}-{}-{}'.format(teacherName, name, klass))
             if os.path.isdir(filePath):
@@ -87,10 +87,10 @@ def addByBatch():
                 continue
 
             # os.makedirs(filePath)
-            tplPath = current_app.config['APP_COURSE_TPL']
+            tplPath = current_app.config['APP_PRACTICE_TPL']
             shutil.copytree(tplPath, filePath)
 
-            Course.create(**courseDict)
+            Practice.create(**practiceDict)
 
             goodData.append(line)
 
@@ -99,27 +99,27 @@ def addByBatch():
                u'失败添加<span class="badge badge-danger">{}</span>条')
         if badData:
             flash(msg.format(len(lines), len(goodData), len(badData)), 'error')
-            return render_template('course/course/badData.html', badData=badData)
+            return render_template('practice/practice/badData.html', badData=badData)
         else:
             flash(msg.format(len(lines), len(goodData), len(badData)), 'success')
             return redirect(url_for('.all'))
 
-    return render_template('course/course/addByBatch.html', form=form)
+    return render_template('practice/practice/addByBatch.html', form=form)
 
 
-@bpCourse.route('/delete/<int:courseId>/', methods=['GET'])
+@bpPractice.route('/delete/<int:practiceId>/', methods=['GET'])
 @login_required
-@permission_required(CntPermission.COURSE)
-def delete(courseId):
-    course = get_object_or_404(Course, (Course.id == courseId))
-    teacher = course.teacher
+@permission_required(CntPermission.PRACTICE)
+def delete(practiceId):
+    practice = get_object_or_404(Practice, (Practice.id == practiceId))
+    teacher = practice.teacher
 
     timeString = '{0:%Y%m%d%H%M%S}'.format(datetime.datetime.now())
-    fileString = u'{}-{}-{}'.format(teacher.chineseName, course.name, course.klass)
+    fileString = u'{}-{}-{}'.format(teacher.chineseName, practice.name, practice.klass)
     recyclePath = os.path.join(current_app.config['APP_RECYCLE_FOLDER'],
                                u'{}_{}'.format(timeString, fileString))
-    filePath = os.path.join(current_app.config['APP_COURSE_FOLDER'],
-                            course.semester, course.getDepartmentName(),
+    filePath = os.path.join(current_app.config['APP_PRACTICE_FOLDER'],
+                            practice.semester, practice.getDepartmentName(),
                             fileString)
 
     # if os.path.isdir(filePath):
@@ -127,7 +127,7 @@ def delete(courseId):
 
     shutil.copytree(filePath, recyclePath)
 
-    course.delete_instance()
+    practice.delete_instance()
 
     flash(u'删除成功', 'success')
     return redirect(url_for('.all'))

@@ -66,6 +66,9 @@ def configure_blueprints(app):
     from .course import bpCourse as courseBlueprint
     app.register_blueprint(courseBlueprint, url_prefix='/course')
 
+    from .practice import bpPractice as practiceBlueprint
+    app.register_blueprint(practiceBlueprint, url_prefix='/practice')
+
 
 def configure_context_processors(app):
     """Configures the context processors."""

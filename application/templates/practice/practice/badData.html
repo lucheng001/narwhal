@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block page_external_css %}
+<link href="{{ url_for('static', filename='global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block page_breadcrumb_1 %}实训{% endblock %}
+{% block page_breadcrumb_2 %}错误数据{% endblock %}
+
+{% block page_title_1 %}错误数据{% endblock %}
+{% block page_title_2 %}Bad Practice Data{% endblock %}
+
+{% block page_content %}
+<div class="row">
+  <div class="col-md-12">
+    <div class="portlet light portlet-fit portlet-form bordered">
+      <div class="portlet-title">
+        <div class="caption">
+          <i class="icon-settings font-blue-sharp"></i>
+          <span class="caption-subject font-blue-sharp sbold uppercase">Bad Practice Data</span>
+        </div>
+      </div>
+      <div class="portlet-body">
+        <!-- BEGIN FORM-->
+          <div class="form-body">
+            <div class="alert alert-danger display-hide">
+              <button data-close="alert" class="close"></button>
+              <span></span>
+            </div>
+            <div class="form-section" style="margin-top: 0px;">
+              <ul>
+                <li>格式为：<code>课程名称,任课教师,班级名称,学期,教研室,培养方案</code>
+                  <ul>
+                    <li>注意1：逗号为<code>英文逗号</code></li>
+                    <li>注意2：学期格式为 <code>2015-2016-1</code></li>
+                    <li>注意3：培养方案格式为 <code>2012</code></li>
+                  </ul>
+                </li>
+                <li>错误原因：
+                  <ul>
+                    <li>格式错误</li>
+                    <li>实训已经存在</li>
+                    <li>任课教师不存在</li>
+                    <li>培养方案不存在</li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="control-label">
+                  错误数据
+                  </label>
+                  <textarea name="courseData" rows="20" class="form-control" readonly>{{ badData|join('\n') }}</textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        <!-- END FORM-->
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+

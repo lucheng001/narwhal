@@ -5,7 +5,7 @@ from flask_login import UserMixin
 from werkzeug.security import check_password_hash
 from peewee import *
 from .extensions import db
-from .constants import CntGender, CntRoles, CntSyllabusYear, CntDepartment, CntCourseMaterials
+from .constants import CntGender, CntRoles, CntSyllabusYear, CntDepartment, CntCourseMaterials, CntPracticeMaterials
 
 _all_ = ['User', 'Course', 'Practice']
 
@@ -91,6 +91,15 @@ class Practice(Model):
     achievement = CharField(max_length=128, null=True)
     syllabusYear = CharField(max_length=32, index=True, choices=CntSyllabusYear.choices, default=CntSyllabusYear.Y2012.label)
     createTime = DateTimeField(default=datetime.datetime.now, formats='%Y-%m-%d %H:%M:%S')
+
+    def getDepartmentName(self):
+        return CntDepartment.getDepartmentName(self.department)
+
+    def getSyllabusYearName(self):
+        return CntSyllabusYear.getSyllabusYearName(self.syllabusYear)
+
+    def getMaterialName(self, label):
+        return CntPracticeMaterials.getMaterialName(label)
 
     class Meta:
         database = db.database

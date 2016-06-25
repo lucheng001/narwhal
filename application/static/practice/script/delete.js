@@ -1,11 +1,11 @@
-var deleteCourse = function() {
+var deletePractice = function() {
 
     var actionUrl = '';
     var objId = '';
 
     var bindEvent = function() {
-        $('a.deleteCourse').click(function(e) {
-            objId = $(this).attr('data-courseId');
+        $('button.deletePractice').click(function(e) {
+            objId = $(this).attr('data-practiceId');
             handleAction();
             e.preventDefault();
         });
@@ -13,7 +13,7 @@ var deleteCourse = function() {
 
     var handleAction = function() {
         bootbox.dialog({
-            message: '确认删除该课程吗？',
+            message: '确认删除实训吗？',
             title: '通 知',
             buttons: {
                 confirm: {
@@ -43,7 +43,3 @@ var deleteCourse = function() {
     };
 
 }();
-
-jQuery(document).ready(function() {
-    deleteCourse.init();
-});

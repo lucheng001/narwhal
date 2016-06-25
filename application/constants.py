@@ -95,9 +95,10 @@ class CntPermission(object):
     NOPERMISSION = 0b00000000
     NORMAL = 0b00000001
     COURSE = 0b00000010
-    DEPARTMENT = 0b00000100
-    COLLEGE = 0b00001000
-    USER = 0b00010000
+    PRACTICE = 0b00000100
+    DEPARTMENT = 0b00001000
+    COLLEGE = 0b00010000
+    USER = 0b00100000
 
 
 class _CntRoleAdministrator(object):
@@ -105,6 +106,7 @@ class _CntRoleAdministrator(object):
     name = u'管理员'
     permissions = (CntPermission.NORMAL |
                    CntPermission.COURSE |
+                   CntPermission.PRACTICE |
                    CntPermission.DEPARTMENT |
                    CntPermission.COLLEGE |
                    CntPermission.USER)
@@ -115,6 +117,7 @@ class _CntRoleLeader(object):
     name = u'院领导'
     permissions = (CntPermission.NORMAL |
                    CntPermission.COURSE |
+                   CntPermission.PRACTICE |
                    CntPermission.COLLEGE |
                    CntPermission.USER)
 
@@ -124,6 +127,7 @@ class _CntRoleSecretary(object):
     name = u'教学秘书'
     permissions = (CntPermission.NORMAL |
                    CntPermission.COURSE |
+                   CntPermission.PRACTICE |
                    CntPermission.COLLEGE |
                    CntPermission.USER)
 
