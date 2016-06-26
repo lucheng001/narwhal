@@ -22,7 +22,7 @@
   font-size: 12px !important;
 }
 
-.subtable a:focus, .subtable a:hover {
+.table a:focus, .table a:hover {
   text-decoration: none !important;
 }
 

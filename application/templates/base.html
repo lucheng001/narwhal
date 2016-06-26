@@ -8,7 +8,7 @@
 <!-- BEGIN HEAD -->
 <head>
 <meta charset="utf-8" />
-<title>CollectIt</title>
+<title>Collect IT</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta content="width=device-width, initial-scale=1" name="viewport" />
 <meta content="" name="description" />
@@ -223,9 +223,9 @@
           </a>
         </li>
         {% endif %}
-        {% if current_user.hasPermission(cPermission.NORMAL) %}
+        {% if current_user.hasPermission(cPermission.NORMAL) and not current_user.hasPermission(cPermission.COLLEGE) %}
         <li class="nav-item">
-          <a href="#" class="nav-link">
+          <a href="{{ url_for('bpProgram.taught') }}" class="nav-link">
             <i class="icon-puzzle"></i>
             <span class="title">全院培养方案</span>
           </a>
@@ -328,7 +328,7 @@
 <!-- BEGIN FOOTER -->
 <div class="page-footer">
   <div class="page-footer-inner">
-    {{ gServerToday.year }} &copy; CollectIt.
+    {{ gServerToday.year }} &copy; Collect IT.
   </div>
   <div class="scroll-to-top">
     <i class="icon-arrow-up"></i>
