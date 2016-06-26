@@ -8,7 +8,8 @@ _all_ = ['CntAllowedExtensions',
          'CntRoles',
          'CntSyllabusYear',
          'CntDepartment'
-         'CntCourseMaterials']
+         'CntCourseMaterials',
+         'CntProgramMaterials']
 
 
 class CntAllowedExtensions(object):
@@ -93,12 +94,13 @@ class CntDepartment(object):
 
 class CntPermission(object):
     NOPERMISSION = 0b00000000
-    NORMAL = 0b00000001
-    COURSE = 0b00000010
-    PRACTICE = 0b00000100
-    DEPARTMENT = 0b00001000
-    COLLEGE = 0b00010000
-    USER = 0b00100000
+    NORMAL       = 0b00000001
+    COURSE       = 0b00000010
+    PRACTICE     = 0b00000100
+    PROGRAM      = 0b00001000
+    DEPARTMENT   = 0b00010000
+    COLLEGE      = 0b00100000
+    USER         = 0b01000000
 
 
 class _CntRoleAdministrator(object):
@@ -107,6 +109,7 @@ class _CntRoleAdministrator(object):
     permissions = (CntPermission.NORMAL |
                    CntPermission.COURSE |
                    CntPermission.PRACTICE |
+                   CntPermission.PROGRAM |
                    CntPermission.DEPARTMENT |
                    CntPermission.COLLEGE |
                    CntPermission.USER)
@@ -118,6 +121,7 @@ class _CntRoleLeader(object):
     permissions = (CntPermission.NORMAL |
                    CntPermission.COURSE |
                    CntPermission.PRACTICE |
+                   CntPermission.PROGRAM |
                    CntPermission.COLLEGE |
                    CntPermission.USER)
 
@@ -128,6 +132,7 @@ class _CntRoleSecretary(object):
     permissions = (CntPermission.NORMAL |
                    CntPermission.COURSE |
                    CntPermission.PRACTICE |
+                   CntPermission.PROGRAM |
                    CntPermission.COLLEGE |
                    CntPermission.USER)
 
@@ -136,6 +141,7 @@ class _CntRoleDirector(object):
     label = u'director'
     name = u'教研室主任'
     permissions = (CntPermission.NORMAL |
+                   CntPermission.PROGRAM |
                    CntPermission.DEPARTMENT)
 
 
@@ -215,6 +221,25 @@ class CntPracticeMaterials(object):
     _objects = [SYLLABUS, SCHEDULE, INSTRUCTION,
                 ROSTER, REPORT,
                 ACHIEVEMENT, SUMMARY]
+
+    _labels = [obj.label for obj in _objects]
+    _maps = dict(zip(_labels, _objects))
+
+    choices = [(obj.label, obj.name) for obj in _objects]
+    labels = _labels
+
+    @classmethod
+    def getMaterialName(cls, label):
+        return cls._maps[label].name if label in cls._labels else u'00未知'
+
+
+class CntProgramMaterials(object):
+    _Material = collections.namedtuple('_Material', ['label', 'name'])
+
+    SYLLABUS = _Material(u'syllabus', u'01教学大纲')
+    EVALUATION = _Material(u'evaluation', u'02考核大纲')
+
+    _objects = [SYLLABUS, EVALUATION]
 
     _labels = [obj.label for obj in _objects]
     _maps = dict(zip(_labels, _objects))

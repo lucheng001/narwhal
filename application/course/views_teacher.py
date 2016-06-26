@@ -133,7 +133,7 @@ def uploadMaterials(category, courseId):
                            course=course, category=category)
 
 
-@bpCourse.route('/download/materials/<category>/<int:courseId>/', methods=['GET', 'POST'])
+@bpCourse.route('/download/materials/<category>/<int:courseId>/', methods=['GET'])
 @login_required
 @permission_required(CntPermission.NORMAL)
 def downloadMaterials(category, courseId):

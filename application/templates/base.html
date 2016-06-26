@@ -176,7 +176,7 @@
         <li class="nav-item">
           <a href="{{ url_for('bpPractice.all') }}" class="nav-link">
             <i class="icon-layers"></i>
-            <span class="title">全院实训</span>
+            <span class="title">全院实习</span>
           </a>
         </li>
         {% endif %}
@@ -184,7 +184,7 @@
         <li class="nav-item">
           <a href="{{ url_for('bpPractice.tasks') }}" class="nav-link">
             <i class="icon-grid"></i>
-            <span class="title">本系实训</span>
+            <span class="title">本系实习</span>
           </a>
         </li>
         {% endif %}
@@ -192,7 +192,7 @@
         <li class="nav-item">
           <a href="{{ url_for('bpPractice.taught') }}" class="nav-link">
             <i class="icon-puzzle"></i>
-            <span class="title">我的实训</span>
+            <span class="title">我的实习</span>
           </a>
         </li>
         {% endif %}
@@ -200,7 +200,42 @@
         <li class="nav-item">
           <a href="{{ url_for('bpPractice.addByBatch') }}" class="nav-link">
             <i class="icon-plus"></i>
-            <span class="title">添加实训</span>
+            <span class="title">添加实习</span>
+          </a>
+        </li>
+        {% endif %}
+        <li class="heading">
+          <h3 class="uppercase">培养方案</h3>
+        </li>
+        {% if current_user.hasPermission(cPermission.COLLEGE) %}
+        <li class="nav-item">
+          <a href="{{ url_for('bpProgram.all') }}" class="nav-link">
+            <i class="icon-layers"></i>
+            <span class="title">全院培养方案</span>
+          </a>
+        </li>
+        {% endif %}
+        {% if current_user.hasPermission(cPermission.DEPARTMENT) %}
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="icon-grid"></i>
+            <span class="title">本系培养方案</span>
+          </a>
+        </li>
+        {% endif %}
+        {% if current_user.hasPermission(cPermission.NORMAL) %}
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="icon-puzzle"></i>
+            <span class="title">全院培养方案</span>
+          </a>
+        </li>
+        {% endif %}
+        {% if current_user.hasPermission(cPermission.PROGRAM) %}
+        <li class="nav-item">
+          <a href="{{ url_for('bpProgram.addByBatch') }}" class="nav-link">
+            <i class="icon-plus"></i>
+            <span class="title">添加培养方案</span>
           </a>
         </li>
         {% endif %}

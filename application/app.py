@@ -69,6 +69,9 @@ def configure_blueprints(app):
     from .practice import bpPractice as practiceBlueprint
     app.register_blueprint(practiceBlueprint, url_prefix='/practice')
 
+    from .program import bpProgram as programBlueprint
+    app.register_blueprint(programBlueprint, url_prefix='/program')
+
 
 def configure_context_processors(app):
     """Configures the context processors."""
@@ -96,13 +99,14 @@ def configure_template_global_variables(app):
     """Configures the template filters."""
     from .constants import (CntRoles, CntPermission,
                             CntSyllabusYear, CntDepartment,
-                            CntCourseMaterials, CntPracticeMaterials)
+                            CntCourseMaterials, CntPracticeMaterials, CntProgramMaterials)
     app.jinja_env.globals['cRoles'] = CntRoles
     app.jinja_env.globals['cPermission'] = CntPermission
     app.jinja_env.globals['cDepartment'] = CntDepartment
     app.jinja_env.globals['cSyllabusYear'] = CntSyllabusYear
     app.jinja_env.globals['cCourseMaterials'] = CntCourseMaterials
     app.jinja_env.globals['cPracticeMaterials'] = CntPracticeMaterials
+    app.jinja_env.globals['cProgramMaterials'] = CntProgramMaterials
 
 
 def configure_error_handlers(app):

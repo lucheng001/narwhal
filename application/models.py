@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
 
+import os
 import datetime
 from flask_login import UserMixin
 from werkzeug.security import check_password_hash
 from peewee import *
 from .extensions import db
-from .constants import CntGender, CntRoles, CntSyllabusYear, CntDepartment, CntCourseMaterials, CntPracticeMaterials
+from .constants import (CntGender, CntRoles, CntSyllabusYear, CntDepartment,
+                        CntCourseMaterials, CntPracticeMaterials, CntProgramMaterials)
 
-_all_ = ['User', 'Course', 'Practice']
+_all_ = ['User', 'Course', 'Practice', 'Program']
 
 
 class User(UserMixin, Model):
@@ -41,7 +43,7 @@ class User(UserMixin, Model):
 class Course(Model):
     id = PrimaryKeyField()
     teacher = ForeignKeyField(User)
-    name = CharField(max_length=32, index=True)
+    name = CharField(max_length=256, index=True)
     klass = CharField(max_length=256, index=True)
     semester = CharField(max_length=32, index=True)
     department = CharField(max_length=32, index=True)
@@ -62,6 +64,21 @@ class Course(Model):
     syllabusYear = CharField(max_length=32, index=True, choices=CntSyllabusYear.choices, default=CntSyllabusYear.Y2012.label)
     createTime = DateTimeField(default=datetime.datetime.now, formats='%Y-%m-%d %H:%M:%S')
 
+    @staticmethod
+    def getTplFileName(category):
+        p = u'{name}.未交'
+        tplFileName = p.format(name=CntCourseMaterials.getMaterialName(category)),
+        return tplFileName
+
+    def getFileNamePattern(self, category):
+        tpl = [CntCourseMaterials.getMaterialName(category),
+               u'-{idx:02d}.{ext}']
+        return u''.join(tpl)
+
+    def getFolder(self, teacher):
+        return os.path.join(self.semester, self.getDepartmentName(),
+                            teacher, self.name, self.klass)
+
     def getDepartmentName(self):
         return CntDepartment.getDepartmentName(self.department)
 
@@ -78,7 +95,7 @@ class Course(Model):
 class Practice(Model):
     id = PrimaryKeyField()
     teacher = ForeignKeyField(User)
-    name = CharField(max_length=32, index=True)
+    name = CharField(max_length=256, index=True)
     klass = CharField(max_length=256, index=True)
     semester = CharField(max_length=32, index=True)
     department = CharField(max_length=32, index=True)
@@ -91,6 +108,21 @@ class Practice(Model):
     achievement = CharField(max_length=128, null=True)
     syllabusYear = CharField(max_length=32, index=True, choices=CntSyllabusYear.choices, default=CntSyllabusYear.Y2012.label)
     createTime = DateTimeField(default=datetime.datetime.now, formats='%Y-%m-%d %H:%M:%S')
+
+    @staticmethod
+    def getTplFileName(category):
+        p = u'{name}.未交'
+        tplFileName = p.format(name=CntPracticeMaterials.getMaterialName(category)),
+        return tplFileName
+
+    def getFileNamePattern(self, category):
+        tpl = [CntPracticeMaterials.getMaterialName(category),
+               u'-{idx:02d}.{ext}']
+        return u''.join(tpl)
+
+    def getFolder(self, teacher):
+        return os.path.join(self.semester, self.getDepartmentName(),
+                            teacher, self.name, self.klass)
 
     def getDepartmentName(self):
         return CntDepartment.getDepartmentName(self.department)
@@ -105,6 +137,56 @@ class Practice(Model):
         database = db.database
 
 
+class Program(Model):
+    id = PrimaryKeyField()
+    name = CharField(max_length=256, index=True)
+    department = CharField(max_length=32, index=True)
+    theory = IntegerField(default=0)
+    laboratory = IntegerField(default=0)
+    practice = IntegerField(default=0)
+    syllabus = CharField(max_length=128, null=True)
+    evaluation = CharField(max_length=128, null=True)
+    syllabusYear = CharField(max_length=32, index=True, choices=CntSyllabusYear.choices, default=CntSyllabusYear.Y2012.label)
+    createTime = DateTimeField(default=datetime.datetime.now, formats='%Y-%m-%d %H:%M:%S')
+
+    @staticmethod
+    def getTplFileName(category):
+        p = u'{name}.未交'
+        tplFileName = p.format(name=CntProgramMaterials.getMaterialName(category)),
+        return tplFileName
+
+    def getFileNamePattern(self, category):
+        p = u'-{name}-{theory:03d}_{laboratory:03d}_{practice:03d}'
+        pattern = p.format(
+            name=self.name,
+            theory=self.theory,
+            laboratory=self.laboratory,
+            practice=self.practice),
+        tpl = [CntProgramMaterials.getMaterialName(category),
+               pattern,
+               u'-{idx:02d}.{ext}']
+        return u''.join(tpl)
+
+    def getFolder(self):
+        p = u'-{name}-{theory:03d}+{laboratory:03d}+{practice:03d}'
+        pattern = p.format(
+            name=self.name,
+            theory=self.theory,
+            laboratory=self.laboratory,
+            practice=self.practice),
+        return os.path.join(self.syllabusYear, self.getDepartmentName(), pattern)
+
+    def getDepartmentName(self):
+        return CntDepartment.getDepartmentName(self.department)
+
+    def getSyllabusYearName(self):
+        return CntSyllabusYear.getSyllabusYearName(self.syllabusYear)
+
+    def getMaterialName(self, label):
+        return CntProgramMaterials.getMaterialName(label)
+
+    class Meta:
+        database = db.database
 
 
 

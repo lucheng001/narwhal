@@ -5,7 +5,7 @@ from flask_wtf import Form
 from wtforms import StringField, SelectField, TextAreaField
 from wtforms import ValidationError
 from wtforms.validators import DataRequired, Length
-from ..constants import CntDepartment
+from ..constants import CntDepartment, CntSyllabusYear
 
 _all_ = ['AddPracticeForm', 'AddPracticeDataForm']
 
@@ -15,7 +15,7 @@ class AddPracticeForm(Form):
         u'名称',
         validators=[
             DataRequired(u'名称不能为空.'),
-            Length(4, 32, u'名称为4~32个字符.'),
+            Length(4, 256, u'名称为4~256个字符.'),
         ]
     )
     teacher = SelectField(
@@ -45,9 +45,9 @@ class AddPracticeForm(Form):
     syllabusYear = StringField(
         u'培养方案',
         validators=[
-            DataRequired(u'培养方案不能为空.'),
-            Length(4, 4, u'培养方案为4个字符.'),
-        ]
+            DataRequired(u'培养方案不能为空.')
+        ],
+        choices=CntSyllabusYear.choices
     )
 
     @staticmethod
@@ -62,19 +62,12 @@ class AddPracticeForm(Form):
         if y2 != y1 + 1:
             raise ValidationError(u'学期格式错误.')
 
-    @staticmethod
-    def validate_syllabusYear(form, filed):
-        pattern = r'20\d{2}'
-        match = re.match(pattern, filed.data)
-        if not match:
-            raise ValidationError(u'培养方案格式错误.')
-
 
 class AddPracticeDataForm(Form):
     practiceData = TextAreaField(
-        u'课程数据',
+        u'实训数据',
         validators=[
-            DataRequired(u'课程数据不能为空.')
+            DataRequired(u'实训数据不能为空.')
         ]
     )
 

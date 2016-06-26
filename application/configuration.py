@@ -22,10 +22,11 @@ class Configuration(object):
     APP_ARCHIVE_FOLDER = os.path.join(APP_UPLOAD_FOLDER, u'.archive')
     APP_RECYCLE_FOLDER = os.path.join(APP_UPLOAD_FOLDER, u'.recycle')
     APP_COURSE_TPL = os.path.join(APP_UPLOAD_FOLDER, u'.tpl', u'course')
-    APP_COURSE_FOLDER = os.path.join(APP_UPLOAD_FOLDER, u'课堂教学')
     APP_PRACTICE_TPL = os.path.join(APP_UPLOAD_FOLDER, u'.tpl', u'practice')
+    APP_PROGRAM_TPL = os.path.join(APP_UPLOAD_FOLDER, u'.tpl', u'program')
+    APP_COURSE_FOLDER = os.path.join(APP_UPLOAD_FOLDER, u'课堂教学')
     APP_PRACTICE_FOLDER = os.path.join(APP_UPLOAD_FOLDER, u'实践教学')
-
+    APP_PROGRAM_FOLDER = os.path.join(APP_UPLOAD_FOLDER, u'.tpl', u'培养方案')
 
     @staticmethod
     def init_app(app):
