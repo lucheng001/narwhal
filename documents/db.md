@@ -50,3 +50,24 @@ VALUES
 
 COMMIT;
 ```
+
+```sql
+BEGIN;
+
+INSERT INTO "public"."user"
+VALUES
+	(
+		'1',
+		'zhaojiagang',
+		'赵家刚',
+		'male',
+		'director',
+		'127',
+		'123456',
+		'pbkdf2:sha1:1000$TeH6nWAu$74eb40f6377417426c103c260c7cb3e10b160a70',
+		'2016-06-24 11:40:53.744011',
+		'2016-06-24 10:12:48.690093'
+	);
+
+COMMIT;
+```

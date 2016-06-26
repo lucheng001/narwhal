@@ -4,7 +4,7 @@
 <link href="{{ url_for('static', filename='global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
 {% endblock %}
 
-{% block page_breadcrumb_1 %}实习{% endblock %}
+{% block page_breadcrumb_1 %}实训{% endblock %}
 {% block page_breadcrumb_2 %}上传教学材料{% endblock %}
 
 {% block page_title_1 %}上传教学材料{% endblock %}
@@ -22,7 +22,7 @@
       </div>
       <div class="portlet-body">
         <!-- BEGIN FORM-->
-        <form action="{{ url_for('.uploadMaterials', category=category, practiceId=practice.id) }}" id="form" class="form-horizontal" role="form" method="post" enctype="multipart/form-data">
+        <form action="{{ url_for('.uploadMaterials', category=category, programId=program.id) }}" id="form" class="form-horizontal" role="form" method="post" enctype="multipart/form-data">
           {{ form.csrf_token }}
           <div class="form-body">
             <div class="alert alert-danger display-hide">
@@ -32,18 +32,10 @@
             <div class="form-body">
               <div class="form-group">
                   <label class="control-label col-md-3">
-                  实 习
+                  名 称
                   </label>
                   <div class="col-md-4">
-                  <p class="form-control-static">{{ practice.name }}</p>
-                  </div>
-              </div>
-              <div class="form-group">
-                  <label class="control-label col-md-3">
-                  班 级
-                  </label>
-                  <div class="col-md-4">
-                  <p class="form-control-static">{{ practice.klass }}</p>
+                  <p class="form-control-static">{{ program.name }}</p>
                   </div>
               </div>
               <div class="form-group">
@@ -51,14 +43,14 @@
                   材料名称
                   </label>
                   <div class="col-md-4">
-                  <p class="form-control-static">{{ practice.getMaterialName(category) }}</p>
+                  <p class="form-control-static">{{ program.getMaterialName(category) }}</p>
                   </div>
               </div>
-              {% if practice[category] %}
+              {% if program[category] %}
               <div class="form-group">
                 <label class="control-label col-md-3">旧的材料</label>
                 <div class="col-md-4">
-                <a href="{{ url_for('.downloadMaterials', category=category, practiceId=practice.id) }}" class="btn btn-primary" target="_blank">
+                <a href="{{ url_for('.downloadMaterials', category=category, programId=program.id) }}" class="btn btn-primary" target="_blank">
                   <i class="fa fa-download"></i>下载
                 </a>
                 </div>

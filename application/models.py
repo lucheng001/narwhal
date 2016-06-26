@@ -150,31 +150,35 @@ class Program(Model):
     createTime = DateTimeField(default=datetime.datetime.now, formats='%Y-%m-%d %H:%M:%S')
 
     @staticmethod
-    def getTplFileName(category):
-        p = u'{name}.未交'
-        tplFileName = p.format(name=CntProgramMaterials.getMaterialName(category)),
-        return tplFileName
+    def getTplMaterialName(category):
+        pattern = u'{name}.未交'
+        material = pattern.format(name=CntProgramMaterials.getMaterialName(category))
+        return material
 
-    def getFileNamePattern(self, category):
-        p = u'-{name}-{theory:03d}_{laboratory:03d}_{practice:03d}'
-        pattern = p.format(
+    def getMaterialNamePattern(self, category):
+        pattern = u'-{name}-{theory:03d}+{laboratory:03d}+{practice:03d}'
+        material = pattern.format(
             name=self.name,
             theory=self.theory,
             laboratory=self.laboratory,
-            practice=self.practice),
+            practice=self.practice)
         tpl = [CntProgramMaterials.getMaterialName(category),
-               pattern,
+               material,
                u'-{idx:02d}.{ext}']
         return u''.join(tpl)
 
     def getFolder(self):
-        p = u'-{name}-{theory:03d}+{laboratory:03d}+{practice:03d}'
-        pattern = p.format(
+        pattern = u'{name}-{theory:03d}+{laboratory:03d}+{practice:03d}'
+        folder = pattern.format(
             name=self.name,
             theory=self.theory,
             laboratory=self.laboratory,
-            practice=self.practice),
-        return os.path.join(self.syllabusYear, self.getDepartmentName(), pattern)
+            practice=self.practice)
+        return folder
+
+    def getFolderPath(self):
+        return os.path.join(self.syllabusYear, self.getDepartmentName(), self.getFolder())
+
 
     def getDepartmentName(self):
         return CntDepartment.getDepartmentName(self.department)

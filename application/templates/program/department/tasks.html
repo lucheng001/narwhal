@@ -1,0 +1,178 @@
+{% extends 'base.html' %}
+
+{% block page_breadcrumb_1 %}培养方案{% endblock %}
+{% block page_breadcrumb_2 %}培养方案列表{% endblock %}
+
+{% block page_title_1 %}培养方案列表{% endblock %}
+{% block page_title_2 %}Programs Table{% endblock %}
+
+{% block page_content %}
+<input value="{{ currentPage }}" type="hidden" name="currentPage" id="currentPage">
+<input value="{{ currentDepartment }}" type="hidden" name="currentDepartment" id="currentDepartment">
+<div class="row">
+  <div class="col-md-12">
+    <div class="portlet light portlet-fit bordered">
+      <div class="portlet-title">
+        <div class="caption">
+          <i class="icon-settings font-blue-sharp"></i>
+          <span class="caption-subject font-blue-sharp sbold uppercase">Programs Table</span>
+        </div>
+      </div>
+      <div class="portlet-body">
+        <div class="table-scrollable">
+          {% if programs %}
+          <table id="table" class="table table-bordered table-hover table-striped">
+            <thead class="">
+              <tr class="heading">
+                <th data-ptcolumn="index" class="text-center"> # </th>
+                <th data-ptcolumn="name"> 名 称 </th>
+                <th data-ptcolumn="theory" class="text-center"> 理论学时 </th>
+                <th data-ptcolumn="laboratory" class="text-center"> 实验学时 </th>
+                <th data-ptcolumn="practice" class="text-center"> 实习周数 </th>
+                <th data-ptcolumn="syllabus" class="text-center"> 教学大纲 </th>
+                <th data-ptcolumn="evaluation" class="text-center"> 考试大纲 </th>
+                <th data-ptcolumn="department" class="text-center"> 教研室 </th>
+                <th data-ptcolumn="syllabusYear" class="text-center"> 年 份 </th>
+                <th data-ptcolumn="operations" class="text-center"> 操 作 </th>
+              </tr>
+              <tr class="filter">
+                <th class="text-center"> &nbsp; </th>
+                <th> &nbsp; </th>
+                <th class="text-center"> &nbsp; </th>
+                <th class="text-center"> &nbsp; </th>
+                <th class="text-center"> &nbsp; </th>
+                <th class="text-center"> &nbsp; </th>
+                <th class="text-center"> &nbsp; </th>
+                <th class="text-center"> &nbsp; </th>
+                <th class="text-center">
+                  <select class="form-control form-filter input-sm" name="currentSyllabusYear" id="currentSyllabusYear">
+                    <option value="all" {% if currentSyllabusYear == 'all' %}selected="selected"{% endif %}>全部</option>
+                    {%- for syllabusYear in cSyllabusYear.choices %}
+                    <option value="{{ syllabusYear[0] }}"  {% if currentSyllabusYear == syllabusYear[0] %}selected{% endif %}>{{ syllabusYear[1] }}</option>
+                    {%- endfor %}
+                  </select>
+                </th>
+                <th class="text-center">
+                  <button id="filter" class="btn btn-sm btn-success filter-submit margin-bottom">
+                    <i class="fa fa-search"></i>  查 询
+                  </button>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for program in programs %}
+              <tr>
+                <td class="text-center"> {{ loop.index }} </td>
+                <td> {{ program.name }} </td>
+                <td class="text-center"> {{ program.theory }} </td>
+                <td class="text-center"> {{ program.laboratory }} </td>
+                <td class="text-center"> {{ program.practice }} </td>
+                <td class="text-center">{%- if program.syllabus -%}
+                  <a href="{{ url_for('.downloadMaterials', category='syllabus', programId=program.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-down"></i></a>
+                  {%- else -%}
+                  &nbsp;<i class="font-red fa fa-exclamation"></i>
+                  {%- endif -%}
+                  <a href="{{ url_for('.uploadMaterials', category='syllabus', programId=program.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-up"></i></a>
+                </td>
+                <td class="text-center">
+                  {%- if program.evaluation -%}
+                  <a href="{{ url_for('.downloadMaterials', category='evaluation', programId=program.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-down"></i></a>
+                  {%- else -%}
+                  &nbsp;<i class="font-red fa fa-exclamation"></i>
+                  {%- endif -%}
+                  <a href="{{ url_for('.uploadMaterials', category='evaluation', programId=program.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-up"></i></a
+                </td>
+                <td class="text-center"> {{ program.getDepartmentName() }} </td>
+                <td class="text-center"> {{ program.getSyllabusYearName() }} </td>
+                <td class="text-center"> &nbsp; </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          {% else %}
+          <div class="text-center padding-tb-20">
+            <h4>暂无数据</h4>
+          </div>
+          {% endif %}
+        </div>
+        {% if pagination.page_num > 1 %}
+        <div>
+          <ul class="pagination">
+             {% if pagination.has_previous %}
+            <li>
+              <a href="{{ url_for('.all', currentPage=pagination.previous, currentDepartment=currentDepartment, currentSyllabusYear=currentSyllabusYear) }}">
+                <i class="fa fa-angle-left"></i>
+              </a>
+            </li>
+            {% else %}
+            <li>
+              <a href="javascript:;" class="disabled-link">
+                <i class="fa fa-angle-left"></i>
+              </a>
+            </li>
+            {% endif %}
+            <li>
+              <a href="{{ url_for('.all', currentPage=1, currentDepartment=currentDepartment, currentSyllabusYear=currentSyllabusYear) }}"> 首页 </a>
+            </li>
+
+            {% for page in pagination.pages %}
+            <li>
+              {% if page == pagination.current %}
+              <a class="disabled-link font-grey-salsa" href="javascript:;"> {{ page }} </a>
+              {% else %}
+              <a href="{{ url_for('.all', currentPage=page, currentDepartment=currentDepartment, currentSyllabusYear=currentSyllabusYear) }}"> {{ page }} </a>
+              {% endif %}
+            </li>
+            {% endfor %}
+
+            <li>
+              <a href="{{ url_for('.all', currentPage=pagination.page_num, currentDepartment=currentDepartment, currentSyllabusYear=currentSyllabusYear) }}"> 末页 </a>
+            </li>
+             {% if pagination.has_next %}
+            <li>
+              <a href="{{ url_for('.all', currentPage=pagination.next, currentDepartment=currentDepartment, currentSyllabusYear=currentSyllabusYear) }}">
+                <i class="fa fa-angle-right"></i>
+              </a>
+            </li>
+            {% else %}
+            <li>
+              <a href="javascript:;" class="disabled-link">
+                <i class="fa fa-angle-right"></i>
+              </a>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block page_external_script %}
+<script src="{{ url_for('static', filename='global/plugins/jquery-powertable/jquery-powertable.js') }}" type="text/javascript"></script>
+<script src="{{ url_for('static', filename='program/script/filterConditions.js') }}" type="text/javascript"></script>
+{% endblock %}
+
+{% block page_internal_script %}
+<script type="text/javascript">
+  jQuery(document).ready(function() {
+
+    /*
+    var pt = $('#table').powertable({
+      allowMoving: false,
+      showHideHandleText: '<i class="fa fa-gg"></i>',
+      fixedColumns: ['name'],
+      fixedRows: [0],
+      showHideDisabled: ['name']
+    });
+    */
+
+    filterConditions.setActionUrl('{{ url_for('.all') }}');
+    filterConditions.init();
+
+
+  });
+</script>
+{% endblock %}
