@@ -62,7 +62,7 @@ class CntDepartment(object):
 
     CS = _Department(u'cs', u'计算机科学与技术', u'zhaojiagang')
     EST = _Department(u'est', u'电子科学与技术', u'xuquanyuan')
-    EIE = _Department(u'eie', u'电子信息工程', u'lvdanju')
+    EIE = _Department(u'eie', u'电子信息工程', u'lvdanjie')
     IE = _Department(u'ie', u'信息工程', u'hukunrong')
     PUB = _Department(u'pub', u'公共教学部', u'kouweili')
 
