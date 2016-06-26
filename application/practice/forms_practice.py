@@ -42,7 +42,7 @@ class AddPracticeForm(Form):
         validators=[DataRequired(u'教研室不能为空.')],
         choices=CntDepartment.choices
     )
-    syllabusYear = StringField(
+    syllabusYear = SelectField(
         u'培养方案',
         validators=[
             DataRequired(u'培养方案不能为空.')

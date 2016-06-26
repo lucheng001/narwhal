@@ -65,19 +65,27 @@ class Course(Model):
     createTime = DateTimeField(default=datetime.datetime.now, formats='%Y-%m-%d %H:%M:%S')
 
     @staticmethod
-    def getTplFileName(category):
-        p = u'{name}.未交'
-        tplFileName = p.format(name=CntCourseMaterials.getMaterialName(category)),
-        return tplFileName
+    def getTplMaterialName(category):
+        pattern = u'{name}.未交'
+        material = pattern.format(name=CntCourseMaterials.getMaterialName(category))
+        return material
 
-    def getFileNamePattern(self, category):
+    @staticmethod
+    def getMaterialNamePattern(category):
         tpl = [CntCourseMaterials.getMaterialName(category),
                u'-{idx:02d}.{ext}']
         return u''.join(tpl)
 
-    def getFolder(self, teacher):
-        return os.path.join(self.semester, self.getDepartmentName(),
-                            teacher, self.name, self.klass)
+    def getFolder(self, teacherName):
+        pattern = u'{teacherName}-{name}-{klass}'
+        folder = pattern.format(
+            teacherName=teacherName,
+            name=self.name,
+            klass=self.klass)
+        return folder
+
+    def getFolderPath(self, teacherName):
+        return os.path.join(self.semester, self.getDepartmentName(), self.getFolder(teacherName))
 
     def getDepartmentName(self):
         return CntDepartment.getDepartmentName(self.department)
@@ -85,7 +93,8 @@ class Course(Model):
     def getSyllabusYearName(self):
         return CntSyllabusYear.getSyllabusYearName(self.syllabusYear)
 
-    def getMaterialName(self, label):
+    @staticmethod
+    def getMaterialName(label):
         return CntCourseMaterials.getMaterialName(label)
 
     class Meta:
@@ -110,19 +119,27 @@ class Practice(Model):
     createTime = DateTimeField(default=datetime.datetime.now, formats='%Y-%m-%d %H:%M:%S')
 
     @staticmethod
-    def getTplFileName(category):
-        p = u'{name}.未交'
-        tplFileName = p.format(name=CntPracticeMaterials.getMaterialName(category)),
-        return tplFileName
+    def getTplMaterialName(category):
+        pattern = u'{name}.未交'
+        material = pattern.format(name=CntPracticeMaterials.getMaterialName(category))
+        return material
 
-    def getFileNamePattern(self, category):
+    @staticmethod
+    def getMaterialNamePattern(category):
         tpl = [CntPracticeMaterials.getMaterialName(category),
                u'-{idx:02d}.{ext}']
         return u''.join(tpl)
 
-    def getFolder(self, teacher):
-        return os.path.join(self.semester, self.getDepartmentName(),
-                            teacher, self.name, self.klass)
+    def getFolder(self, teacherName):
+        pattern = u'{teacherName}-{name}-{klass}'
+        folder = pattern.format(
+            teacherName=teacherName,
+            name=self.name,
+            klass=self.klass)
+        return folder
+
+    def getFolderPath(self, teacherName):
+        return os.path.join(self.semester, self.getDepartmentName(), self.getFolder(teacherName))
 
     def getDepartmentName(self):
         return CntDepartment.getDepartmentName(self.department)
@@ -130,7 +147,8 @@ class Practice(Model):
     def getSyllabusYearName(self):
         return CntSyllabusYear.getSyllabusYearName(self.syllabusYear)
 
-    def getMaterialName(self, label):
+    @staticmethod
+    def getMaterialName(label):
         return CntPracticeMaterials.getMaterialName(label)
 
     class Meta:
@@ -179,14 +197,14 @@ class Program(Model):
     def getFolderPath(self):
         return os.path.join(self.syllabusYear, self.getDepartmentName(), self.getFolder())
 
-
     def getDepartmentName(self):
         return CntDepartment.getDepartmentName(self.department)
 
     def getSyllabusYearName(self):
         return CntSyllabusYear.getSyllabusYearName(self.syllabusYear)
 
-    def getMaterialName(self, label):
+    @staticmethod
+    def getMaterialName(label):
         return CntProgramMaterials.getMaterialName(label)
 
     class Meta:

@@ -90,8 +90,7 @@ def uploadMaterials(category, practiceId):
         abort(404)
 
     filePath = os.path.join(current_app.config['APP_PRACTICE_FOLDER'],
-                            practice.semester, practice.getDepartmentName(),
-                            u'{}-{}-{}'.format(me.chineseName, practice.name, practice.klass))
+                            practice.getFolderPath(me.chineseName))
 
     form = UploadMaterialsForm()
     if form.validate_on_submit():
@@ -115,10 +114,11 @@ def uploadMaterials(category, practiceId):
             idx1 = int(idx) + 1
             newFileInfo = u'{:02d}|{}'.format(idx1, fExtension)
 
-        fileName = u'{}-{:02d}.{}'.format(CntPracticeMaterials.getMaterialName(category), idx1, fExtension)
+        pattern = practice.getMaterialNamePattern(category)
+        fileName = pattern.format(idx=idx1, ext=fExtension)
         form.materials.data.save(os.path.join(filePath, fileName))
 
-        tplFileName = u'{}.{}'.format(CntPracticeMaterials.getMaterialName(category), u'未交')
+        tplFileName = practice.getTplMaterialName(category)
         if os.path.isfile(os.path.join(filePath, tplFileName)):
             os.remove(os.path.join(filePath, tplFileName))
 
@@ -163,11 +163,11 @@ def downloadMaterials(category, practiceId):
         idx, ext = fileInfo.split(u'|')
         idx1 = int(idx)
 
-    fileName = u'{}-{:02d}.{}'.format(CntPracticeMaterials.getMaterialName(category), idx1, ext)
+    pattern = practice.getMaterialNamePattern(category)
+    fileName = pattern.format(idx=idx1, ext=ext)
     encodeFileName = quote(fileName.encode('UTF-8'))
     filePath = os.path.join(current_app.config['APP_PRACTICE_FOLDER'],
-                            practice.semester, practice.getDepartmentName(),
-                            u'{}-{}-{}'.format(teacher.chineseName, practice.name, practice.klass))
+                            practice.getFolderPath(teacher.chineseName))
 
     return send_from_directory(filePath, fileName,
                                as_attachment=True,
@@ -192,10 +192,9 @@ def archivePractice(practiceId):
     else:
         canDownload = False
 
-    fileString = u'{}-{}-{}'.format(teacher.chineseName, practice.name, practice.klass)
+    fileString = practice.getFolder(teacher.chineseName)
     filePath = os.path.join(current_app.config['APP_PRACTICE_FOLDER'],
-                            practice.semester, practice.getDepartmentName(),
-                            fileString)
+                            practice.getFolderPath(teacher.chineseName))
 
     timeString = u'{0:%Y%m%d%H%M%S}'.format(datetime.datetime.now())
     archiveName = u'{}_{}'.format(timeString, fileString)

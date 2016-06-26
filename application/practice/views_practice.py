@@ -59,9 +59,11 @@ def addByBatch():
 
             practiceDict = dict(
                 name=name,
+                teacherName=teacherName,
                 teacher=teacherId,
                 klass=klass,
                 semester=semester,
+                departmentName=departmentName,
                 department=departmentLable,
                 syllabusYear=syllabusYear
             )
@@ -79,9 +81,10 @@ def addByBatch():
                 badData.append(line)
                 continue
 
+            p = u'{teacherName}-{name}-{klass}'
             filePath = os.path.join(current_app.config['APP_PRACTICE_FOLDER'],
                                     semester, departmentName,
-                                    u'{}-{}-{}'.format(teacherName, name, klass))
+                                    p.format(**practiceDict))
             if os.path.isdir(filePath):
                 badData.append(line)
                 continue
@@ -115,17 +118,16 @@ def delete(practiceId):
     teacher = practice.teacher
 
     timeString = '{0:%Y%m%d%H%M%S}'.format(datetime.datetime.now())
-    fileString = u'{}-{}-{}'.format(teacher.chineseName, practice.name, practice.klass)
+    fileString = practice.getFolder(teacher.chineseName)
     recyclePath = os.path.join(current_app.config['APP_RECYCLE_FOLDER'],
                                u'{}_{}'.format(timeString, fileString))
     filePath = os.path.join(current_app.config['APP_PRACTICE_FOLDER'],
-                            practice.semester, practice.getDepartmentName(),
-                            fileString)
+                            practice.getFolderPath(teacher.chineseName))
 
     # if os.path.isdir(filePath):
     #     shutil.rmtree(filePath)
 
-    shutil.copytree(filePath, recyclePath)
+    shutil.move(filePath, recyclePath)
 
     practice.delete_instance()
 

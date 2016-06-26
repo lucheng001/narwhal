@@ -59,9 +59,11 @@ def addByBatch():
 
             courseDict = dict(
                 name=name,
+                teacherName=teacherName,
                 teacher=teacherId,
                 klass=klass,
                 semester=semester,
+                departmentName=departmentName,
                 department=departmentLable,
                 syllabusYear=syllabusYear
             )
@@ -79,9 +81,10 @@ def addByBatch():
                 badData.append(line)
                 continue
 
+            p = u'{teacherName}-{name}-{klass}'
             filePath = os.path.join(current_app.config['APP_COURSE_FOLDER'],
                                     semester, departmentName,
-                                    u'{}-{}-{}'.format(teacherName, name, klass))
+                                    p.format(**courseDict))
             if os.path.isdir(filePath):
                 badData.append(line)
                 continue
@@ -115,17 +118,16 @@ def delete(courseId):
     teacher = course.teacher
 
     timeString = '{0:%Y%m%d%H%M%S}'.format(datetime.datetime.now())
-    fileString = u'{}-{}-{}'.format(teacher.chineseName, course.name, course.klass)
+    fileString = course.getFolder(teacher.chineseName)
     recyclePath = os.path.join(current_app.config['APP_RECYCLE_FOLDER'],
                                u'{}_{}'.format(timeString, fileString))
     filePath = os.path.join(current_app.config['APP_COURSE_FOLDER'],
-                            course.semester, course.getDepartmentName(),
-                            fileString)
+                            course.getFolderPath(teacher.chineseName))
 
     # if os.path.isdir(filePath):
     #     shutil.rmtree(filePath)
 
-    shutil.copytree(filePath, recyclePath)
+    shutil.move(filePath, recyclePath)
 
     course.delete_instance()
 

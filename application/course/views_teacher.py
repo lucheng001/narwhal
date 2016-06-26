@@ -90,8 +90,7 @@ def uploadMaterials(category, courseId):
         abort(404)
 
     filePath = os.path.join(current_app.config['APP_COURSE_FOLDER'],
-                            course.semester, course.getDepartmentName(),
-                            u'{}-{}-{}'.format(me.chineseName, course.name, course.klass))
+                            course.getFolderPath(me.chineseName))
 
     form = UploadMaterialsForm()
     if form.validate_on_submit():
@@ -115,10 +114,11 @@ def uploadMaterials(category, courseId):
             idx1 = int(idx) + 1
             newFileInfo = u'{:02d}|{}'.format(idx1, fExtension)
 
-        fileName = u'{}-{:02d}.{}'.format(CntCourseMaterials.getMaterialName(category), idx1, fExtension)
+        pattern = course.getMaterialNamePattern(category)
+        fileName = pattern.format(idx=idx1, ext=fExtension)
         form.materials.data.save(os.path.join(filePath, fileName))
 
-        tplFileName = u'{}.{}'.format(CntCourseMaterials.getMaterialName(category), u'未交')
+        tplFileName = course.getTplMaterialName(category)
         if os.path.isfile(os.path.join(filePath, tplFileName)):
             os.remove(os.path.join(filePath, tplFileName))
 
@@ -163,11 +163,11 @@ def downloadMaterials(category, courseId):
         idx, ext = fileInfo.split(u'|')
         idx1 = int(idx)
 
-    fileName = u'{}-{:02d}.{}'.format(CntCourseMaterials.getMaterialName(category), idx1, ext)
+    pattern = course.getMaterialNamePattern(category)
+    fileName = pattern.format(idx=idx1, ext=ext)
     encodeFileName = quote(fileName.encode('UTF-8'))
     filePath = os.path.join(current_app.config['APP_COURSE_FOLDER'],
-                            course.semester, course.getDepartmentName(),
-                            u'{}-{}-{}'.format(teacher.chineseName, course.name, course.klass))
+                            course.getFolderPath(teacher.chineseName))
 
     return send_from_directory(filePath, fileName,
                                as_attachment=True,
@@ -192,10 +192,9 @@ def archiveCourse(courseId):
     else:
         canDownload = False
 
-    fileString = u'{}-{}-{}'.format(teacher.chineseName, course.name, course.klass)
+    fileString = course.getFolder(teacher.chineseName)
     filePath = os.path.join(current_app.config['APP_COURSE_FOLDER'],
-                            course.semester, course.getDepartmentName(),
-                            fileString)
+                            course.getFolderPath(teacher.chineseName))
 
     timeString = u'{0:%Y%m%d%H%M%S}'.format(datetime.datetime.now())
     archiveName = u'{}_{}'.format(timeString, fileString)
