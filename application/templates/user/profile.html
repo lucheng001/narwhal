@@ -21,7 +21,7 @@
           <div class="form-body">
             <div class="form-group">
               <label class="control-label col-md-3">
-                姓 名
+                姓 名：
               </label>
               <div class="col-md-4">
                 <p class="form-control-static">{{ user.chineseName }}</p>
@@ -29,7 +29,7 @@
             </div>
             <div class="form-group">
               <label class="control-label col-md-3">
-                用户名
+                用户名：
               </label>
               <div class="col-md-4">
                 <p class="form-control-static">{{ user.userName }}</p>
@@ -37,18 +37,27 @@
             </div>
             <div class="form-group">
               <label class="control-label col-md-3">
-                角 色
+                性 别：
+              </label>
+              <div class="col-md-4">
+                <p class="form-control-static">{{ user.getGenderName() }}</p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3">
+                角 色：
               </label>
               <div class="col-md-4">
                 <p class="form-control-static">{{ user.getRoleName() }}</p>
               </div>
             </div>
           </div>
+          </div>
           <div class="form-actions">
             <div class="row">
               <div class="col-md-offset-3 col-md-9">
                 <a href="{{ url_for('.changePassword') }}" class="btn green"> 修改密码 </a>
-                <a href="{{ url_for('.changeChineseName') }}" class="btn blue"> 修改姓名 </a>
+                <a href="{{ url_for('.changeProfile') }}" class="btn blue"> 修改个人信息 </a>
               </div>
             </div>
           </div>
@@ -58,3 +67,4 @@
   </div>
 </div>
 {% endblock %}
+

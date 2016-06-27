@@ -50,6 +50,7 @@ class AddUserForm(Form):
         validators=[DataRequired(u'性别不能为空')],
         choices=CntGender.choices
     )
+
     @staticmethod
     def validate_userName(form, filed):
         user = None

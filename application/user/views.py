@@ -5,7 +5,7 @@ from flask import render_template, redirect, url_for, flash, request
 from flask_login import current_user, login_required, logout_user
 from ..models import User
 from ..constants import CntRoles
-from .forms import RegisterForm, ChangePasswordForm, ChangeChineseNameForm
+from .forms import RegisterForm, ChangePasswordForm, ChangeChineseNameForm, ChangeProfileForm
 from . import bpUser
 
 _all_ = ['register', 'profile', 'changePassword', 'changeChineseName']
@@ -83,5 +83,23 @@ def changeChineseName():
         return redirect(url_for('bpAuth.login'))
 
     return render_template('user/changeChineseName.html', form=form)
+
+
+@bpUser.route('/change/profile', methods=['GET', 'POST'])
+@login_required
+def changeProfile():
+    user = current_user._get_current_object()
+    form = ChangeProfileForm()
+    if form.validate_on_submit():
+        import re
+        user.chineseName = re.sub('[\s+]', '', form.chineseName.data)
+        user.gender = form.gender.data
+        user.save()
+        logout_user()
+        flash(u'修改成功，请重新登录', 'success')
+        return redirect(url_for('bpAuth.login'))
+
+    return render_template('user/changeProfile.html', form=form,
+                           user=user)
 
 

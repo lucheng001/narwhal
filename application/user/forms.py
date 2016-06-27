@@ -2,12 +2,13 @@
 
 import hashlib
 from flask_wtf import Form
-from wtforms import StringField, PasswordField, HiddenField
+from wtforms import StringField, PasswordField, HiddenField, RadioField
 from wtforms import ValidationError
 from wtforms.validators import DataRequired, Length, EqualTo
+from ..constants import CntGender
 from ..models import User
 
-_all_ = ['RegisterForm', 'ChangeChineseNameForm', 'ChangePasswordForm']
+_all_ = ['RegisterForm', 'ChangeChineseNameForm', 'ChangePasswordForm', 'ChangeProfile']
 
 
 class ChangeChineseNameForm(Form):
@@ -130,4 +131,16 @@ class RegisterForm(Form):
             raise ValidationError(u'邀请码错误.')
 
 
+class ChangeProfileForm(Form):
+    chineseName = StringField(
+        u'姓名', validators=[
+            DataRequired(u'姓名不能为空.'),
+            Length(1, 32)
+        ]
+    )
+    gender = RadioField(
+        u'性别',
+        validators=[DataRequired(u'性别不能为空')],
+        choices=CntGender.choices
+    )
 
