@@ -6,8 +6,9 @@ var ActiveMenu = function() {
     return {
         init: function() {
             for (var i = 0; i < aJels.length; i++) {
-                var pathname = aJels[i].pathname;
-                var aJel = $(aJels[i]);
+                var aEl = aJels[i];
+                var pathname = aEl.pathname;
+                var aJel = $(aEl);
                 var href = aJel.attr('href');
 
                 if (href.indexOf(currentPathName) == 0) {
