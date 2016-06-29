@@ -64,15 +64,17 @@ class Course(Model):
     syllabusYear = CharField(max_length=32, index=True, choices=CntSyllabusYear.choices, default=CntSyllabusYear.Y2012.label)
     createTime = DateTimeField(default=datetime.datetime.now, formats='%Y-%m-%d %H:%M:%S')
 
-    @staticmethod
-    def getTplMaterialName(category):
+    _MATERIAL = CntCourseMaterials
+
+    @classmethod
+    def getTplMaterialName(cls, category):
         pattern = u'{name}.未交'
-        material = pattern.format(name=CntCourseMaterials.getMaterialName(category))
+        material = pattern.format(name=cls._MATERIAL.getMaterialName(category))
         return material
 
-    @staticmethod
-    def getMaterialNamePattern(category):
-        tpl = [CntCourseMaterials.getMaterialName(category),
+    @classmethod
+    def getMaterialNamePattern(cls, category):
+        tpl = [cls._MATERIAL.getMaterialName(category),
                u'-{idx:02d}.{ext}']
         return u''.join(tpl)
 
@@ -93,9 +95,9 @@ class Course(Model):
     def getSyllabusYearName(self):
         return CntSyllabusYear.getSyllabusYearName(self.syllabusYear)
 
-    @staticmethod
-    def getMaterialName(label):
-        return CntCourseMaterials.getMaterialName(label)
+    @classmethod
+    def getMaterialName(cls, label):
+        return cls._MATERIAL.getMaterialName(label)
 
     class Meta:
         database = db.database
@@ -118,15 +120,17 @@ class Practice(Model):
     syllabusYear = CharField(max_length=32, index=True, choices=CntSyllabusYear.choices, default=CntSyllabusYear.Y2012.label)
     createTime = DateTimeField(default=datetime.datetime.now, formats='%Y-%m-%d %H:%M:%S')
 
-    @staticmethod
-    def getTplMaterialName(category):
+    _MATERIAL = CntPracticeMaterials
+
+    @classmethod
+    def getTplMaterialName(cls, category):
         pattern = u'{name}.未交'
-        material = pattern.format(name=CntPracticeMaterials.getMaterialName(category))
+        material = pattern.format(name=cls._MATERIAL.getMaterialName(category))
         return material
 
-    @staticmethod
-    def getMaterialNamePattern(category):
-        tpl = [CntPracticeMaterials.getMaterialName(category),
+    @classmethod
+    def getMaterialNamePattern(cls, category):
+        tpl = [cls._MATERIAL.getMaterialName(category),
                u'-{idx:02d}.{ext}']
         return u''.join(tpl)
 
@@ -147,9 +151,9 @@ class Practice(Model):
     def getSyllabusYearName(self):
         return CntSyllabusYear.getSyllabusYearName(self.syllabusYear)
 
-    @staticmethod
-    def getMaterialName(label):
-        return CntPracticeMaterials.getMaterialName(label)
+    @classmethod
+    def getMaterialName(cls, label):
+        return cls._MATERIAL.getMaterialName(label)
 
     class Meta:
         database = db.database
@@ -167,10 +171,12 @@ class Program(Model):
     syllabusYear = CharField(max_length=32, index=True, choices=CntSyllabusYear.choices, default=CntSyllabusYear.Y2012.label)
     createTime = DateTimeField(default=datetime.datetime.now, formats='%Y-%m-%d %H:%M:%S')
 
-    @staticmethod
-    def getTplMaterialName(category):
+    _MATERIAL = CntProgramMaterials
+
+    @classmethod
+    def getTplMaterialName(cls, category):
         pattern = u'{name}.未交'
-        material = pattern.format(name=CntProgramMaterials.getMaterialName(category))
+        material = pattern.format(name=cls._MATERIAL.getMaterialName(category))
         return material
 
     def getMaterialNamePattern(self, category):
@@ -180,7 +186,7 @@ class Program(Model):
             theory=self.theory,
             laboratory=self.laboratory,
             practice=self.practice)
-        tpl = [CntProgramMaterials.getMaterialName(category),
+        tpl = [self._MATERIAL.getMaterialName(category),
                material,
                u'-{idx:02d}.{ext}']
         return u''.join(tpl)
@@ -203,9 +209,9 @@ class Program(Model):
     def getSyllabusYearName(self):
         return CntSyllabusYear.getSyllabusYearName(self.syllabusYear)
 
-    @staticmethod
-    def getMaterialName(label):
-        return CntProgramMaterials.getMaterialName(label)
+    @classmethod
+    def getMaterialName(cls, label):
+        return cls._MATERIAL.getMaterialName(label)
 
     class Meta:
         database = db.database
