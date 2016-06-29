@@ -12,7 +12,7 @@ def index():
 
 
 @bpMain.app_errorhandler(404)
-def error403(error):
+def error404(error):
     return render_template('main/404.html'), 404
 
 
