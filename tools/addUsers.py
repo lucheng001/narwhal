@@ -2,72 +2,72 @@
 
 from werkzeug.security import generate_password_hash
 from application import create_app
-from application.constants import CntRoles
+from application.constants import CntRoles, CntGender
 from application.extensions import db
 
 group1 = [
-   ('diguangzhi', '狄光智'),
-   ('zhangyan', '张雁'),
-   ('zhangqinghui', '张晴晖'),
-   ('wuxuelong', '伍学龙')
+   ('diguangzhi',   '狄光智',   CntGender.FEMALE.label),
+   ('zhangyan',     '张雁',     CntGender.FEMALE.label),
+   ('zhangqinghui', '张晴晖',   CntGender.MALE.label),
+   ('wuxuelong',    '伍学龙',   CntGender.MALE.label)
 ]
 
 group2 = [
-   ('yangweiwei', '杨微微')
+   ('yangweiwei',   '杨微微',   CntGender.FEMALE.label)
 ]
 
 group3 = [
-   ('zhaojiagang', '赵家刚'),
-   ('xuquanyuan', '徐全元'),
-   ('lvdanjie', '吕丹桔'),
-   ('kouweili', '寇卫利')
+   ('zhaojiagang',  '赵家刚',   CntGender.MALE.label),
+   ('xuquanyuan',   '徐全元',   CntGender.MALE.label),
+   ('lvdanjie',     '吕丹桔',   CntGender.FEMALE.label),
+   ('kouweili',     '寇卫利',   CntGender.MALE.label)
 ]
 
 group4 = [
-    ('caoyong', '曹涌'),
-    ('chenxu', '陈旭'),
-    ('chenyongren', '陈勇仁'),
-    ('daizhengquan', '戴正权'),
-    ('dongjiane', '董建娥'),
-    ('dongyueyu', '董跃宇'),
-    ('fuxiaoyong', '付小勇'),
-    ('gaohao', '高皜'),
-    ('guoran', '郭冉'),
-    ('hanxu', '韩旭'),
-    ('hejinping', '贺金平'),
-    ('hexin', '何鑫'),
-    ('hugangyi', '胡刚毅'),
-    ('lijunqiu', '李俊萩'),
-    ('linhong', '林宏'),
-    ('lisha', '李莎'),
-    ('luning', '鲁宁'),
-    ('luying', '鲁莹'),
-    ('miaocheng', '苗晟'),
-    ('qiangzhenping', '强振平'),
-    ('qinmingming', '秦明明'),
-    ('rongjian', '荣剑'),
-    ('sunyongke', '孙永科'),
-    ('wanghuan', '王欢'),
-    ('wangwei', '王维'),
-    ('wangxiaolin', '王晓林'),
-    ('wangxiaorui', '王晓锐'),
-    ('xieshijian', '谢时俭'),
-    ('xinghong', '幸宏'),
-    ('xingliwei', '邢丽伟'),
-    ('xiongfei', '熊飞'),
-    ('xuweiheng', '徐伟恒'),
-    ('yangpengyu', '杨鹏宇'),
-    ('yangweimin', '杨为民'),
-    ('yangyufeng', '杨雨峰'),
-    ('yangyuyan', '杨雨燕'),
-    ('yuyueyun', '禹玥昀'),
-    ('zhanghongxiang', '张宏翔'),
-    ('zhaofan', '赵璠'),
-    ('zhaofangting', '赵芳婷'),
-    ('zhaoyili', '赵毅力'),
-    ('zhaoyoujie', '赵友杰'),
-    ('zhonglihui', '钟丽辉'),
-    ('zhoukailai', '周开来')
+    ('caoyong',           '曹涌',     CntGender.MALE.label),
+    ('chenxu',            '陈旭',     CntGender.MALE.label),
+    ('chenyongren',       '陈勇仁',    CntGender.MALE.label),
+    ('daizhengquan',      '戴正权',    CntGender.MALE.label),
+    ('dongjiane',         '董建娥',    CntGender.FEMALE.label),
+    ('dongyueyu',         '董跃宇',    CntGender.MALE.label),
+    ('fuxiaoyong',        '付小勇',    CntGender.MALE.label),
+    ('gaohao',            '高皜',     CntGender.FEMALE.label),
+    ('guoran',            '郭冉',     CntGender.MALE.label),
+    ('hanxu',             '韩旭',     CntGender.MALE.label),
+    ('hejinping',         '贺金平',   CntGender.MALE.label),
+    ('hexin',             '何鑫',     CntGender.MALE.label),
+    ('hugangyi',          '胡刚毅',    CntGender.MALE.label),
+    ('lijunqiu',          '李俊萩',    CntGender.FEMALE.label),
+    ('linhong',           '林宏',      CntGender.FEMALE.label),
+    ('lisha',             '李莎',      CntGender.FEMALE.label),
+    ('luning',            '鲁宁',      CntGender.MALE.label),
+    ('luying',            '鲁莹',      CntGender.FEMALE.label),
+    ('miaocheng',         '苗晟',      CntGender.MALE.label),
+    ('qiangzhenping',     '强振平',    CntGender.MALE.label),
+    ('qinmingming',       '秦明明',    CntGender.MALE.label),
+    ('rongjian',          '荣剑',     CntGender.MALE.label),
+    ('sunyongke',         '孙永科',   CntGender.MALE.label),
+    ('wanghuan',          '王欢',     CntGender.MALE.label),
+    ('wangwei',           '王维',     CntGender.FEMALE.label),
+    ('wangxiaolin',       '王晓林',   CntGender.MALE.label),
+    ('wangxiaorui',       '王晓锐',   CntGender.MALE.label),
+    ('xieshijian',        '谢时俭',   CntGender.MALE.label),
+    ('xinghong',          '幸宏',     CntGender.MALE.label),
+    ('xingliwei',         '邢丽伟',   CntGender.FEMALE.label),
+    ('xiongfei',          '熊飞',     CntGender.MALE.label),
+    ('xuweiheng',         '徐伟恒',   CntGender.MALE.label),
+    ('yangpengyu',        '杨鹏宇',   CntGender.MALE.label),
+    ('yangweimin',        '杨为民',   CntGender.MALE.label),
+    ('yangyufeng',        '杨雨峰',   CntGender.FEMALE.label),
+    ('yangyuyan',         '杨雨燕',   CntGender.FEMALE.label),
+    ('yuyueyun',          '禹玥昀',   CntGender.FEMALE.label),
+    ('zhanghongxiang',    '张宏翔',   CntGender.MALE.label),
+    ('zhaofan',           '赵璠',     CntGender.MALE.label),
+    ('zhaofangting',      '赵芳婷',   CntGender.FEMALE.label),
+    ('zhaoyili',          '赵毅力',   CntGender.MALE.label),
+    ('zhaoyoujie',        '赵友杰',   CntGender.MALE.label),
+    ('zhonglihui',        '钟丽辉',   CntGender.FEMALE.label),
+    ('zhoukailai',        '周开来',   CntGender.MALE.label)
 ]
 
 
@@ -94,6 +94,7 @@ def addUsers():
         User.create(
             userName=user[0],
             chineseName=user[1],
+            gender=user[2],
             password=password,
             passwordHash=generate_password_hash(password),
             role=CntRoles.SECRETARY.label,
@@ -104,6 +105,7 @@ def addUsers():
         User.create(
             userName=user[0],
             chineseName=user[1],
+            gender=user[2],
             password=password,
             passwordHash=generate_password_hash(password),
             role=CntRoles.DIRECTOR.label,
@@ -114,6 +116,7 @@ def addUsers():
         User.create(
             userName=user[0],
             chineseName=user[1],
+            gender=user[2],
             password=password,
             passwordHash=generate_password_hash(password),
             role=CntRoles.TEACHER.label,
