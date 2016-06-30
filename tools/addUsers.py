@@ -84,6 +84,7 @@ def addUsers():
         User.create(
             userName=user[0],
             chineseName=user[1],
+            gender=user[2],
             password=password,
             passwordHash=generate_password_hash(password),
             role=CntRoles.LEADER.label,
