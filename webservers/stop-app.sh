@@ -3,8 +3,8 @@
 BASEDIR=$(cd "$(dirname "$0")";pwd)
 APPDIR=$(dirname "$BASEDIR")
 
-PIDFILE="$APPDIR/run/application.pid"
-SOCKFILE="$APPDIR/run/application.sock"
+PIDFILE="$APPDIR/run/app.pid"
+SOCKFILE="$APPDIR/run/app.sock"
 
 if [ -e "$PIDFILE" ]; then
     kill -TERM $(cat "$PIDFILE")
