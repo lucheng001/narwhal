@@ -60,7 +60,7 @@ def taught():
     pagination = Paginator(object_num=numOfPractices, current=currentPage, per_page=numOfPerPage)
 
     if numOfPractices <= 0:
-        return render_template('Practice/teacher/taught.html', pagination=pagination, currentPage=currentPage,
+        return render_template('practice/teacher/taught.html', pagination=pagination, currentPage=currentPage,
                                currentDepartment=currentDepartment, currentTeacher=currentTeacher,
                                currentSemester=currentSemester, currentSyllabusYear=currentSyllabusYear,
                                practices=[], semesters=semesters)
