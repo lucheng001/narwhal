@@ -3,8 +3,8 @@ Description=Gunicorn instance to server Narwhal
 After=syslog.target network.target
 
 [Service]
-User=passta
-Group=passta
+User=narwhal
+Group=narwhal
 Type=forking
 PIDFile=/home/narwhal/pysite/narwhal/run/app.pid
 WorkingDirectory=/home/narwhal/pysite/narwhal
