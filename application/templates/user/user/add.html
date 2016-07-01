@@ -86,7 +86,7 @@
               <span class="required" aria-required="true"> * </span>
               </label>
               <div class="col-md-4">
-                <select class="form-control form-filter input-sm" name="role">
+                <select class="bs-select form-control form-filter input-sm" name="role">
                   {%- for role in cRoles.choices %}
                   <option value="{{ role[0] }}"  {% if loop.last %}selected="selected"{% endif %}>{{ role[1] }}</option>
                   {%- endfor %}

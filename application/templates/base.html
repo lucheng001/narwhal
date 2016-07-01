@@ -26,6 +26,7 @@
 <!-- BEGIN THEME GLOBAL STYLES -->
 <link href="{{ url_for('static', filename='global/css/components-rounded.min.css') }}" rel="stylesheet" id="style_components" type="text/css" />
 <link href="{{ url_for('static', filename='global/css/plugins.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ url_for('static', filename='global/plugins/bootstrap-select/css/bootstrap-select.min.css') }}" rel="stylesheet" type="text/css" />
 <!-- END THEME GLOBAL STYLES -->
 <!-- BEGIN THEME LAYOUT STYLES -->
 <link href="{{ url_for('static', filename='layouts/layout/css/layout.min.css') }}" rel="stylesheet" type="text/css" />
@@ -359,6 +360,8 @@
 <script type="text/javascript">
   var serverTime = moment(new Date("{{ "{0:%m/%d/%Y %H:%M:%S}".format(gServerNow) }}"));
 </script>
+<script src="{{ url_for('static', filename='global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
+<script src="{{ url_for('static', filename='pages/scripts/bootstrapSelect.js') }}" type="text/javascript"></script>
 <script src="{{ url_for('static', filename='pages/scripts/activeMenu.js') }}" type="text/javascript"></script>
 <script src="{{ url_for('static', filename='global/scripts/app.min.js') }}" type="text/javascript"></script>
 <!-- END THEME GLOBAL SCRIPTS -->
