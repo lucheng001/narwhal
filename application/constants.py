@@ -117,7 +117,7 @@ class _CntRoleAdministrator(object):
 
 class _CntRoleLeader(object):
     label = u'leader'
-    name = u'院领导'
+    name = u'学院领导'
     permissions = (CntPermission.NORMAL |
                    CntPermission.COURSE |
                    CntPermission.PRACTICE |
