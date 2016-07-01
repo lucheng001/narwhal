@@ -224,6 +224,7 @@
 {% endblock %}
 
 {% block page_external_script %}
+<script src="{{ url_for('static', filename='global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}" type="text/javascript"></script>
 <script src="{{ url_for('static', filename='pages/scripts/bootstrapSelect.js') }}" type="text/javascript"></script>
 <script src="{{ url_for('static', filename='global/plugins/jquery-powertable/jquery-powertable.js') }}" type="text/javascript"></script>
 <script src="{{ url_for('static', filename='practice/script/filterConditions.js') }}" type="text/javascript"></script>
