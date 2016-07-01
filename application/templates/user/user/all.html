@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 
+{% block page_external_css %}
+<link href="{{ url_for('static', filename='global/plugins/bootstrap-select/css/bootstrap-select.min.css') }}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
 {% block page_breadcrumb_1 %}用户{% endblock %}
 {% block page_breadcrumb_2 %}用户列表{% endblock %}
 
@@ -35,14 +39,14 @@
                 <th class="text-center"> &nbsp; </th>
                 <th class="text-center"> &nbsp; </th>
                 <th class="text-center">
-                  <select class="form-control form-filter input-sm" name="currentGender" id="currentGender">
+                  <select class="bs-select form-control form-filter input-sm" name="currentGender" id="currentGender">
                     <option value="all" {% if currentGender == 'all' %}selected="selected"{% endif %}>全部</option>
                     <option value="male" {% if currentGender == 'male' %}selected="selected"{% endif %}>男</option>
                     <option value="female" {% if currentGender == 'female' %}selected="selected"{% endif %}>女</option>
                   </select>
                 </th>
                 <th class="text-center">
-                  <select class="form-control form-filter input-sm" name="currentRole" id="currentRole">
+                  <select class="bs-select form-control form-filter input-sm" name="currentRole" id="currentRole">
                     <option value="all" {% if currentRole == 'all' %}selected{% endif %}>全部</option>
                     {%- for role in cRoles.choices %}
                     <option value="{{ role[0] }}"  {% if currentRole == role[0] %}selected="selected"{% endif %}>{{ role[1] }}</option>
@@ -136,6 +140,7 @@
 {% endblock %}
 
 {% block page_external_script %}
+<script src="{{ url_for('static', filename='pages/scripts/bootstrapSelect.js') }}" type="text/javascript"></script>
 <script src="{{ url_for('static', filename='user/script/filterConditions.js') }}" type="text/javascript"></script>
 <script src="{{ url_for('static', filename='user/script/resetPassword.js') }}" type="text/javascript"></script>
 <script src="{{ url_for('static', filename='user/script/delete.js') }}" type="text/javascript"></script>
