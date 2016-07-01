@@ -16,3 +16,6 @@ var BootstrapSelect = function () {
 
 }();
 
+jQuery(document).ready(function() {
+    BootstrapSelect.init();
+});
