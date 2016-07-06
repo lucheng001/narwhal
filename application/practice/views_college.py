@@ -18,7 +18,8 @@ def all():
     me = current_user
 
     query = (User
-             .select(User.id, User.chineseName))
+             .select(User.id, User.chineseName)
+             .order_by(User.userName.asc()))
     teachers = [row for row in query]
     teacherIds = [teacher.id for teacher in teachers]
 

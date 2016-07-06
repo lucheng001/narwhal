@@ -28,6 +28,7 @@ def tasks():
              .select(User.id, User.chineseName)
              .join(Course)
              .where(Course.department == department)
+             .order_by(User.userName.asc())
              .distinct())
     teachers = [row for row in query]
     teacherIds = [teacher.id for teacher in teachers]
