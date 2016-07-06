@@ -124,7 +124,7 @@
           <ul class="pagination">
              {% if pagination.has_previous %}
             <li>
-              <a href="{{ url_for('.task', currentPage=pagination.previous, currentTeacher=currentTeacher, currentDepartment=currentDepartment, currentSemester=currentSemester, currentSyllabusYear=currentSyllabusYear) }}">
+              <a href="{{ url_for('.tasks', currentPage=pagination.previous, currentTeacher=currentTeacher, currentDepartment=currentDepartment, currentSemester=currentSemester, currentSyllabusYear=currentSyllabusYear) }}">
                 <i class="fa fa-angle-left"></i>
               </a>
             </li>
@@ -136,7 +136,7 @@
             </li>
             {% endif %}
             <li>
-              <a href="{{ url_for('.task', currentPage=1, currentTeacher=currentTeacher, currentDepartment=currentDepartment, currentSemester=currentSemester, currentSyllabusYear=currentSyllabusYear) }}"> 首页 </a>
+              <a href="{{ url_for('.tasks', currentPage=1, currentTeacher=currentTeacher, currentDepartment=currentDepartment, currentSemester=currentSemester, currentSyllabusYear=currentSyllabusYear) }}"> 首页 </a>
             </li>
 
             {% for page in pagination.pages %}
@@ -144,17 +144,17 @@
               {% if page == pagination.current %}
               <a class="disabled-link font-grey-salsa" href="javascript:;"> {{ page }} </a>
               {% else %}
-              <a href="{{ url_for('.task', currentPage=page, currentTeacher=currentTeacher, currentDepartment=currentDepartment, currentSemester=currentSemester, currentSyllabusYear=currentSyllabusYear) }}"> {{ page }} </a>
+              <a href="{{ url_for('.tasks', currentPage=page, currentTeacher=currentTeacher, currentDepartment=currentDepartment, currentSemester=currentSemester, currentSyllabusYear=currentSyllabusYear) }}"> {{ page }} </a>
               {% endif %}
             </li>
             {% endfor %}
 
             <li>
-              <a href="{{ url_for('.task', currentPage=pagination.page_num, currentTeacher=currentTeacher, currentDepartment=currentDepartment, currentSemester=currentSemester, currentSyllabusYear=currentSyllabusYear) }}"> 末页 </a>
+              <a href="{{ url_for('.tasks', currentPage=pagination.page_num, currentTeacher=currentTeacher, currentDepartment=currentDepartment, currentSemester=currentSemester, currentSyllabusYear=currentSyllabusYear) }}"> 末页 </a>
             </li>
              {% if pagination.has_next %}
             <li>
-              <a href="{{ url_for('.task', currentPage=pagination.next, currentTeacher=currentTeacher, currentDepartment=currentDepartment, currentSemester=currentSemester, currentSyllabusYear=currentSyllabusYear) }}">
+              <a href="{{ url_for('.tasks', currentPage=pagination.next, currentTeacher=currentTeacher, currentDepartment=currentDepartment, currentSemester=currentSemester, currentSyllabusYear=currentSyllabusYear) }}">
                 <i class="fa fa-angle-right"></i>
               </a>
             </li>
