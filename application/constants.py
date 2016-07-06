@@ -185,16 +185,17 @@ class CntCourseMaterials(object):
     ANSWERS1 = _Material(u'answers1', u'07参考答案A')
     PAPERS2 = _Material(u'papers2', u'08试卷B')
     ANSWERS2 = _Material(u'answers2', u'09参考答案B')
-    EXAMINATION1 = _Material(u'examination1', u'10考卷')
+    EXAMINATION1 = _Material(u'examination1', u'10学生考卷')
     SCORE1 = _Material(u'score1', u'11成绩表')
     EXAMINATION2 = _Material(u'examination2', u'12补考卷')
     SCORE2 = _Material(u'score2', u'13补考成绩表')
-    SUMMARY = _Material(u'summary', u'教学小结')
+    ANALYSIS = _Material(u'score2', u'14试卷分析报告')
+    SUMMARY = _Material(u'summary', u'15教学小结')
 
     _objects = [SYLLABUS, EVALUATION, LECTURES, SCHEDULE, REPORT,
                 PAPERS1, ANSWERS1, PAPERS2, ANSWERS2,
                 EXAMINATION1, SCORE1, EXAMINATION2, SCORE2,
-                SUMMARY]
+                ANALYSIS, SUMMARY]
 
     _labels = [obj.label for obj in _objects]
     _maps = dict(zip(_labels, _objects))

@@ -192,6 +192,14 @@
                           {%- endif -%}
                         </th>
                         <th class="text-center">
+                          试卷分析报告
+                          {%- if course.analysis -%}
+                          <a href="{{ url_for('.downloadMaterials', category='analysis', courseId=course.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-down"></i></a>
+                          {%- else -%}
+                          &nbsp;<i class="font-red fa fa-exclamation"></i>
+                          {%- endif -%}
+                        </th>
+                        <th class="text-center">
                           教学小结
                           {%- if course.summary -%}
                           <a href="{{ url_for('.downloadMaterials', category='summary', courseId=course.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-down"></i></a>

@@ -169,7 +169,7 @@
                           <a href="{{ url_for('.uploadMaterials', category='answers2', courseId=course.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-up"></i></a>
                         </th>
                         <th class="text-center">
-                          考卷
+                          学生考卷
                           {%- if course.examination1 -%}
                           <a href="{{ url_for('.downloadMaterials', category='examination1', courseId=course.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-down"></i></a>
                           {%- else -%}
@@ -203,6 +203,15 @@
                           &nbsp;<i class="font-red fa fa-exclamation"></i>
                           {%- endif -%}
                           <a href="{{ url_for('.uploadMaterials', category='score2', courseId=course.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-up"></i></a>
+                        </th>
+                        <th class="text-center">
+                          试卷分析报告
+                          {%- if course.analysis -%}
+                          <a href="{{ url_for('.downloadMaterials', category='analysis', courseId=course.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-down"></i></a>
+                          {%- else -%}
+                          &nbsp;<i class="font-red fa fa-exclamation"></i>
+                          {%- endif -%}
+                          <a href="{{ url_for('.uploadMaterials', category='analysis', courseId=course.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-up"></i></a>
                         </th>
                         <th class="text-center">
                           教学小结
