@@ -239,7 +239,7 @@ class CntProgramMaterials(object):
 
     SYLLABUS = _Material(u'syllabus', u'01教学大纲')
     EVALUATION = _Material(u'evaluation', u'02考核大纲')
-    PLAN = _Material(u'evaluation', u'03实习方案')
+    PLAN = _Material(u'plan', u'03实习方案')
 
     _objects = [SYLLABUS, EVALUATION, PLAN]
 

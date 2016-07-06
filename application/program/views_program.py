@@ -4,9 +4,9 @@ import os
 import re
 import datetime
 import shutil
-from flask import render_template, redirect, url_for, flash, current_app
+from flask import render_template, redirect, url_for, flash, current_app, abort
 from playhouse.flask_utils import get_object_or_404
-from flask_login import login_required
+from flask_login import login_required, current_user
 from ..models import Program
 from ..constants import CntPermission, CntDepartment
 from ..utilities import permission_required
@@ -94,7 +94,12 @@ def addByBatch():
             return render_template('program/program/badData.html', badData=badData)
         else:
             flash(msg.format(len(lines), len(goodData), len(badData)), 'success')
-            return redirect(url_for('.all'))
+            if current_user.hasPermission(CntPermission.COLLEGE):
+                return redirect(url_for('.all'))
+            elif current_user.hasPermission(CntPermission.DEPARTMENT):
+                return redirect(url_for('.task'))
+            else:
+                abort(403)
 
     return render_template('program/program/addByBatch.html', form=form)
 

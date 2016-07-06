@@ -36,7 +36,7 @@
                 <th class="text-center"> &nbsp; </th>
                 <th> &nbsp; </th>
                 <th class="text-center">
-                  <select class="form-control form-filter input-sm" name="currentTeacher" id="currentTeacher">
+                  <select class="bs-select form-control form-filter input-sm" name="currentTeacher" id="currentTeacher">
                     <option value="0" {% if currentTeacher == 0 %}selected="selected"{% endif %}>全部</option>
                     {%- for teacher in teachers %}
                     <option value="{{ teacher.id }}" {% if currentTeacher == teacher.id %}selected{% endif %}>{{ teacher.chineseName }}</option>
@@ -45,7 +45,7 @@
                 </th>
                 <th> &nbsp; </th>
                 <th class="text-center">
-                  <select class="form-control form-filter input-sm" name="currentSemester" id="currentSemester">
+                  <select class="bs-select form-control form-filter input-sm" name="currentSemester" id="currentSemester">
                     <option value="all" {% if currentSemester == 'all' %}selected="selected"{% endif %}>全部</option>
                     {%- for semester in semesters %}
                     <option value="{{ semester }}"  {% if currentSemester == semester %}selected{% endif %}>{{ semester }}</option>
@@ -53,7 +53,7 @@
                   </select>
                 </th>
                 <th class="text-center">
-                  <select class="form-control form-filter input-sm" name="currentSyllabusYear" id="currentSyllabusYear">
+                  <select class="bs-select form-control form-filter input-sm" name="currentSyllabusYear" id="currentSyllabusYear">
                     <option value="all" {% if currentSyllabusYear == 'all' %}selected="selected"{% endif %}>全部</option>
                     {%- for syllabusYear in cSyllabusYear.choices %}
                     <option value="{{ syllabusYear[0] }}"  {% if currentSyllabusYear == syllabusYear[0] %}selected{% endif %}>{{ syllabusYear[1] }}</option>
@@ -87,64 +87,26 @@
                   <table class="table subtable">
                     <thead>
                       <tr class="heading">
+                        {% for category in cPracticeMaterials.labels %}
                         <th class="text-center">
-                          实习大纲
-                          {%- if practice.syllabus -%}
-                          <a href="{{ url_for('.downloadMaterials', category='syllabus', practiceId=practice.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-down"></i></a>
-                          {%- else -%}
-                          &nbsp;<i class="font-red fa fa-exclamation"></i>
-                          {%- endif -%}
+                          {{ cPracticeMaterials.getMaterialName(category)[2:] }}
                         </th>
-                        <th class="text-center">
-                          实习计划
-                          {%- if practice.schedule -%}
-                          <a href="{{ url_for('.downloadMaterials', category='schedule', practiceId=practice.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-down"></i></a>
-                          {%- else -%}
-                          &nbsp;<i class="font-red fa fa-exclamation"></i>
-                          {%- endif -%}
-                        </th>
-                        <th class="text-center">
-                          指导书
-                          {%- if practice.instruction -%}
-                          <a href="{{ url_for('.downloadMaterials', category='instruction', practiceId=practice.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-down"></i></a>
-                          {%- else -%}
-                           <i class="font-red fa fa-exclamation"></i>
-                          {%- endif -%}
-                        </th>
-                        <th class="text-center">
-                          名单及分组表
-                          {%- if practice.roster -%}
-                          <a href="{{ url_for('.downloadMaterials', category='roster', practiceId=practice.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-down"></i></a>
-                          {%- else -%}
-                          &nbsp;<i class="font-red fa fa-exclamation"></i>
-                          {%- endif -%}
-                        </th>
-                        <th class="text-center">
-                          学生实习报告
-                          {%- if practice.report -%}
-                          <a href="{{ url_for('.downloadMaterials', category='report', practiceId=practice.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-down"></i></a>
-                          {%- else -%}
-                          &nbsp;<i class="font-red fa fa-exclamation"></i>
-                          {%- endif -%}
-                        </th>
-                        <th class="text-center">
-                          实习成果
-                          {%- if practice.achievement -%}
-                          <a href="{{ url_for('.downloadMaterials', category='achievement', practiceId=practice.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-down"></i></a>
-                          {%- else -%}
-                          &nbsp;<i class="font-red fa fa-exclamation"></i>
-                          {%- endif -%}
-                        </th>
-                        <th class="text-center">
-                          实习总结
-                          {%- if practice.summary -%}
-                          <a href="{{ url_for('.downloadMaterials', category='summary', practiceId=practice.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-down"></i></a>
-                          {%- else -%}
-                          &nbsp;<i class="font-red fa fa-exclamation"></i>
-                          {%- endif -%}
-                        </th>
+                        {% endfor %}
                      </tr>
                     </thead>
+                    <tbody>
+                      <tr class="heading">
+                        {% for category in cPracticeMaterials.labels %}
+                        <td class="text-center">
+                          {%- if practice[category] -%}
+                          <a href="{{ url_for('.downloadMaterials', category=category, practiceId=practice.id) }}" class="font-blue">&nbsp;<i class="fa fa-cloud-download"></i></a>
+                          {%- else -%}
+                          &nbsp;<i class="font-red fa fa-exclamation-circle"></i>
+                          {%- endif -%}
+                        </td>
+                        {% endfor %}
+                     </tr>
+                    </tbody>
                   </table>
                 </td>
               </tr>
@@ -162,7 +124,7 @@
           <ul class="pagination">
              {% if pagination.has_previous %}
             <li>
-              <a href="{{ url_for('.all', currentPage=pagination.previous, currentTeacher=currentTeacher, currentDepartment=currentDepartment, currentSemester=currentSemester, currentSyllabusYear=currentSyllabusYear) }}">
+              <a href="{{ url_for('.task', currentPage=pagination.previous, currentTeacher=currentTeacher, currentDepartment=currentDepartment, currentSemester=currentSemester, currentSyllabusYear=currentSyllabusYear) }}">
                 <i class="fa fa-angle-left"></i>
               </a>
             </li>
@@ -174,7 +136,7 @@
             </li>
             {% endif %}
             <li>
-              <a href="{{ url_for('.all', currentPage=1, currentTeacher=currentTeacher, currentDepartment=currentDepartment, currentSemester=currentSemester, currentSyllabusYear=currentSyllabusYear) }}"> 首页 </a>
+              <a href="{{ url_for('.task', currentPage=1, currentTeacher=currentTeacher, currentDepartment=currentDepartment, currentSemester=currentSemester, currentSyllabusYear=currentSyllabusYear) }}"> 首页 </a>
             </li>
 
             {% for page in pagination.pages %}
@@ -182,17 +144,17 @@
               {% if page == pagination.current %}
               <a class="disabled-link font-grey-salsa" href="javascript:;"> {{ page }} </a>
               {% else %}
-              <a href="{{ url_for('.all', currentPage=page, currentTeacher=currentTeacher, currentDepartment=currentDepartment, currentSemester=currentSemester, currentSyllabusYear=currentSyllabusYear) }}"> {{ page }} </a>
+              <a href="{{ url_for('.task', currentPage=page, currentTeacher=currentTeacher, currentDepartment=currentDepartment, currentSemester=currentSemester, currentSyllabusYear=currentSyllabusYear) }}"> {{ page }} </a>
               {% endif %}
             </li>
             {% endfor %}
 
             <li>
-              <a href="{{ url_for('.all', currentPage=pagination.page_num, currentTeacher=currentTeacher, currentDepartment=currentDepartment, currentSemester=currentSemester, currentSyllabusYear=currentSyllabusYear) }}"> 末页 </a>
+              <a href="{{ url_for('.task', currentPage=pagination.page_num, currentTeacher=currentTeacher, currentDepartment=currentDepartment, currentSemester=currentSemester, currentSyllabusYear=currentSyllabusYear) }}"> 末页 </a>
             </li>
              {% if pagination.has_next %}
             <li>
-              <a href="{{ url_for('.all', currentPage=pagination.next, currentTeacher=currentTeacher, currentDepartment=currentDepartment, currentSemester=currentSemester, currentSyllabusYear=currentSyllabusYear) }}">
+              <a href="{{ url_for('.task', currentPage=pagination.next, currentTeacher=currentTeacher, currentDepartment=currentDepartment, currentSemester=currentSemester, currentSyllabusYear=currentSyllabusYear) }}">
                 <i class="fa fa-angle-right"></i>
               </a>
             </li>

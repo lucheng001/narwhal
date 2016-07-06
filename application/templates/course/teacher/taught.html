@@ -37,7 +37,7 @@
                 <th> &nbsp; </th>
                 <th> &nbsp; </th>
                 <th class="text-center">
-                  <select class="form-control form-filter input-sm" name="currentSemester" id="currentSemester">
+                  <select class="bs-select form-control form-filter input-sm" name="currentSemester" id="currentSemester">
                     <option value="all" {% if currentSemester == 'all' %}selected="selected"{% endif %}>全部</option>
                     {%- for semester in semesters %}
                     <option value="{{ semester }}"  {% if currentSemester == semester %}selected{% endif %}>{{ semester }}</option>
@@ -45,7 +45,7 @@
                   </select>
                 </th>
                 <th class="text-center">
-                  <select class="form-control form-filter input-sm" name="currentDepartment" id="currentDepartment">
+                  <select class="bs-select form-control form-filter input-sm" name="currentDepartment" id="currentDepartment">
                     <option value="all" {% if currentDepartment == 'all' %}selected="selected"{% endif %}>全部</option>
                     {%- for department in cDepartment.choices %}
                     <option value="{{ department[0] }}"  {% if currentDepartment == department[0] %}selected{% endif %}>{{ department[1] }}</option>
@@ -53,7 +53,7 @@
                   </select>
                 </th>
                 <th class="text-center">
-                  <select class="form-control form-filter input-sm" name="currentSyllabusYear" id="currentSyllabusYear">
+                  <select class="bs-select form-control form-filter input-sm" name="currentSyllabusYear" id="currentSyllabusYear">
                     <option value="all" {% if currentSyllabusYear == 'all' %}selected="selected"{% endif %}>全部</option>
                     {%- for syllabusYear in cSyllabusYear.choices %}
                     <option value="{{ syllabusYear[0] }}"  {% if currentSyllabusYear == syllabusYear[0] %}selected{% endif %}>{{ syllabusYear[1] }}</option>
@@ -87,143 +87,27 @@
                   <table class="table subtable">
                     <thead>
                       <tr class="heading">
+                        {% for category in cCourseMaterials.labels %}
                         <th class="text-center">
-                          教学大纲
-                          {%- if course.syllabus -%}
-                          <a href="{{ url_for('.downloadMaterials', category='syllabus', courseId=course.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-down"></i></a>
-                          {%- else -%}
-                          &nbsp;<i class="font-red fa fa-exclamation"></i>
-                          {%- endif -%}
-                          <a href="{{ url_for('.uploadMaterials', category='syllabus', courseId=course.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-up"></i></a>
+                          {{ cCourseMaterials.getMaterialName(category)[2:] }}
                         </th>
-                        <th class="text-center">
-                          考核大纲
-                          {%- if course.evaluation -%}
-                          <a href="{{ url_for('.downloadMaterials', category='evaluation', courseId=course.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-down"></i></a>
-                          {%- else -%}
-                          &nbsp;<i class="font-red fa fa-exclamation"></i>
-                          {%- endif -%}
-                          <a href="{{ url_for('.uploadMaterials', category='evaluation', courseId=course.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-up"></i></a>
-                        </th>
-                        <th class="text-center">
-                          教案
-                          {%- if course.lectures -%}
-                          <a href="{{ url_for('.downloadMaterials', category='lectures', courseId=course.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-down"></i></a>
-                          {%- else -%}
-                          &nbsp;<i class="font-red fa fa-exclamation"></i>
-                          {%- endif -%}
-                          <a href="{{ url_for('.uploadMaterials', category='lectures', courseId=course.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-up"></i></a>
-                        </th>
-                        <th class="text-center">
-                          教学进程表
-                          {%- if course.schedule -%}
-                          <a href="{{ url_for('.downloadMaterials', category='schedule', courseId=course.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-down"></i></a>
-                          {%- else -%}
-                          &nbsp;<i class="font-red fa fa-exclamation"></i>
-                          {%- endif -%}
-                          <a href="{{ url_for('.uploadMaterials', category='schedule', courseId=course.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-up"></i></a>
-                        </th>
-                        <th class="text-center">
-                          学生实验报告
-                          {%- if course.report -%}
-                          <a href="{{ url_for('.downloadMaterials', category='report', courseId=course.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-down"></i></a>
-                          {%- else -%}
-                          &nbsp;<i class="font-red fa fa-exclamation"></i>
-                          {%- endif -%}
-                          <a href="{{ url_for('.uploadMaterials', category='report', courseId=course.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-up"></i></a>
-                        </th>
-                        <th class="text-center">
-                          试卷Ａ
-                          {%- if course.papers1 -%}
-                          <a href="{{ url_for('.downloadMaterials', category='papers1', courseId=course.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-down"></i></a>
-                          {%- else -%}
-                          &nbsp;<i class="font-red fa fa-exclamation"></i>
-                          {%- endif -%}
-                          <a href="{{ url_for('.uploadMaterials', category='papers1', courseId=course.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-up"></i></a>
-                        </th>
-                        <th class="text-center">
-                          参考答案A
-                          {%- if course.answers1 -%}
-                          <a href="{{ url_for('.downloadMaterials', category='answers1', courseId=course.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-down"></i></a>
-                          {%- else -%}
-                          &nbsp;<i class="font-red fa fa-exclamation"></i>
-                          {%- endif -%}
-                          <a href="{{ url_for('.uploadMaterials', category='answers1', courseId=course.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-up"></i></a>
-                        </th>
-                        <th class="text-center">
-                          试卷B
-                          {%- if course.papers2 -%}
-                          <a href="{{ url_for('.downloadMaterials', category='papers2', courseId=course.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-down"></i></a>
-                          {%- else -%}
-                          &nbsp;<i class="font-red fa fa-exclamation"></i>
-                          {%- endif -%}
-                          <a href="{{ url_for('.uploadMaterials', category='papers2', courseId=course.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-up"></i></a>
-                        </th>
-                        <th class="text-center">
-                          参考答案B
-                          {%- if course.answers2 -%}
-                          <a href="{{ url_for('.downloadMaterials', category='answers2', courseId=course.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-down"></i></a>
-                          {%- else -%}
-                          &nbsp;<i class="font-red fa fa-exclamation"></i>
-                          {%- endif -%}
-                          <a href="{{ url_for('.uploadMaterials', category='answers2', courseId=course.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-up"></i></a>
-                        </th>
-                        <th class="text-center">
-                          学生考卷
-                          {%- if course.examination1 -%}
-                          <a href="{{ url_for('.downloadMaterials', category='examination1', courseId=course.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-down"></i></a>
-                          {%- else -%}
-                          &nbsp;<i class="font-red fa fa-exclamation"></i>
-                          {%- endif -%}
-                          <a href="{{ url_for('.uploadMaterials', category='examination1', courseId=course.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-up"></i></a>
-                        </th>
-                        <th class="text-center">
-                          成绩表
-                          {%- if course.score1 -%}
-                          <a href="{{ url_for('.downloadMaterials', category='score1', courseId=course.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-down"></i></a>
-                          {%- else -%}
-                          &nbsp;<i class="font-red fa fa-exclamation"></i>
-                          {%- endif -%}
-                          <a href="{{ url_for('.uploadMaterials', category='score1', courseId=course.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-up"></i></a>
-                        </th>
-                        <th class="text-center">
-                          补考卷
-                          {%- if course.examination2 -%}
-                          <a href="{{ url_for('.downloadMaterials', category='examination2', courseId=course.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-down"></i></a>
-                          {%- else -%}
-                          &nbsp;<i class="font-red fa fa-exclamation"></i>
-                          {%- endif -%}
-                          <a href="{{ url_for('.uploadMaterials', category='examination2', courseId=course.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-up"></i></a>
-                        </th>
-                        <th class="text-center">
-                          补考成绩表
-                          {%- if course.score2 -%}
-                          <a href="{{ url_for('.downloadMaterials', category='score2', courseId=course.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-down"></i></a>
-                          {%- else -%}
-                          &nbsp;<i class="font-red fa fa-exclamation"></i>
-                          {%- endif -%}
-                          <a href="{{ url_for('.uploadMaterials', category='score2', courseId=course.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-up"></i></a>
-                        </th>
-                        <th class="text-center">
-                          试卷分析报告
-                          {%- if course.analysis -%}
-                          <a href="{{ url_for('.downloadMaterials', category='analysis', courseId=course.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-down"></i></a>
-                          {%- else -%}
-                          &nbsp;<i class="font-red fa fa-exclamation"></i>
-                          {%- endif -%}
-                          <a href="{{ url_for('.uploadMaterials', category='analysis', courseId=course.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-up"></i></a>
-                        </th>
-                        <th class="text-center">
-                          教学小结
-                          {%- if course.summary -%}
-                          <a href="{{ url_for('.downloadMaterials', category='summary', courseId=course.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-down"></i></a>
-                          {%- else -%}
-                          &nbsp;<i class="font-red fa fa-exclamation"></i>
-                          {%- endif -%}
-                          <a href="{{ url_for('.uploadMaterials', category='summary', courseId=course.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-up"></i></a>
-                        </th>
+                        {% endfor %}
                      </tr>
                     </thead>
+                    <tbody>
+                      <tr class="heading">
+                        {% for category in cCourseMaterials.labels %}
+                        <td class="text-center">
+                          {%- if course[category] -%}
+                          <a href="{{ url_for('.downloadMaterials', category=category, courseId=course.id) }}" class="font-blue">&nbsp;<i class="fa fa-cloud-download"></i></a>
+                          {%- else -%}
+                          &nbsp;<i class="font-red fa fa-exclamation-circle"></i>
+                          {%- endif -%}
+                          <a href="{{ url_for('.uploadMaterials', category=category, courseId=course.id) }}" class="font-blue">&nbsp;<i class="fa fa-cloud-upload"></i></a>
+                        </td>
+                        {% endfor %}
+                     </tr>
+                    </tbody>
                   </table>
                 </td>
               </tr>
@@ -241,7 +125,7 @@
           <ul class="pagination">
              {% if pagination.has_previous %}
             <li>
-              <a href="{{ url_for('.all', currentPage=pagination.previous, currentTeacher=currentTeacher, currentDepartment=currentDepartment, currentSemester=currentSemester, currentSyllabusYear=currentSyllabusYear) }}">
+              <a href="{{ url_for('.taught', currentPage=pagination.previous, currentTeacher=currentTeacher, currentDepartment=currentDepartment, currentSemester=currentSemester, currentSyllabusYear=currentSyllabusYear) }}">
                 <i class="fa fa-angle-left"></i>
               </a>
             </li>
@@ -253,7 +137,7 @@
             </li>
             {% endif %}
             <li>
-              <a href="{{ url_for('.all', currentPage=1, currentTeacher=currentTeacher, currentDepartment=currentDepartment, currentSemester=currentSemester, currentSyllabusYear=currentSyllabusYear) }}"> 首页 </a>
+              <a href="{{ url_for('.taught', currentPage=1, currentTeacher=currentTeacher, currentDepartment=currentDepartment, currentSemester=currentSemester, currentSyllabusYear=currentSyllabusYear) }}"> 首页 </a>
             </li>
 
             {% for page in pagination.pages %}
@@ -261,17 +145,17 @@
               {% if page == pagination.current %}
               <a class="disabled-link font-grey-salsa" href="javascript:;"> {{ page }} </a>
               {% else %}
-              <a href="{{ url_for('.all', currentPage=page, currentTeacher=currentTeacher, currentDepartment=currentDepartment, currentSemester=currentSemester, currentSyllabusYear=currentSyllabusYear) }}"> {{ page }} </a>
+              <a href="{{ url_for('.taught', currentPage=page, currentTeacher=currentTeacher, currentDepartment=currentDepartment, currentSemester=currentSemester, currentSyllabusYear=currentSyllabusYear) }}"> {{ page }} </a>
               {% endif %}
             </li>
             {% endfor %}
 
             <li>
-              <a href="{{ url_for('.all', currentPage=pagination.page_num, currentTeacher=currentTeacher, currentDepartment=currentDepartment, currentSemester=currentSemester, currentSyllabusYear=currentSyllabusYear) }}"> 末页 </a>
+              <a href="{{ url_for('.taught', currentPage=pagination.page_num, currentTeacher=currentTeacher, currentDepartment=currentDepartment, currentSemester=currentSemester, currentSyllabusYear=currentSyllabusYear) }}"> 末页 </a>
             </li>
              {% if pagination.has_next %}
             <li>
-              <a href="{{ url_for('.all', currentPage=pagination.next, currentTeacher=currentTeacher, currentDepartment=currentDepartment, currentSemester=currentSemester, currentSyllabusYear=currentSyllabusYear) }}">
+              <a href="{{ url_for('.taught', currentPage=pagination.next, currentTeacher=currentTeacher, currentDepartment=currentDepartment, currentSemester=currentSemester, currentSyllabusYear=currentSyllabusYear) }}">
                 <i class="fa fa-angle-right"></i>
               </a>
             </li>

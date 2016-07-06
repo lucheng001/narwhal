@@ -28,9 +28,9 @@
                 <th data-ptcolumn="theory" class="text-center"> 理论学时 </th>
                 <th data-ptcolumn="laboratory" class="text-center"> 实验学时 </th>
                 <th data-ptcolumn="practice" class="text-center"> 实习周数 </th>
-                <th data-ptcolumn="syllabus" class="text-center"> 教学大纲 </th>
-                <th data-ptcolumn="evaluation" class="text-center"> 考试大纲 </th>
-                <th data-ptcolumn="plan" class="text-center"> 实习方案 </th>
+                {% for category in cProgramMaterials.labels %}
+                <th data-ptcolumn="{{ category }}" class="text-center">{{ cProgramMaterials.getMaterialName(category)[2:] }}</th>
+                {% endfor %}
                 <th data-ptcolumn="department" class="text-center"> 教研室 </th>
                 <th data-ptcolumn="syllabusYear" class="text-center"> 年 份 </th>
                 <th data-ptcolumn="operations" class="text-center"> 操 作 </th>
@@ -41,11 +41,11 @@
                 <th class="text-center"> &nbsp; </th>
                 <th class="text-center"> &nbsp; </th>
                 <th class="text-center"> &nbsp; </th>
-                <th class="text-center"> &nbsp; </th>
-                <th class="text-center"> &nbsp; </th>
-                <th class="text-center"> &nbsp; </th>
+                {% for category in cProgramMaterials.labels %}
+                <th class="text-center">&nbsp;</th>
+                {% endfor %}
                 <th class="text-center">
-                  <select class="form-control form-filter input-sm" name="currentDepartment" id="currentDepartment">
+                  <select class="bs-select form-control form-filter input-sm" name="currentDepartment" id="currentDepartment">
                     <option value="all" {% if currentDepartment == 'all' %}selected="selected"{% endif %}>全部</option>
                     {%- for department in cDepartment.choices %}
                     <option value="{{ department[0] }}"  {% if currentDepartment == department[0] %}selected{% endif %}>{{ department[1] }}</option>
@@ -53,7 +53,7 @@
                   </select>
                 </th>
                 <th class="text-center">
-                  <select class="form-control form-filter input-sm" name="currentSyllabusYear" id="currentSyllabusYear">
+                  <select class="bs-select form-control form-filter input-sm" name="currentSyllabusYear" id="currentSyllabusYear">
                     <option value="all" {% if currentSyllabusYear == 'all' %}selected="selected"{% endif %}>全部</option>
                     {%- for syllabusYear in cSyllabusYear.choices %}
                     <option value="{{ syllabusYear[0] }}"  {% if currentSyllabusYear == syllabusYear[0] %}selected{% endif %}>{{ syllabusYear[1] }}</option>
@@ -75,27 +75,15 @@
                 <td class="text-center"> {{ program.theory }} </td>
                 <td class="text-center"> {{ program.laboratory }} </td>
                 <td class="text-center"> {{ program.practice }} </td>
+                {% for category in cProgramMaterials.labels %}
                 <td class="text-center">
-                   {%- if program.syllabus -%}
-                   <a href="{{ url_for('.downloadMaterials', category='syllabus', programId=program.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-down"></i></a>
-                   {%- else -%}
-                   &nbsp;<i class="font-red fa fa-exclamation"></i>
-                   {%- endif -%}
+                  {%- if program[category] -%}
+                  <a href="{{ url_for('.downloadMaterials', category=category, programId=program.id) }}" class="font-blue">&nbsp;<i class="fa fa-cloud-download"></i></a>
+                  {%- else -%}
+                  &nbsp;<i class="font-red fa fa-exclamation-circle"></i>
+                  {%- endif -%}
                 </td>
-                <td class="text-center">
-                   {%- if program.evaluation -%}
-                   <a href="{{ url_for('.downloadMaterials', category='evaluation', programId=program.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-down"></i></a>
-                   {%- else -%}
-                   &nbsp;<i class="font-red fa fa-exclamation"></i>
-                   {%- endif -%}
-                </td>
-                <td class="text-center">
-                   {%- if program.plan -%}
-                   <a href="{{ url_for('.downloadMaterials', category='plan', programId=program.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-down"></i></a>
-                   {%- else -%}
-                   &nbsp;<i class="font-red fa fa-exclamation"></i>
-                   {%- endif -%}
-                </td>
+                {% endfor %}
                 <td class="text-center"> {{ program.getDepartmentName() }} </td>
                 <td class="text-center"> {{ program.getSyllabusYearName() }} </td>
                 <td class="text-center">
