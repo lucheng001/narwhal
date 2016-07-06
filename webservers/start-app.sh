@@ -5,6 +5,7 @@ APPDIR=$(dirname "$BASEDIR")
 VENV="$APPDIR/venv"
 
 GUNICORN="$VENV/bin/gunicorn"
+WSGIFILE="$APPDIR/wsgi.py"
 CONFIGFILE="$APPDIR/webservers/app-gunicorn-cfg.py"
 
 PIDFILE="$APPDIR/run/app.pid"
@@ -17,5 +18,5 @@ source "$VENV/bin/activate"
 
 cd "$APPDIR"
 
-$GUNICORN --config $CONFIGFILE wsgi:app
+$GUNICORN --config $CONFIGFILE $WSGIFILE:app
 
