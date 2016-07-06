@@ -187,7 +187,7 @@ class CntCourseMaterials(object):
     ANSWERS2 = _Material(u'answers2', u'09参考答案B')
     EXAMINATION1 = _Material(u'examination1', u'10学生考卷')
     SCORE1 = _Material(u'score1', u'11成绩表')
-    EXAMINATION2 = _Material(u'examination2', u'12补考卷')
+    EXAMINATION2 = _Material(u'examination2', u'12学生补考卷')
     SCORE2 = _Material(u'score2', u'13补考成绩表')
     ANALYSIS = _Material(u'analysis', u'14试卷分析报告')
     SUMMARY = _Material(u'summary', u'15教学小结')
@@ -239,7 +239,7 @@ class CntProgramMaterials(object):
 
     SYLLABUS = _Material(u'syllabus', u'01教学大纲')
     EVALUATION = _Material(u'evaluation', u'02考核大纲')
-    PLAN = _Material(u'plan', u'03实习方案')
+    PLAN = _Material(u'plan', u'03实习大纲')
 
     _objects = [SYLLABUS, EVALUATION, PLAN]
 
