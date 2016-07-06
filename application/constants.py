@@ -189,7 +189,7 @@ class CntCourseMaterials(object):
     SCORE1 = _Material(u'score1', u'11成绩表')
     EXAMINATION2 = _Material(u'examination2', u'12补考卷')
     SCORE2 = _Material(u'score2', u'13补考成绩表')
-    ANALYSIS = _Material(u'score2', u'14试卷分析报告')
+    ANALYSIS = _Material(u'analysis', u'14试卷分析报告')
     SUMMARY = _Material(u'summary', u'15教学小结')
 
     _objects = [SYLLABUS, EVALUATION, LECTURES, SCHEDULE, REPORT,
