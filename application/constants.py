@@ -239,8 +239,9 @@ class CntProgramMaterials(object):
 
     SYLLABUS = _Material(u'syllabus', u'01教学大纲')
     EVALUATION = _Material(u'evaluation', u'02考核大纲')
+    PLAN = _Material(u'evaluation', u'03实习方案')
 
-    _objects = [SYLLABUS, EVALUATION]
+    _objects = [SYLLABUS, EVALUATION, PLAN]
 
     _labels = [obj.label for obj in _objects]
     _maps = dict(zip(_labels, _objects))

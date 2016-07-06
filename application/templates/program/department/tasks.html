@@ -31,6 +31,7 @@
                 <th data-ptcolumn="practice" class="text-center"> 实习周数 </th>
                 <th data-ptcolumn="syllabus" class="text-center"> 教学大纲 </th>
                 <th data-ptcolumn="evaluation" class="text-center"> 考试大纲 </th>
+                <th data-ptcolumn="plan" class="text-center"> 实习方案 </th>
                 <th data-ptcolumn="department" class="text-center"> 教研室 </th>
                 <th data-ptcolumn="syllabusYear" class="text-center"> 年 份 </th>
                 <th data-ptcolumn="operations" class="text-center"> 操 作 </th>
@@ -38,6 +39,7 @@
               <tr class="filter">
                 <th class="text-center"> &nbsp; </th>
                 <th> &nbsp; </th>
+                <th class="text-center"> &nbsp; </th>
                 <th class="text-center"> &nbsp; </th>
                 <th class="text-center"> &nbsp; </th>
                 <th class="text-center"> &nbsp; </th>
@@ -81,6 +83,13 @@
                   &nbsp;<i class="font-red fa fa-exclamation"></i>
                   {%- endif -%}
                   <a href="{{ url_for('.uploadMaterials', category='evaluation', programId=program.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-up"></i></a
+                </td>
+                <td class="text-center">
+                   {%- if program.plan -%}
+                   <a href="{{ url_for('.downloadMaterials', category='plan', programId=program.id) }}" class="font-blue">&nbsp;<i class="fa fa-angle-double-down"></i></a>
+                   {%- else -%}
+                   &nbsp;<i class="font-red fa fa-exclamation"></i>
+                   {%- endif -%}
                 </td>
                 <td class="text-center"> {{ program.getDepartmentName() }} </td>
                 <td class="text-center"> {{ program.getSyllabusYearName() }} </td>

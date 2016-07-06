@@ -169,6 +169,7 @@ class Program(Model):
     practice = IntegerField(default=0)
     syllabus = CharField(max_length=128, null=True)
     evaluation = CharField(max_length=128, null=True)
+    plan = CharField(max_length=128, null=True)
     syllabusYear = CharField(max_length=32, index=True, choices=CntSyllabusYear.choices, default=CntSyllabusYear.Y2012.label)
     createTime = DateTimeField(default=datetime.datetime.now, formats='%Y-%m-%d %H:%M:%S')
 
