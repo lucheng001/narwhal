@@ -181,7 +181,7 @@ class CntCourseMaterials(object):
     LECTURES = _Material(u'lectures', u'03教案')
     SCHEDULE = _Material(u'schedule', u'04教学进程表')
     REPORT = _Material(u'report', u'05学生实验报告')
-    PAPERS1 = _Material(u'papers1', u'06试卷Ａ')
+    PAPERS1 = _Material(u'papers1', u'06试卷A')
     ANSWERS1 = _Material(u'answers1', u'07参考答案A')
     PAPERS2 = _Material(u'papers2', u'08试卷B')
     ANSWERS2 = _Material(u'answers2', u'09参考答案B')
