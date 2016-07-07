@@ -13,7 +13,7 @@ var deleteProgram = function() {
 
     var handleAction = function() {
         bootbox.dialog({
-            message: '确认删除该培养方案吗？',
+            message: '确认删除该课程方案吗？',
             title: '通 知',
             buttons: {
                 confirm: {

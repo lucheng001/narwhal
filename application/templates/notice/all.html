@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block page_internal_css %}
+<style type="text/css">
+.chats li {
+  font-size: 14px;
+}
+</style>
+{% endblock %}
+
+{% block page_breadcrumb_1 %}通知{% endblock %}
+{% block page_breadcrumb_2 %}最新通知{% endblock %}
+
+{% block page_title_1 %}最新通知{% endblock %}
+{% block page_title_2 %}Announcements{% endblock %}
+
+{% block page_content %}
+<div class="row">
+  <div class="col-md-12">
+    <div class="portlet light portlet-fit bordered">
+      <div class="portlet-title">
+        <div class="caption">
+          <i class="icon-settings font-blue-sharp"></i>
+          <span class="caption-subject font-blue-sharp sbold uppercase">Announcements Table</span>
+        </div>
+      </div>
+      <div class="portlet-body">
+        <div class="scroller" data-always-visible="1" data-rail-visible1="1">
+          <ul class="chats">
+            <li class="in">
+              <span class="avatar"><h4><i class="fa fa-bullhorn fa-lg"></i></h4></span>
+              <div class="message">
+                <span class="arrow"> </span>
+                <span class="name"> 计信学院 </span>
+                <span class="datetime">&nbsp;</span>
+                <span class="body">
+                  <a class="font-dark" href="{{ url_for('static', filename='notice/docs/2学院－0计算机与信息学院本科教学审核评估领导小组名单-2016-07-07.doc') }}">
+                    <i class="fa fa-file-word-o"></i>&nbsp;
+                    2学院－0计算机与信息学院本科教学审核评估领导小组名单
+                  </a>
+                </span>
+              </div>
+            </li>
+            <li class="in">
+              <span class="avatar"><h4><i class="fa fa-bullhorn fa-lg"></i></h4></span>
+              <div class="message">
+                <span class="arrow"> </span>
+                <span class="name"> 计信学院 </span>
+                <span class="datetime">&nbsp;</span>
+                <span class="body">
+                  <a class="font-dark" href="{{ url_for('static', filename='notice/docs/2学院－1自评报告撰写分工-2016-07-06.doc') }}">
+                    <i class="fa fa-file-word-o"></i>&nbsp;
+                    2学院－1自评报告撰写分工
+                  </a>
+                </span>
+              </div>
+            </li>
+            <li class="in">
+              <span class="avatar"><h4><i class="fa fa-bullhorn fa-lg"></i></h4></span>
+              <div class="message">
+                <span class="arrow"> </span>
+                <span class="name"> 计信学院 </span>
+                <span class="datetime">&nbsp;</span>
+                <span class="body">
+                  <a class="font-dark" href="{{ url_for('static', filename='notice/docs/2学院－2教学材料准备分工-2016-07-07.doc') }}">
+                    <i class="fa fa-file-word-o"></i>&nbsp;
+                    2学院－2教学材料准备分工
+                  </a>
+                </span>
+              </div>
+            </li>
+            <li class="in">
+              <span class="avatar"><h4><i class="fa fa-bullhorn fa-lg"></i></h4></span>
+              <div class="message">
+                <span class="arrow"> </span>
+                <span class="name"> 计信学院 </span>
+                <span class="datetime">&nbsp;</span>
+                <span class="body">
+                  <a class="font-dark" href="{{ url_for('static', filename='notice/docs/2学院－2教学材料准备分工-2016-07-07.doc') }}">
+                    <i class="fa fa-file-word-o"></i>&nbsp;
+                    2学院－3各类人员任务清单及详细要求（第二版）
+                  </a>
+                </span>
+              </div>
+            </li>
+            <li class="in">
+              <span class="avatar"><h4><i class="fa fa-bullhorn fa-lg"></i></h4></span>
+              <div class="message">
+                <span class="arrow"> </span>
+                <span class="name"> 计信学院 </span>
+                <span class="datetime">&nbsp;</span>
+                <span class="body">
+                  <a class="font-dark" href="{{ url_for('static', filename='notice/docs/2学院－0关于2016年本科审核评估工作的奖惩办法（修改稿）-2016-07-07.docx') }}">
+                    <i class="fa fa-file-word-o"></i>&nbsp;
+                    2学院－0关于2016年本科审核评估工作的奖惩办法（修改稿）
+                  </a>
+                </span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

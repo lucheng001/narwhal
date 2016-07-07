@@ -255,6 +255,17 @@
           </a>
         </li>
         {% endif %}
+        <li class="heading">
+          <h3 class="uppercase">评估通知</h3>
+        </li>
+        {% if current_user.hasPermission(cPermission.NORMAL) %}
+        <li class="nav-item">
+          <a href="{{ url_for('bpNotice.all') }}" class="nav-link">
+            <i class="icon-puzzle"></i>
+            <span class="title">最新通知</span>
+          </a>
+        </li>
+        {% endif %}
       </ul>
       <!-- END SIDEBAR MENU -->
     </div>
