@@ -48,7 +48,7 @@ def addByBatch():
                 name=name,
                 theory=int(theory),
                 laboratory=int(laboratory),
-                practice=int(practice),
+                practice=round(float(practice), 1),
                 department=departmentLable,
                 syllabusYear=syllabusYear
             )
@@ -70,7 +70,7 @@ def addByBatch():
                 badData.append(line)
                 continue
 
-            p = u'{name}-{theory:03d}+{laboratory:03d}+{practice:03d}'
+            p = u'{name}-{theory:03d}+{laboratory:03d}+{practice:.1f}'
             filePath = os.path.join(current_app.config['APP_PROGRAM_FOLDER'],
                                     syllabusYear, departmentName,
                                     p.format(**programDict))
@@ -97,7 +97,7 @@ def addByBatch():
             if current_user.hasPermission(CntPermission.COLLEGE):
                 return redirect(url_for('.all'))
             elif current_user.hasPermission(CntPermission.DEPARTMENT):
-                return redirect(url_for('.task'))
+                return redirect(url_for('.tasks'))
             else:
                 abort(403)
 

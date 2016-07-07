@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from flask_wtf import Form
-from wtforms import StringField, SelectField, TextAreaField, IntegerField
+from wtforms import StringField, SelectField, TextAreaField, IntegerField, DecimalField
 from wtforms.validators import DataRequired, InputRequired, Length, NumberRange
 from ..constants import CntDepartment, CntSyllabusYear
 
@@ -35,11 +35,11 @@ class AddProgramForm(Form):
             NumberRange(min=0, message=u'不能小于零.')
         ]
     )
-    practice = IntegerField(
+    practice = DecimalField(
         u'实习周数',
         validators=[
             InputRequired(u'实习周数不能为空.'),
-            NumberRange(min=0, message=u'不能小于零.')
+            NumberRange(min=0.0, max=99.9, message=u'范围错误.')
         ]
     )
     syllabusYear = SelectField(
@@ -53,9 +53,9 @@ class AddProgramForm(Form):
 
 class AddProgramDataForm(Form):
     programData = TextAreaField(
-        u'培养方案数据',
+        u'课程方案数据',
         validators=[
-            DataRequired(u'培养方案数据不能为空.')
+            DataRequired(u'课程方案数据不能为空.')
         ]
     )
 

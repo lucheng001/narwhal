@@ -166,7 +166,7 @@ class Program(Model):
     department = CharField(max_length=32, index=True)
     theory = IntegerField(default=0)
     laboratory = IntegerField(default=0)
-    practice = IntegerField(default=0)
+    practice = DecimalField(default=0.0, max_digits=4, decimal_places=2)
     syllabus = CharField(max_length=128, null=True)
     evaluation = CharField(max_length=128, null=True)
     plan = CharField(max_length=128, null=True)
@@ -182,7 +182,7 @@ class Program(Model):
         return material
 
     def getMaterialNamePattern(self, category):
-        pattern = u'-{name}-{theory:03d}+{laboratory:03d}+{practice:03d}'
+        pattern = u'-{name}-{theory:03d}+{laboratory:03d}+{practice:.1f}'
         material = pattern.format(
             name=self.name,
             theory=self.theory,
@@ -194,7 +194,7 @@ class Program(Model):
         return u''.join(tpl)
 
     def getFolder(self):
-        pattern = u'{name}-{theory:03d}+{laboratory:03d}+{practice:03d}'
+        pattern = u'{name}-{theory:03d}+{laboratory:03d}+{practice:.1f}'
         folder = pattern.format(
             name=self.name,
             theory=self.theory,

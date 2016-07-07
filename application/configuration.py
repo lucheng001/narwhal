@@ -26,7 +26,7 @@ class Configuration(object):
     APP_PROGRAM_TPL = os.path.join(APP_UPLOAD_FOLDER, u'.tpl', u'program')
     APP_COURSE_FOLDER = os.path.join(APP_UPLOAD_FOLDER, u'课堂教学')
     APP_PRACTICE_FOLDER = os.path.join(APP_UPLOAD_FOLDER, u'实践教学')
-    APP_PROGRAM_FOLDER = os.path.join(APP_UPLOAD_FOLDER, u'培养方案')
+    APP_PROGRAM_FOLDER = os.path.join(APP_UPLOAD_FOLDER, u'课程方案')
 
     @staticmethod
     def init_app(app):
