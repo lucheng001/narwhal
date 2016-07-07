@@ -43,7 +43,7 @@ group4 = [
     ('lisha',             '李莎',      CntGender.FEMALE.label),
     ('luning',            '鲁宁',      CntGender.MALE.label),
     ('luying',            '鲁莹',      CntGender.FEMALE.label),
-    ('miaocheng',         '苗晟',      CntGender.MALE.label),
+    ('miaosheng',         '苗晟',      CntGender.MALE.label),
     ('qiangzhenping',     '强振平',    CntGender.MALE.label),
     ('qinmingming',       '秦明明',    CntGender.MALE.label),
     ('rongjian',          '荣剑',     CntGender.MALE.label),
