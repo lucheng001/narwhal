@@ -31,8 +31,11 @@ def addByBatch():
                 badData.append(line)
                 continue
 
-            data2 = [re.sub('[\s+]', '', d) for d in data1]
-            data = [re.sub('[()]', '', d) for d in data2]
+            data2 = [re.sub(u'[\s+]', u'', d) for d in data1]
+            data3 = [re.sub(u'[()]', u'', d) for d in data2]
+            data4 = [re.sub(u'[（）]', u'', d) for d in data3]
+            data5 = [re.sub(u'[-]', u'', d) for d in data4]
+            data = [re.sub(u'[_]', u'', d) for d in data5]
             name, theory, laboratory, practice, departmentName, syllabusYear = data
 
             departmentLable = u''
