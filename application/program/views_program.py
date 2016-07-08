@@ -34,8 +34,7 @@ def addByBatch():
             data2 = [re.sub(u'[\s+]', u'', d) for d in data1]
             data3 = [re.sub(u'[()]', u'', d) for d in data2]
             data4 = [re.sub(u'[（）]', u'', d) for d in data3]
-            data5 = [re.sub(u'[-]', u'', d) for d in data4]
-            data = [re.sub(u'[_]', u'', d) for d in data5]
+            data = [re.sub(u'[_]', u'', d) for d in data4]
             name, theory, laboratory, practice, departmentName, syllabusYear = data
 
             departmentLable = u''
