@@ -19,7 +19,7 @@ group2 = [
 group3 = [
    ('zhaojiagang',  '赵家刚',   CntGender.MALE.label),
    ('xuquanyuan',   '徐全元',   CntGender.MALE.label),
-   ('lvdanjie',     '吕丹桔',   CntGender.FEMALE.label),
+   ('lvdanjv',      '吕丹桔',   CntGender.FEMALE.label),
    ('hukunrong',    '胡坤融',   CntGender.FEMALE.label),
    ('kouweili',     '寇卫利',   CntGender.MALE.label)
 ]
