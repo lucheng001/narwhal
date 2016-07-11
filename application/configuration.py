@@ -8,7 +8,7 @@ class Configuration(object):
     BASE_DIR = os.path.abspath(os.path.dirname(APP_DIR))
     DATABASE = 'postgresql://narwhal:1234qwer@127.0.0.1:5432/narwhal'
     SECRET_KEY = 'ZVRymCEV7NRSpujp'
-    MAX_CONTENT_LENGTH = 256 * 1024 * 1024
+    MAX_CONTENT_LENGTH = 512 * 1024 * 1024
     APP_LOG_DIR = os.path.join(BASE_DIR, 'logs')
     APP_LOG_INFO = 'info.app.log'
     APP_LOG_ERROR = 'error.app.log'
