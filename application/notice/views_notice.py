@@ -14,7 +14,7 @@ from ..models import Notice
 from .forms_notice import AddNoticeForm
 from . import bpNotice
 
-_all_ = ['all', 'add', 'delete']
+_all_ = ['add', 'delete']
 
 
 @bpNotice.route('/add', methods=['GET', 'POST'])
@@ -53,7 +53,7 @@ def add():
         flash(u'通知发布成功', 'success')
         return redirect(url_for('.all'))
 
-    return render_template('notice/add.html', form=form)
+    return render_template('notice/college/add.html', form=form)
 
 
 @bpNotice.route('/delete/<int:noticeId>', methods=['GET'])

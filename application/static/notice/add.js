@@ -1,4 +1,4 @@
-var addUser = function() {
+var addNotice = function() {
 
     // basic validation
     var handleValidation = function() {
@@ -87,5 +87,5 @@ var addUser = function() {
 }();
 
 jQuery(document).ready(function() {
-    addUser.init();
+    addNotice.init();
 });

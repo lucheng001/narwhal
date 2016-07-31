@@ -13,7 +13,12 @@ _all_ = ['CntAllowedExtensions',
 
 
 class CntAllowedExtensions(object):
-    _extensions = ['txt', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'pdf', 'rar', 'zip', 'jpg', 'png', 'bmp']
+    TEXT_TYPE = ['txt', 'pdf', 'nfo']
+    MSOFFICE_TYPE = ['doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx']
+    IMAGE_TYPE = ['bmp', 'gif', 'jpg', 'jpeg', 'png', 'svg']
+    COMPRESS_TYPE = ['7z', 'rar', 'zip', 'bz2', 'gz', 'tar']
+
+    _extensions = TEXT_TYPE + MSOFFICE_TYPE + IMAGE_TYPE + COMPRESS_TYPE
     _objects = list(set(_extensions + [ext.upper() for ext in _extensions]))
 
     choices = _objects
