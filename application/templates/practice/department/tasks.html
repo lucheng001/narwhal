@@ -101,7 +101,7 @@
                           {%- if practice[category] -%}
                           <a href="{{ url_for('.downloadMaterials', category=category, practiceId=practice.id) }}" class="font-blue">&nbsp;<i class="fa fa-cloud-download"></i></a>
                           {%- else -%}
-                          &nbsp;<i class="hide font-red fa fa-exclamation-circle"></i>
+                          &nbsp;<i class="font-red fa fa-exclamation-circle"></i>
                           {%- endif -%}
                         </td>
                         {% endfor %}
