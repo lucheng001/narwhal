@@ -63,7 +63,7 @@ def taught():
                            programs=programs)
 
 
-@bpProgram.route('/download/materials/<category>/<int:programId>/', methods=['GET'])
+@bpProgram.route('/download/materials/<category>/<int:programId>', methods=['GET'])
 @login_required
 @permission_required(CntPermission.NORMAL)
 def downloadMaterials(category, programId):

@@ -77,7 +77,7 @@ def taught():
                            courses=courses, semesters=semesters)
 
 
-@bpCourse.route('/upload/materials/<category>/<int:courseId>/', methods=['GET', 'POST'])
+@bpCourse.route('/upload/materials/<category>/<int:courseId>', methods=['GET', 'POST'])
 @login_required
 @permission_required(CntPermission.NORMAL)
 def uploadMaterials(category, courseId):
@@ -133,7 +133,7 @@ def uploadMaterials(category, courseId):
                            course=course, category=category)
 
 
-@bpCourse.route('/download/materials/<category>/<int:courseId>/', methods=['GET'])
+@bpCourse.route('/download/materials/<category>/<int:courseId>', methods=['GET'])
 @login_required
 @permission_required(CntPermission.NORMAL)
 def downloadMaterials(category, courseId):
@@ -174,7 +174,7 @@ def downloadMaterials(category, courseId):
                                attachment_filename=encodeFileName)
 
 
-@bpCourse.route('/archive/<int:courseId>/', methods=['GET', 'POST'])
+@bpCourse.route('/archive/<int:courseId>', methods=['GET', 'POST'])
 @login_required
 @permission_required(CntPermission.NORMAL)
 def archiveCourse(courseId):

@@ -106,7 +106,7 @@ def addByBatch():
     return render_template('program/program/addByBatch.html', form=form)
 
 
-@bpProgram.route('/delete/<int:programId>/', methods=['GET'])
+@bpProgram.route('/delete/<int:programId>', methods=['GET'])
 @login_required
 @permission_required(CntPermission.PROGRAM)
 def delete(programId):

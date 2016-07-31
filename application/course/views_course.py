@@ -112,7 +112,7 @@ def addByBatch():
     return render_template('course/course/addByBatch.html', form=form)
 
 
-@bpCourse.route('/delete/<int:courseId>/', methods=['GET'])
+@bpCourse.route('/delete/<int:courseId>', methods=['GET'])
 @login_required
 @permission_required(CntPermission.COURSE)
 def delete(courseId):

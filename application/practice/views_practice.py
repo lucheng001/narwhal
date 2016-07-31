@@ -112,7 +112,7 @@ def addByBatch():
     return render_template('practice/practice/addByBatch.html', form=form)
 
 
-@bpPractice.route('/delete/<int:practiceId>/', methods=['GET'])
+@bpPractice.route('/delete/<int:practiceId>', methods=['GET'])
 @login_required
 @permission_required(CntPermission.PRACTICE)
 def delete(practiceId):

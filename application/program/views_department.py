@@ -69,7 +69,7 @@ def tasks():
                            programs=programs)
 
 
-@bpProgram.route('/upload/materials/<category>/<int:programId>/', methods=['GET', 'POST'])
+@bpProgram.route('/upload/materials/<category>/<int:programId>', methods=['GET', 'POST'])
 @login_required
 @permission_required(CntPermission.DEPARTMENT)
 def uploadMaterials(category, programId):

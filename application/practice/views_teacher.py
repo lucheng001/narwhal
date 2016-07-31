@@ -77,7 +77,7 @@ def taught():
                            practices=practices, semesters=semesters)
 
 
-@bpPractice.route('/upload/materials/<category>/<int:practiceId>/', methods=['GET', 'POST'])
+@bpPractice.route('/upload/materials/<category>/<int:practiceId>', methods=['GET', 'POST'])
 @login_required
 @permission_required(CntPermission.NORMAL)
 def uploadMaterials(category, practiceId):
@@ -133,7 +133,7 @@ def uploadMaterials(category, practiceId):
                            practice=practice, category=category)
 
 
-@bpPractice.route('/download/materials/<category>/<int:practiceId>/', methods=['GET'])
+@bpPractice.route('/download/materials/<category>/<int:practiceId>', methods=['GET'])
 @login_required
 @permission_required(CntPermission.NORMAL)
 def downloadMaterials(category, practiceId):
@@ -174,7 +174,7 @@ def downloadMaterials(category, practiceId):
                                attachment_filename=encodeFileName)
 
 
-@bpPractice.route('/archive/<int:practiceId>/', methods=['GET', 'POST'])
+@bpPractice.route('/archive/<int:practiceId>', methods=['GET', 'POST'])
 @login_required
 @permission_required(CntPermission.NORMAL)
 def archivePractice(practiceId):

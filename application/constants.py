@@ -140,7 +140,9 @@ class _CntRoleSecretary(object):
                    CntPermission.PRACTICE |
                    CntPermission.PROGRAM |
                    CntPermission.COLLEGE |
-                   CntPermission.USER)
+                   CntPermission.USER|
+                   CntPermission.NOTICE |
+                   CntPermission.SUPPORT)
 
 
 class _CntRoleDirector(object):
