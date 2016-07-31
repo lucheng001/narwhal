@@ -93,14 +93,16 @@ class CntDepartment(object):
 
 
 class CntPermission(object):
-    NOPERMISSION = 0b00000000
-    NORMAL       = 0b00000001
-    COURSE       = 0b00000010
-    PRACTICE     = 0b00000100
-    PROGRAM      = 0b00001000
-    DEPARTMENT   = 0b00010000
-    COLLEGE      = 0b00100000
-    USER         = 0b01000000
+    NOPERMISSION = 0b000000000000
+    NORMAL       = 0b000000000001
+    COURSE       = 0b000000000010
+    PRACTICE     = 0b000000000100
+    PROGRAM      = 0b000000001000
+    DEPARTMENT   = 0b000000010000
+    COLLEGE      = 0b000000100000
+    USER         = 0b000001000000
+    NOTICE       = 0b000010000000
+    SUPPORT      = 0b000100000000
 
 
 class _CntRoleAdministrator(object):
@@ -112,7 +114,9 @@ class _CntRoleAdministrator(object):
                    CntPermission.PROGRAM |
                    CntPermission.DEPARTMENT |
                    CntPermission.COLLEGE |
-                   CntPermission.USER)
+                   CntPermission.USER |
+                   CntPermission.NOTICE |
+                   CntPermission.SUPPORT)
 
 
 class _CntRoleLeader(object):
@@ -123,7 +127,9 @@ class _CntRoleLeader(object):
                    CntPermission.PRACTICE |
                    CntPermission.PROGRAM |
                    CntPermission.COLLEGE |
-                   CntPermission.USER)
+                   CntPermission.USER |
+                   CntPermission.NOTICE |
+                   CntPermission.SUPPORT)
 
 
 class _CntRoleSecretary(object):

@@ -219,4 +219,16 @@ class Program(Model):
         database = db.database
 
 
+class Notice(Model):
+    id = PrimaryKeyField()
+    creator = ForeignKeyField(User)
+    name = CharField(max_length=256, index=True)
+    fileInfo = CharField(max_length=256)
+    createTime = DateTimeField(default=datetime.datetime.now, formats='%Y-%m-%d %H:%M:%S')
+
+    class Meta:
+        database = db.database
+
+
+
 

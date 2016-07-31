@@ -266,6 +266,14 @@
           </a>
         </li>
         {% endif %}
+        {% if current_user.hasPermission(cPermission.NOTICE) %}
+        <li class="nav-item">
+          <a href="{{ url_for('bpNotice.add') }}" class="nav-link">
+            <i class="icon-plus"></i>
+            <span class="title">添加通知</span>
+          </a>
+        </li>
+        {% endif %}
       </ul>
       <!-- END SIDEBAR MENU -->
     </div>

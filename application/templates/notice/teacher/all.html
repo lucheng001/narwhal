@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{% block page_internal_css %}
+<style type="text/css">
+.chats li {
+  font-size: 14px;
+}
+</style>
+{% endblock %}
+
+{% block page_breadcrumb_1 %}通知{% endblock %}
+{% block page_breadcrumb_2 %}最新通知{% endblock %}
+
+{% block page_title_1 %}最新通知{% endblock %}
+{% block page_title_2 %}Announcements{% endblock %}
+
+{% block page_content %}
+<div class="row">
+  <div class="col-md-12">
+    <div class="portlet light portlet-fit bordered">
+      <div class="portlet-title">
+        <div class="caption">
+          <i class="icon-settings font-blue-sharp"></i>
+          <span class="caption-subject font-blue-sharp sbold uppercase">Announcements Table</span>
+        </div>
+      </div>
+      <div class="portlet-body">
+        <div class="scroller" data-always-visible="1" data-rail-visible1="1">
+          {% if notices %}
+          <ul class="chats">
+            {% for notice in notices %}
+            <li class="in">
+              <span class="avatar"><h4><i class="fa fa-bullhorn fa-lg"></i></h4></span>
+              <div class="message">
+                <span class="arrow"> </span>
+                <span class="name">{{ notice.creator.chineseName }}</span>
+                <span class="datetime"> - {{ notice.createTime.strftime('%Y-%m-%d %H:%M') }}</span>
+                <span class="body">
+                    <i class="fa fa-file-word-o"></i>&nbsp;
+                  <a class="font-dark" href="{{ url_for('.download', noticeId=notice.id) }}">
+                    {{ notice.name }}
+                  </a>
+                </span>
+              </div>
+            </li>
+            {% endfor %}
+          </ul>
+          {% else %}
+          <div class="text-center padding-tb-20">
+            <h4>暂无数据</h4>
+          </div>
+          {% endif %}
+        {% if pagination.page_num > 1 %}
+        <div class="text-center">
+          <ul class="pagination">
+             {% if pagination.has_previous %}
+            <li>
+              <a href="{{ url_for('.all', currentPage=pagination.previous) }}">
+                <i class="fa fa-angle-left"></i>
+              </a>
+            </li>
+            {% else %}
+            <li>
+              <a href="javascript:;" class="disabled-link">
+                <i class="fa fa-angle-left"></i>
+              </a>
+            </li>
+            {% endif %}
+            <li>
+              <a href="{{ url_for('.all', currentPage=1) }}"> 首页 </a>
+            </li>
+
+            {% for page in pagination.pages %}
+            <li>
+              {% if page == pagination.current %}
+              <a class="disabled-link font-grey-salsa" href="javascript:;"> {{ page }} </a>
+              {% else %}
+              <a href="{{ url_for('.all', currentPage=page) }}"> {{ page }} </a>
+              {% endif %}
+            </li>
+            {% endfor %}
+
+            <li>
+              <a href="{{ url_for('.all', currentPage=pagination.page_num) }}"> 末页 </a>
+            </li>
+             {% if pagination.has_next %}
+            <li>
+              <a href="{{ url_for('.all', currentPage=pagination.next) }}">
+                <i class="fa fa-angle-right"></i>
+              </a>
+            </li>
+            {% else %}
+            <li>
+              <a href="javascript:;" class="disabled-link">
+                <i class="fa fa-angle-right"></i>
+              </a>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+        {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

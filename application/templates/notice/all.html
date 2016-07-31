@@ -97,10 +97,30 @@
                 </span>
               </div>
             </li>
+            {% for notice in notices %}
+            <li class="in">
+              <span class="avatar"><h4><i class="fa fa-bullhorn fa-lg"></i></h4></span>
+              <div class="message">
+                <span class="arrow"> </span>
+                <span class="name">{{ notice.creator.chineseName }}</span>
+                <span class="datetime"> - {{ notice.createTime.strftime('%Y-%m-%d %H:%M') }}</span>
+                <span class="body">
+                  <a class="font-dark" href="{{ url_for('.download', noticeId=notice.id) }}">
+                    <i class="fa fa-file-word-o"></i>&nbsp;
+                    {{ notice.name }}
+                  </a>
+                </span>
+              </div>
+            </li>
+            {% endfor %}
           </ul>
         </div>
       </div>
     </div>
   </div>
 </div>
+{% endblock %}
+
+{% block page_external_script %}
+<script src="{{ url_for('static', filename='notice/delete.js') }}" type="text/javascript"></script>
 {% endblock %}
