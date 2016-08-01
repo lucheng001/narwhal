@@ -230,5 +230,38 @@ class Notice(Model):
         database = db.database
 
 
+class Support(Model):
+    id = PrimaryKeyField()
+    parent = ForeignKeyField('self', null=True)
+    creator = ForeignKeyField(User)
+    name = CharField(max_length=1024, index=True)
+    isDirectory = BooleanField(default=True)
+    createTime = DateTimeField(default=datetime.datetime.now, formats='%Y-%m-%d %H:%M:%S')
+
+    def getParentDirectory(self):
+        if self.parent is None:
+            return u''
+        p = self.parent
+        return p.name
+
+    def getRelativePath(self):
+        if self.parent is None:
+            return u''
+
+        p = self.parent
+        if not self.isDirectory:
+            return p.getRelativePath()
+        else:
+            return os.path.join(p.getRelativePath(), self.name)
+
+    def getIcon(self):
+        tpl = u'<i class="fa fa-{icon}"></i>'
+        if self.isDirectory:
+            return tpl.format(icon=u'folder-o')
+        else:
+            return tpl.format(icon=u'file-o')
+
+    class Meta:
+        database = db.database
 
 

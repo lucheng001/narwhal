@@ -71,3 +71,21 @@ VALUES
 
 COMMIT;
 ```
+
+```sql
+INSERT INTO "public"."support"(
+	"parent_id",
+	"creator_id",
+	"name",
+	"isDirectory",
+	"createTime"
+)
+VALUES
+	(
+		NULL,
+		'1',
+		'ROOT',
+		't',
+		'2016-07-31 00:00:00'
+	) RETURNING *;
+```

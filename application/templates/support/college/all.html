@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block page_internal_css %}
+<style type="text/css">
+.chats li {
+  font-size: 16px;
+}
+</style>
+{% endblock %}
+
+{% block page_breadcrumb_1 %}通知{% endblock %}
+{% block page_breadcrumb_2 %}最新通知{% endblock %}
+
+{% block page_title_1 %}最新通知{% endblock %}
+{% block page_title_2 %}Announcements{% endblock %}
+
+{% block page_content %}
+<div class="row">
+  <div class="col-md-12">
+    <div class="portlet light portlet-fit bordered">
+      <div class="portlet-title">
+        <div class="caption">
+          <i class="icon-settings font-blue-sharp"></i>
+          <span class="caption-subject font-blue-sharp sbold uppercase">Announcements Table</span>
+        </div>
+      </div>
+      <div class="portlet-body">
+        <div class="row">
+          <div class="col-md-8">
+            <span>路径信息: <code>/{{ parent.getRelativePath() }}</code></span>
+          </div>
+          <div class="col-md-4 text-right">
+            <a href="{{ url_for('.addDirectory', parentId=parent.id) }}" class="btn btn-xs green"> 创建文件夹 </a>
+            <a href="{{ url_for('.addFile', parentId=parent.id) }}" class="btn btn-xs blue"> 上传文件 </a>
+          </div>
+        </div>
+        <hr>
+        <div class="table-scrollable">
+          <table id="table" class="table table-hover table-striped">
+            <thead class="">
+              <tr class="heading">
+                <th> 名 称 </th>
+                <th class="text-center"> 创建时间 </th>
+                <th class="text-center"> 创建人 </th>
+                <th class="text-center"> 操 作 </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                {% if parent.id != 1%}
+                <td>
+                  <a href="{{ url_for('.all', parentId=parent.parent_id) }}">
+                  <i class="fa fa-angle-double-up"></i> 上层目录
+                  </a>
+                </td>
+                <td class="text-center"> - </td>
+                <td class="text-center"> - </td>
+                <td class="text-center"> - </td>
+                {% endif %}
+              </tr>
+              {% for support in supports %}
+                <td>
+                  {% if support.isDirectory %}
+                  <a href="{{ url_for('.all', parentId=support.id) }}">
+                  {{ support.getIcon()|safe }} {{ support.name }}
+                  </a>
+                  {% else %}
+                  <a href="{{ url_for('.downloadFile', supportId=support.id) }}">
+                  {{ support.getIcon()|safe }} {{ support.name }}
+                  {% endif %}
+                </td>
+                <td class="text-center"> {{ support.createTime.strftime('%Y-%m-%d %H:%M') }} </td>
+                <td class="text-center"> {{ support.creator.chineseName }} </td>
+                <td class="text-center">
+                  <div class="btn-group btn-group-xs btn-group-solid">
+                  {% if support.isDirectory %}
+                    <button data-supportId="{{ support.id }}" class="deleteDirectory btn btn-outline red">删除</button>
+                    {% else %}
+                    <button data-supportId="{{ support.id }}" class="deleteFile btn btn-outline red">删除</button>
+                    {% endif %}
+                  </div>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block page_external_script %}
+<script src="{{ url_for('static', filename='support/script/deleteDirectory.js') }}" type="text/javascript"></script>
+<script src="{{ url_for('static', filename='support/script/deleteFile.js') }}" type="text/javascript"></script>
+{% endblock %}
+
+{% block page_internal_script %}
+<script type="text/javascript">
+  jQuery(document).ready(function() {
+
+    deleteDirectory.setActionUrl('/support/delete/directory/');
+    deleteDirectory.init();
+
+    deleteFile.setActionUrl('/support/delete/file/');
+    deleteFile.init();
+
+  });
+</script>
+{% endblock %}

@@ -75,6 +75,9 @@ def configure_blueprints(app):
     from .notice import bpNotice as noticeBlueprint
     app.register_blueprint(noticeBlueprint, url_prefix='/notice')
 
+    from .support import bpSupport as supportBlueprint
+    app.register_blueprint(supportBlueprint, url_prefix='/support')
+
 
 def configure_context_processors(app):
     """Configures the context processors."""

@@ -238,20 +238,14 @@
           </a>
         </li>
         {% endif %}
-        {% if current_user.hasPermission(cPermission.USER) %}
         <li class="heading">
-          <h3 class="uppercase">用户管理</h3>
+          <h3 class="uppercase">支撑材料</h3>
         </li>
+        {% if current_user.hasPermission(cPermission.SUPPORT) %}
         <li class="nav-item">
-          <a href="{{ url_for('bpUser.all') }}" class="nav-link">
-            <i class="icon-users"></i>
-            <span class="title">用户列表</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="{{ url_for('bpUser.add') }}" class="nav-link">
-            <i class="icon-user-follow"></i>
-            <span class="title">添加用户</span>
+          <a href="{{ url_for('bpSupport.all', parentId=1) }}" class="nav-link">
+            <i class="icon-layers"></i>
+            <span class="title">材料列表</span>
           </a>
         </li>
         {% endif %}
@@ -271,6 +265,23 @@
           <a href="{{ url_for('bpNotice.add') }}" class="nav-link">
             <i class="icon-plus"></i>
             <span class="title">添加通知</span>
+          </a>
+        </li>
+        {% endif %}
+        {% if current_user.hasPermission(cPermission.USER) %}
+        <li class="heading">
+          <h3 class="uppercase">用户管理</h3>
+        </li>
+        <li class="nav-item">
+          <a href="{{ url_for('bpUser.all') }}" class="nav-link">
+            <i class="icon-users"></i>
+            <span class="title">用户列表</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ url_for('bpUser.add') }}" class="nav-link">
+            <i class="icon-user-follow"></i>
+            <span class="title">添加用户</span>
           </a>
         </li>
         {% endif %}
@@ -317,7 +328,7 @@
         {% elif category == 'warning' %}
           <div class="note note-warning">
           <h4>警告：</h4>
-          <p>{{ messagev }}</p>
+          <p>{{ message }}</p>
           </div>
         {% elif category == 'success' %}
           <div class="note note-success">
