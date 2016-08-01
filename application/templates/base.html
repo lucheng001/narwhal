@@ -238,10 +238,10 @@
           </a>
         </li>
         {% endif %}
+        {% if current_user.hasPermission(cPermission.SUPPORT) %}
         <li class="heading">
           <h3 class="uppercase">支撑材料</h3>
         </li>
-        {% if current_user.hasPermission(cPermission.SUPPORT) %}
         <li class="nav-item">
           <a href="{{ url_for('bpSupport.all', parentId=1) }}" class="nav-link">
             <i class="icon-layers"></i>
