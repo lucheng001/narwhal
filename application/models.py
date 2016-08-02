@@ -238,12 +238,6 @@ class Support(Model):
     isDirectory = BooleanField(default=True)
     createTime = DateTimeField(default=datetime.datetime.now, formats='%Y-%m-%d %H:%M:%S')
 
-    def getParentDirectory(self):
-        if self.parent is None:
-            return u''
-        p = self.parent
-        return p.name
-
     def getRelativePath(self):
         if self.parent is None:
             return u''
@@ -255,11 +249,33 @@ class Support(Model):
             return os.path.join(p.getRelativePath(), self.name)
 
     def getIcon(self):
-        tpl = u'<i class="fa fa-{icon}"></i>'
+        tpl = '<i class="fa fa-{icon}"></i>'
+        mp = {'txt': 'file-text-o',
+              'pdf': 'file-pdf-o',
+              'doc': 'file-word-o',
+              'docx': 'file-word-o',
+              'xls': 'file-excel-o',
+              'xlsx': 'file-excel-o',
+              'ppt': 'file-powerpoint-o',
+              'pptx': 'file-powerpoint-o',
+              'bmp': 'file-image-o',
+              'gif': 'file-image-o',
+              'jpg': 'file-image-o',
+              'jpeg': 'file-image-o',
+              'png': 'file-image-o',
+              'svg': 'file-image-o',
+              '7z': 'file-archive-o',
+              'rar': 'file-archive-o',
+              'zip': 'file-archive-o',
+              'bz2': 'file-archive-o',
+              'gz': 'file-archive-o',
+              'tar': 'file-archive-o'}
         if self.isDirectory:
-            return tpl.format(icon=u'folder-o')
+            return tpl.format(icon='folder-o')
         else:
-            return tpl.format(icon=u'file-o')
+            ext = self.name.split('.')[-1].lower()
+            icon = mp.get(ext, 'file-o')
+            return tpl.format(icon=icon)
 
     class Meta:
         database = db.database

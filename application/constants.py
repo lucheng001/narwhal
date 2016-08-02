@@ -13,7 +13,7 @@ _all_ = ['CntAllowedExtensions',
 
 
 class CntAllowedExtensions(object):
-    TEXT_TYPE = ['txt', 'pdf', 'nfo']
+    TEXT_TYPE = ['txt', 'pdf']
     MSOFFICE_TYPE = ['doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx']
     IMAGE_TYPE = ['bmp', 'gif', 'jpg', 'jpeg', 'png', 'svg']
     COMPRESS_TYPE = ['7z', 'rar', 'zip', 'bz2', 'gz', 'tar']
