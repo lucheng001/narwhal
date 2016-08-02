@@ -243,10 +243,10 @@ class Support(Model):
             return u''
 
         p = self.parent
-        if not self.isDirectory:
-            return p.getRelativePath()
-        else:
+        if self.isDirectory:
             return os.path.join(p.getRelativePath(), self.name)
+        else:
+            return p.getRelativePath()
 
     def getIcon(self):
         tpl = '<i class="fa fa-{icon}"></i>'
