@@ -23,8 +23,6 @@
             <span>路径信息: <code>/{{ parent.getRelativePath() }}</code></span>
           </div>
           <div class="col-md-4 text-right">
-            <a href="{{ url_for('.addDirectory', parentId=parent.id) }}" class="btn btn-xs green"> 创建文件夹 </a>
-            <a href="{{ url_for('.addFile', parentId=parent.id) }}" class="btn btn-xs blue"> 上传文件 </a>
           </div>
         </div>
         <hr>
