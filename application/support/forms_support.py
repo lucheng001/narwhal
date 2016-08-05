@@ -22,7 +22,7 @@ class AddDirectoryForm(Form):
     def validate_name(form, filed):
         regx = re.compile(r'/+|\\+|\?+|%+|\*+|:+|\|+|\.+|\s+')
         if re.search(regx, filed.data):
-            raise ValidationError(u'名称不合法.')
+            raise ValidationError(u'名称含有非法字符.')
 
 
 class AddFileForm(Form):
@@ -45,7 +45,7 @@ class AddFileForm(Form):
     def validate_name(form, filed):
         regx = re.compile(r'/+|\\+|\?+|%+|\*+|:+|\|+|\.+|\s+')
         if re.search(regx, filed.data):
-            raise ValidationError(u'名称不合法.')
+            raise ValidationError(u'名称含有非法字符.')
 
 
 
