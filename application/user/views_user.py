@@ -97,6 +97,7 @@ def add():
         User.create(
             userName=re.sub('[\s+]', '', form.userName.data),
             chineseName=re.sub('[\s+]', '', form.chineseName.data),
+            gender=form.gender.data,
             role=form.role.data,
             permission=CntRoles.getRolePermission(form.role.data),
             password=form.password.data,
