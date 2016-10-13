@@ -7,7 +7,7 @@ from werkzeug.security import check_password_hash
 from peewee import *
 from .extensions import db
 from .constants import (CntGender, CntRoles, CntSyllabusYear, CntDepartment,
-                        CntCourseMaterials, CntPracticeMaterials, CntProgramMaterials)
+                        CntCourseMaterials, CntPracticeMaterials, CntProgramMaterials, CntThesisMaterials)
 
 _all_ = ['User', 'Course', 'Practice', 'Program']
 
@@ -280,4 +280,66 @@ class Support(Model):
     class Meta:
         database = db.database
 
+
+class Thesis(Model):
+    id = PrimaryKeyField()
+    teacher = ForeignKeyField(User)
+    studentNo = CharField(max_length=32, index=True)
+    studentName = CharField(max_length=32, index=True)
+    name = CharField(max_length=256, index=True)
+    semester = CharField(max_length=32, index=True)
+    department = CharField(max_length=32, index=True)
+    mandate = CharField(max_length=128, null=True)
+    schedule1 = CharField(max_length=128, null=True)
+    schedule2 = CharField(max_length=128, null=True)
+    proposal = CharField(max_length=128, null=True)
+    checklist = CharField(max_length=128, null=True)
+    ppt1 = CharField(max_length=128, null=True)
+    defence = CharField(max_length=128, null=True)
+    advice = CharField(max_length=128, null=True)
+    review = CharField(max_length=128, null=True)
+    thesis = CharField(max_length=128, null=True)
+    ppt2 = CharField(max_length=128, null=True)
+    score = CharField(max_length=128, null=True)
+    sourcecode = CharField(max_length=128, null=True)
+    syllabusYear = CharField(max_length=32, index=True, choices=CntSyllabusYear.choices, default=CntSyllabusYear.Y2012.label)
+    createTime = DateTimeField(default=datetime.datetime.now, formats='%Y-%m-%d %H:%M:%S')
+
+    _MATERIAL = CntThesisMaterials
+
+    @classmethod
+    def getTplMaterialName(cls, category):
+        pattern = u'{name}.未交'
+        material = pattern.format(name=cls._MATERIAL.getMaterialName(category))
+        return material
+
+    @classmethod
+    def getMaterialNamePattern(cls, category):
+        tpl = [cls._MATERIAL.getMaterialName(category),
+               u'-{idx:02d}.{ext}']
+        return u''.join(tpl)
+
+    def getFolder(self, teacherName):
+        pattern = u'{teacherName}-{name}-{klass}'
+        folder = pattern.format(
+            teacherName=teacherName,
+            name=self.name,
+            klass=self.klass)
+        return folder
+
+    def getFolderPath(self, teacherName):
+        return os.path.join(self.semester, self.getDepartmentName(), self.getFolder(teacherName))
+
+    def getDepartmentName(self):
+        return CntDepartment.getDepartmentName(self.department)
+
+    def getSyllabusYearName(self):
+        return CntSyllabusYear.getSyllabusYearName(self.syllabusYear)
+
+    @classmethod
+    def getMaterialName(cls, label):
+        return cls._MATERIAL.getMaterialName(label)
+
+    class Meta:
+        database = db.database
 

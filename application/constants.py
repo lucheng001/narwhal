@@ -9,7 +9,8 @@ _all_ = ['CntAllowedExtensions',
          'CntSyllabusYear',
          'CntDepartment'
          'CntCourseMaterials',
-         'CntProgramMaterials']
+         'CntProgramMaterials',
+         'CntThesisMaterials']
 
 
 class CntAllowedExtensions(object):
@@ -48,6 +49,7 @@ class CntSyllabusYear(object):
     _SyllabusYear = collections.namedtuple('_SyllabusYear', ['label', 'name'])
 
     Y2012 = _SyllabusYear(u'2012', u'2012版')
+    Y2016 = _SyllabusYear(u'2016', u'2016版')
 
     _objects = [Y2012]
 
@@ -267,4 +269,34 @@ class CntProgramMaterials(object):
         return cls._maps[label].name if label in cls._labels else u'00未知'
 
 
+class CntThesisMaterials(object):
+    _Material = collections.namedtuple('_Material', ['label', 'name'])
+
+    MANDATE = _Material(u'syllabus', u'01任务书')
+    SCHEDULE1 = _Material(u'evaluation', u'02指导计划表(教师)')
+    SCHEDULE2 = _Material(u'lectures', u'03指导计划表(学生)')
+    PROPOSAL = _Material(u'schedule', u'04开题报告.doc')
+    CHECKLIST = _Material(u'report', u'05中期检查表')
+    PPT1 = _Material(u'papers1', u'06中期检答辩PPT')
+    DEFENCE = _Material(u'answers1', u'07答辩申请表')
+    ADVICE = _Material(u'papers2', u'08导教师意见')
+    REVIEW = _Material(u'answers2', u'09评阅意见')
+    THESIS = _Material(u'examination1', u'10论文')
+    PPT2 = _Material(u'score1', u'11答辩PPT')
+    SCORE = _Material(u'examination2', u'12成绩登记表')
+    SOURCECODE = _Material(u'score2', u'13源代码')
+
+    _objects = [MANDATE, SCHEDULE1, SCHEDULE2, PROPOSAL, CHECKLIST,
+                PPT1, DEFENCE, ADVICE, REVIEW,
+                THESIS, PPT2, SCORE, SOURCECODE]
+
+    _labels = [obj.label for obj in _objects]
+    _maps = dict(zip(_labels, _objects))
+
+    choices = [(obj.label, obj.name) for obj in _objects]
+    labels = _labels
+
+    @classmethod
+    def getMaterialName(cls, label):
+        return cls._maps[label].name if label in cls._labels else u'00未知'
 

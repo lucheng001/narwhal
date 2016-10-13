@@ -105,7 +105,7 @@ def configure_template_global_variables(app):
     """Configures the template filters."""
     from .constants import (CntGender, CntRoles, CntPermission,
                             CntSyllabusYear, CntDepartment,
-                            CntCourseMaterials, CntPracticeMaterials, CntProgramMaterials)
+                            CntCourseMaterials, CntPracticeMaterials, CntProgramMaterials, CntThesisMaterials)
 
     app.jinja_env.globals['cGender'] = CntGender
     app.jinja_env.globals['cRoles'] = CntRoles
@@ -115,6 +115,7 @@ def configure_template_global_variables(app):
     app.jinja_env.globals['cCourseMaterials'] = CntCourseMaterials
     app.jinja_env.globals['cPracticeMaterials'] = CntPracticeMaterials
     app.jinja_env.globals['cProgramMaterials'] = CntProgramMaterials
+    app.jinja_env.globals['CntThesisMaterials'] = CntThesisMaterials
 
 
 def configure_error_handlers(app):
