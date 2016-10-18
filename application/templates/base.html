@@ -238,6 +238,35 @@
           </a>
         </li>
         {% endif %}
+
+      <li class="heading">
+          <h3 class="uppercase">毕业论文</h3>
+        </li>
+        <li class="nav-item">
+          <a href="" class="nav-link">
+            <i class="icon-layers"></i>
+            <span class="title">全院论文</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="" class="nav-link">
+            <i class="icon-layers"></i>
+            <span class="title">教研室论文</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="" class="nav-link">
+            <i class="icon-layers"></i>
+            <span class="title">我的论文</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ url_for('bpThesis.addByBatch') }}" class="nav-link">
+            <i class="icon-plus"></i>
+            <span class="title">添加学生论文结构</span>
+          </a>
+        </li>
+
         {% if current_user.hasPermission(cPermission.SUPPORT) %}
         <li class="heading">
           <h3 class="uppercase">支撑材料</h3>

@@ -6,10 +6,10 @@ from application.extensions import db
 
 def createTables():
     app = create_app('default')
-    from application.models import (User, Course, Practice, Program)
+    from application.models import (User, Course, Practice, Program, Thesis)
     database = db.database
     database.connect()
-    database.create_tables([User, Course, Practice, Program])
+    database.create_tables([User, Course, Practice, Program, Thesis])
     database.close()
 
 if __name__ == '__main__':

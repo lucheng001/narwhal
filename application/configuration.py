@@ -29,6 +29,8 @@ class Configuration(object):
     APP_PROGRAM_FOLDER = os.path.join(APP_UPLOAD_FOLDER, u'课程方案')
     APP_NOTICE_FOLDER = os.path.join(APP_UPLOAD_FOLDER, u'通知')
     APP_SUPPORT_FOLDER = os.path.join(APP_UPLOAD_FOLDER, u'支撑材料')
+    APP_THESIS_FOLDER = os.path.join(APP_UPLOAD_FOLDER, u'毕业论文')
+    APP_THESIE_TPL = os.path.join(APP_UPLOAD_FOLDER, u'.tpl', u'thesis')
 
     @staticmethod
     def init_app(app):

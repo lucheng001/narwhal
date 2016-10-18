@@ -78,6 +78,9 @@ def configure_blueprints(app):
     from .support import bpSupport as supportBlueprint
     app.register_blueprint(supportBlueprint, url_prefix='/support')
 
+    from .thesis import bpThesis as thesisBlueprint
+    app.register_blueprint(thesisBlueprint, url_prefix='/thesis')
+
 
 def configure_context_processors(app):
     """Configures the context processors."""

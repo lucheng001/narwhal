@@ -284,7 +284,7 @@ class Support(Model):
 class Thesis(Model):
     id = PrimaryKeyField()
     teacher = ForeignKeyField(User)
-    studentNo = CharField(max_length=32, index=True)
+    studentNum = CharField(max_length=32, index=True)
     studentName = CharField(max_length=32, index=True)
     name = CharField(max_length=256, index=True)
     semester = CharField(max_length=32, index=True)

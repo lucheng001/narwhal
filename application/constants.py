@@ -275,7 +275,7 @@ class CntThesisMaterials(object):
     MANDATE = _Material(u'syllabus', u'01任务书')
     SCHEDULE1 = _Material(u'evaluation', u'02指导计划表(教师)')
     SCHEDULE2 = _Material(u'lectures', u'03指导计划表(学生)')
-    PROPOSAL = _Material(u'schedule', u'04开题报告.doc')
+    PROPOSAL = _Material(u'schedule', u'04开题报告')
     CHECKLIST = _Material(u'report', u'05中期检查表')
     PPT1 = _Material(u'papers1', u'06中期检答辩PPT')
     DEFENCE = _Material(u'answers1', u'07答辩申请表')
@@ -299,4 +299,5 @@ class CntThesisMaterials(object):
     @classmethod
     def getMaterialName(cls, label):
         return cls._maps[label].name if label in cls._labels else u'00未知'
+
 
