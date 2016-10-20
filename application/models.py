@@ -319,16 +319,15 @@ class Thesis(Model):
                u'-{idx:02d}.{ext}']
         return u''.join(tpl)
 
-    def getFolder(self, teacherName):
-        pattern = u'{teacherName}-{name}-{klass}'
+    def getFolder(self, studentName):
+        pattern = u'{studentNum}{studentName}'
         folder = pattern.format(
-            teacherName=teacherName,
-            name=self.name,
-            klass=self.klass)
+            studentNum=self.studentNum,
+            studentName=studentName)
         return folder
 
     def getFolderPath(self, teacherName):
-        return os.path.join(self.semester, self.getDepartmentName(), self.getFolder(teacherName))
+        return os.path.join(self.semester, self.getDepartmentName(), teacherName, self.getFolder(self.studentName))
 
     def getDepartmentName(self):
         return CntDepartment.getDepartmentName(self.department)
