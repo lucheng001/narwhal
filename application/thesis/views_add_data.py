@@ -16,7 +16,7 @@ _all_ = ['addByBatch']
 def addByBatch():
     form = AddStudentDataForm()
     if form.validate_on_submit():
-        query = (User.select(User.id, User.chineseName))
+        query = (User.select(User.id, User.chineseName, User.userName))
         teachers = [row for row in query]
 
         lines = form.studentData.data.splitlines()
@@ -53,11 +53,23 @@ def addByBatch():
                 badData.append(line)
                 continue
 
+            directorID = 0
+            directorName = CntDepartment.getDepartmentDirectorName(departmentLable)
+            for teacher in teachers:
+                if directorName == teacher.userName:
+                    directorID = teacher.id
+                    break
+            else:
+                badData.append(line)
+                continue
+
             thesisDic = dict(
                 studentNum=stuNum,
                 studentName=stuName,
                 name=name,
                 teacher=teacherID,
+                reviewer=directorID,
+                secretary=directorID,
                 semester=semester,
                 departmentName=departmentName,
                 department=departmentLable
@@ -103,8 +115,6 @@ def addByBatch():
         else:
             flash(msg.format(len(lines), len(goodData), len(badData)), 'success')
             return redirect(url_for('bpThesis.addByBatch'))
-
-
 
 
     return render_template('thesis/teacher/addByBatch.html', form=form)

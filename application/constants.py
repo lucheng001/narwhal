@@ -86,6 +86,10 @@ class CntDepartment(object):
         return cls._maps[label].name if label in cls._labels else u'未知'
 
     @classmethod
+    def getDepartmentDirectorName(cls, label):
+        return cls._maps[label].director if label in cls._labels else u'未知'
+
+    @classmethod
     def isDirector(cls, label, userName):
         return cls._maps[label].director == userName if label in cls._labels else False
 
