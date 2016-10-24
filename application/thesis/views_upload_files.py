@@ -2,8 +2,9 @@
 import os
 from . import  bpThesis
 from werkzeug.utils import secure_filename
+from urllib.parse import quote
 from flask_login import  login_required, current_user
-from flask import abort, render_template, current_app, flash, redirect, url_for
+from flask import abort, render_template, current_app, flash, redirect, url_for, send_from_directory
 from playhouse.flask_utils import get_object_or_404
 from .forms_upload_file import UploadMaterialsForm
 from .. models import Thesis
@@ -69,3 +70,36 @@ def uploadMaterials(category, thesisId):
 
 
     return render_template('thesis/teacher/uploadMaterials.html', form=form, category=category, thesis=thesis)
+
+@bpThesis.route('/download/materials/<category>/<int:thesisId>', methods=['GET'])
+@login_required
+def downloadMaterials(category, thesisId):
+    thesis = get_object_or_404(Thesis, (Thesis.id == thesisId))
+    teacher = thesis.teacher
+    me = current_user
+
+    if category not in CntThesisMaterials.labels:
+        abort(404)
+
+    canDownload = False
+    if thesis.teacher_id == me.id:
+        canDownload = True
+
+    idx1 = 0
+    ext = u'unknown'
+    fileInfo = getattr(thesis, category)
+    if fileInfo is None:
+        abort(404)
+    else:
+        idx, ext = fileInfo.split(u'|')
+        idx1 = int(idx)
+
+    pattern = thesis.getMaterialNamePattern(category)
+    fileName = pattern.format(idx=idx1, ext=ext)
+    encodeFileName = quote(fileName.encode('UTF-8'))
+    filePath = os.path.join(current_app.config['APP_THESIS_FOLDER'],
+                            thesis.getFolderPath(me.chineseName))
+
+    return send_from_directory(filePath, fileName,
+                               as_attachment=True,
+                               attachment_filename=encodeFileName)

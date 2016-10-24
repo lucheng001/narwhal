@@ -46,6 +46,16 @@
                   <p class="form-control-static">{{ thesis.getMaterialName(category) }}</p>
                   </div>
               </div>
+              {% if thesis[category] %}
+              <div class="form-group">
+                <label class="control-label col-md-3">旧的材料</label>
+                <div class="col-md-4">
+                <a href="{{ url_for('bpThesis.downloadMaterials', category=category, thesisId=thesis.id) }}" class="btn btn-primary" target="_blank">
+                  <i class="fa fa-download"></i>下载
+                </a>
+                </div>
+              </div>
+              {% endif %}
               <div class="form-group {% if form.materials.errors %}has-error{% endif %}">
                 <label class="control-label col-md-3">
                   相关材料

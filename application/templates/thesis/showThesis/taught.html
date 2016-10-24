@@ -82,7 +82,7 @@
                         {% for category in CntThesisMaterials.labels %}
                         <td class="text-center">
 
-                          <a href="" class="font-blue">&nbsp;<i class="fa fa-cloud-download"></i></a>
+                          <a href="{{ url_for('bpThesis.downloadMaterials', category=category, thesisId=thesis.id) }}" class="font-blue">&nbsp;<i class="fa fa-cloud-download"></i></a>
 
                           &nbsp;<i class="font-red fa fa-exclamation-circle"></i>
 
