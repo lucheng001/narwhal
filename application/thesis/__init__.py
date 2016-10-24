@@ -8,3 +8,4 @@ bpThesis = Blueprint('bpThesis', __name__)
 
 from . import views_add_data
 from . import  views_thesis_list
+from . import  views_upload_files

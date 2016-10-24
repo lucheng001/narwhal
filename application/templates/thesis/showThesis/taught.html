@@ -86,7 +86,7 @@
 
                           &nbsp;<i class="font-red fa fa-exclamation-circle"></i>
 
-                          <a href="" class="font-blue">&nbsp;<i class="fa fa-cloud-upload"></i></a>
+                          <a href="{{ url_for('bpThesis.uploadMaterials', category=category, thesisId=thesis.id) }}" class="font-blue">&nbsp;<i class="fa fa-cloud-upload"></i></a>
                         </td>
                         {% endfor %}
                      </tr>

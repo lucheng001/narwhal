@@ -276,19 +276,19 @@ class CntProgramMaterials(object):
 class CntThesisMaterials(object):
     _Material = collections.namedtuple('_Material', ['label', 'name'])
 
-    MANDATE = _Material(u'syllabus', u'01任务书')
-    SCHEDULE1 = _Material(u'evaluation', u'02指导计划表(教师)')
-    SCHEDULE2 = _Material(u'lectures', u'03指导计划表(学生)')
-    PROPOSAL = _Material(u'schedule', u'04开题报告')
-    CHECKLIST = _Material(u'report', u'05中期检查表')
-    PPT1 = _Material(u'papers1', u'06中期检答辩PPT')
-    DEFENCE = _Material(u'answers1', u'07答辩申请表')
-    ADVICE = _Material(u'papers2', u'08导教师意见')
-    REVIEW = _Material(u'answers2', u'09评阅意见')
-    THESIS = _Material(u'examination1', u'10论文')
-    PPT2 = _Material(u'score1', u'11答辩PPT')
-    SCORE = _Material(u'examination2', u'12成绩登记表')
-    SOURCECODE = _Material(u'score2', u'13源代码')
+    MANDATE = _Material(u'mandate', u'01任务书')
+    SCHEDULE1 = _Material(u'schedule1', u'02指导计划表(教师)')
+    SCHEDULE2 = _Material(u'schedule2', u'03指导计划表(学生)')
+    PROPOSAL = _Material(u'proposal', u'04开题报告')
+    CHECKLIST = _Material(u'checklist', u'05中期检查表')
+    PPT1 = _Material(u'ppt1', u'06中期检答辩PPT')
+    DEFENCE = _Material(u'defence', u'07答辩申请表')
+    ADVICE = _Material(u'advice', u'08导教师意见')
+    REVIEW = _Material(u'review', u'09评阅意见')
+    THESIS = _Material(u'thesis', u'10论文')
+    PPT2 = _Material(u'ppt2', u'11答辩PPT')
+    SCORE = _Material(u'score', u'12成绩登记表')
+    SOURCECODE = _Material(u'sourcecode', u'13源代码')
 
     _objects = [MANDATE, SCHEDULE1, SCHEDULE2, PROPOSAL, CHECKLIST,
                 PPT1, DEFENCE, ADVICE, REVIEW,
