@@ -3,8 +3,8 @@ import re
 import os
 import shutil
 from . import bpThesis
-from flask_login import login_required
-from flask import render_template, current_app, flash, redirect, url_for
+from flask_login import login_required, current_user
+from flask import render_template, current_app, flash, redirect, url_for, abort
 from .forms_add_student import AddStudentForm, AddStudentDataForm
 from ..models import User, Thesis
 from ..constants import CntDepartment
@@ -18,6 +18,7 @@ def addByBatch():
     if form.validate_on_submit():
         query = (User.select(User.id, User.chineseName, User.userName))
         teachers = [row for row in query]
+        me = current_user
 
         lines = form.studentData.data.splitlines()
         badData = []
@@ -34,6 +35,9 @@ def addByBatch():
             data4 = [re.sub(u'[（）]', u'', d) for d in data3]
             data = [re.sub(u'[_]', u'', d) for d in data4]
             stuNum, stuName, name, teacherName, semester, departmentName = data
+
+            if me.chineseName != teacherName:
+                abort(403)
 
             teacherID = 0
             for teacher in teachers:

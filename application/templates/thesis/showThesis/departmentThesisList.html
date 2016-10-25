@@ -28,6 +28,7 @@
                 <th data-ptcolumn="studentNum"> 学  号 </th>
                 <th data-ptcolumn="studentName"> 姓  名 </th>
                 <th data-ptcolumn="name"> 论文题目 </th>
+                <th data-ptcolumn="teacher" class="text-center"> 指导老师 </th>
                 <th data-ptcolumn="semester" class="text-center"> 年  份 </th>
                 <th data-ptcolumn="operations" class="text-center"> 操 作 </th>
               </tr>
@@ -36,6 +37,14 @@
                 <th> &nbsp; </th>
                 <th> &nbsp; </th>
                 <th> &nbsp; </th>
+                <th class="text-center">
+                  <select class="bs-select form-control form-filter input-sm" name="currentTeacher" id="currentTeacher">
+                    <option value="0" {% if currentTeacher == 0 %}selected="selected"{% endif %}>全部</option>
+                    {%- for teacher in teachers %}
+                    <option value="{{ teacher.id }}" {% if currentTeacher == teacher.id %}selected{% endif %}>{{ teacher.chineseName }}</option>
+                    {%- endfor %}
+                  </select>
+                </th>
                 <th class="text-center">
                   <select class="bs-select form-control form-filter input-sm" name="currentSemester" id="currentSemester">
                     <option value="all" {% if currentSemester == 'all' %}selected="selected"{% endif %}>全部</option>
@@ -58,6 +67,7 @@
                 <td> {{ thesis.studentNum }} </td>
                 <td> {{ thesis.studentName }} </td>
                 <td> {{ thesis.name }} </td>
+                <td class="text-center"> {{ thesis.teacher.chineseName }} </td>
                 <td class="text-center"> {{ thesis.semester }} </td>
                 <td class="text-center">
                   <div class="btn-group btn-group-xs btn-group-solid">
@@ -86,7 +96,6 @@
                           {%- else -%}
                           &nbsp;<i class="font-red fa fa-exclamation-circle"></i>
                           {%- endif -%}
-                          <a href="{{ url_for('bpThesis.uploadMaterials', category=category, thesisId=thesis.id) }}" class="font-blue">&nbsp;<i class="fa fa-cloud-upload"></i></a>
                         </td>
                         {% endfor %}
                      </tr>
@@ -108,7 +117,7 @@
           <ul class="pagination">
              {% if pagination.has_previous %}
             <li>
-              <a href="{{ url_for('.taught', currentPage=pagination.previous, currentSemester=currentSemester) }}">
+              <a href="{{ url_for('.departmentThesisList', currentPage=pagination.previous, currentTeacher=currentTeacher, currentSemester=currentSemester) }}">
                 <i class="fa fa-angle-left"></i>
               </a>
             </li>
@@ -120,7 +129,7 @@
             </li>
             {% endif %}
             <li>
-              <a href="{{ url_for('.taught', currentPage=1, currentSemester=currentSemester) }}"> 首页 </a>
+              <a href="{{ url_for('.departmentThesisList', currentPage=1, currentTeacher=currentTeacher, currentSemester=currentSemester) }}"> 首页 </a>
             </li>
 
             {% for page in pagination.pages %}
@@ -128,17 +137,17 @@
               {% if page == pagination.current %}
               <a class="disabled-link font-grey-salsa" href="javascript:;"> {{ page }} </a>
               {% else %}
-              <a href="{{ url_for('.taught', currentPage=page, currentSemester=currentSemester) }}"> {{ page }} </a>
+              <a href="{{ url_for('.departmentThesisList', currentPage=page, currentTeacher=currentTeacher, currentSemester=currentSemester) }}"> {{ page }} </a>
               {% endif %}
             </li>
             {% endfor %}
 
             <li>
-              <a href="{{ url_for('.taught', currentPage=pagination.page_num, currentSemester=currentSemester) }}"> 末页 </a>
+              <a href="{{ url_for('.departmentThesisList', currentPage=pagination.page_num, currentTeacher=currentTeacher, currentSemester=currentSemester) }}"> 末页 </a>
             </li>
              {% if pagination.has_next %}
             <li>
-              <a href="{{ url_for('.taught', currentPage=pagination.next, currentSemester=currentSemester) }}">
+              <a href="{{ url_for('.departmentThesisList', currentPage=pagination.next, currentTeacher=currentTeacher, currentSemester=currentSemester) }}">
                 <i class="fa fa-angle-right"></i>
               </a>
             </li>
@@ -178,7 +187,7 @@
     });
     */
 
-    filterConditions.setActionUrl('{{ url_for('.taught') }}');
+    filterConditions.setActionUrl('{{ url_for('.departmentThesisList') }}');
     filterConditions.init();
 
     deleteCourse.setActionUrl('/course/delete/');
