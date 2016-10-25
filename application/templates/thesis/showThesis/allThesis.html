@@ -1,0 +1,208 @@
+{% extends 'base.html' %}
+
+{% block page_breadcrumb_1 %}论文{% endblock %}
+{% block page_breadcrumb_2 %}论文列表{% endblock %}
+
+{% block page_title_1 %}论文列表{% endblock %}
+{% block page_title_2 %}Thesis Table{% endblock %}
+
+{% block page_content %}
+<input value="{{ currentPage }}" type="hidden" name="currentPage" id="currentPage">
+<input value="{{ currentTeacher }}" type="hidden" name="currentTeacher" id="currentTeacher">
+<div class="row">
+  <div class="col-md-12">
+    <div class="portlet light portlet-fit bordered">
+      <div class="portlet-title">
+        <div class="caption">
+          <i class="icon-settings font-blue-sharp"></i>
+          <span class="caption-subject font-blue-sharp sbold uppercase">Thesis Table</span>
+        </div>
+      </div>
+      <div class="portlet-body">
+        <div class="table-scrollable">
+          {% if thesiss %}
+          <table id="table" class="table table-bordered table-hover table-striped">
+            <thead class="">
+              <tr class="heading">
+                <th data-ptcolumn="index" class="text-center"> # </th>
+                <th data-ptcolumn="studentNum"> 学  号 </th>
+                <th data-ptcolumn="studentName"> 姓  名 </th>
+                <th data-ptcolumn="name"> 论文题目 </th>
+                <th data-ptcolumn="teacher" class="text-center"> 指导老师 </th>
+                <th data-ptcolumn="department" class="text-center"> 教研室 </th>
+                <th data-ptcolumn="semester" class="text-center"> 年  份 </th>
+                <th data-ptcolumn="operations" class="text-center"> 操 作 </th>
+              </tr>
+              <tr class="filter">
+                <th class="text-center"> &nbsp; </th>
+                <th> &nbsp; </th>
+                <th> &nbsp; </th>
+                <th> &nbsp; </th>
+                <th class="text-center">
+                  <select class="bs-select form-control form-filter input-sm" name="currentTeacher" id="currentTeacher">
+                    <option value="0" {% if currentTeacher == 0 %}selected="selected"{% endif %}>全部</option>
+                    {%- for teacher in teachers %}
+                    <option value="{{ teacher.id }}" {% if currentTeacher == teacher.id %}selected{% endif %}>{{ teacher.chineseName }}</option>
+                    {%- endfor %}
+                  </select>
+                </th>
+                <th class="text-center">
+                  <select class="bs-select form-control form-filter input-sm" name="currentDepartment" id="currentDepartment">
+                    <option value="all" {% if currentDepartment == 'all' %}selected="selected"{% endif %}>全部</option>
+                    {%- for department in cDepartment.choices %}
+                    <option value="{{ department[0] }}"  {% if currentDepartment == department[0] %}selected{% endif %}>{{ department[1] }}</option>
+                    {%- endfor %}
+                  </select>
+                </th>
+                <th class="text-center">
+                  <select class="bs-select form-control form-filter input-sm" name="currentSemester" id="currentSemester">
+                    <option value="all" {% if currentSemester == 'all' %}selected="selected"{% endif %}>全部</option>
+                    {%- for semester in semesters %}
+                    <option value="{{ semester }}"  {% if currentSemester == semester %}selected{% endif %}>{{ semester }}</option>
+                    {%- endfor %}
+                  </select>
+                </th>
+                <th class="text-center">
+                  <button id="filter" class="btn btn-sm btn-success filter-submit margin-bottom">
+                    <i class="fa fa-search"></i>  查 询
+                  </button>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for thesis in thesiss %}
+              <tr>
+                <td class="text-center"> {{ loop.index }} </td>
+                <td> {{ thesis.studentNum }} </td>
+                <td> {{ thesis.studentName }} </td>
+                <td> {{ thesis.name }} </td>
+                <td class="text-center"> {{ thesis.teacher.chineseName }} </td>
+                <td class="text-center"> {{ thesis.getDepartmentName() }} </td>
+                <td class="text-center"> {{ thesis.semester }} </td>
+                <td class="text-center">
+                  <div class="btn-group btn-group-xs btn-group-solid">
+                    <a href="{{ url_for('bpThesis.archiveThesis', thesisId=thesis.id) }}" class="btn btn-outline blue">下载</a>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="7">
+                  <table class="table subtable">
+                    <thead>
+                      <tr class="heading">
+                        {% for category in CntThesisMaterials.labels %}
+                        <th class="text-center">
+                          {{ CntThesisMaterials.getMaterialName(category)[2:] }}
+                        </th>
+                        {% endfor %}
+                     </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="heading">
+                        {% for category in CntThesisMaterials.labels %}
+                        <td class="text-center">
+                          {%- if thesis[category] -%}
+                          <a href="{{ url_for('bpThesis.downloadMaterials', category=category, thesisId=thesis.id) }}" class="font-blue">&nbsp;<i class="fa fa-cloud-download"></i></a>
+                          {%- else -%}
+                          &nbsp;<i class="font-red fa fa-exclamation-circle"></i>
+                          {%- endif -%}
+                        </td>
+                        {% endfor %}
+                     </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          {% else %}
+          <div class="text-center padding-tb-20">
+            <h4>暂无数据</h4>
+          </div>
+          {% endif %}
+        </div>
+        {% if pagination.page_num > 1 %}
+        <div class="text-center">
+          <ul class="pagination">
+             {% if pagination.has_previous %}
+            <li>
+              <a href="{{ url_for('.all', currentPage=pagination.previous, currentTeacher=currentTeacher, currentSemester=currentSemester) }}">
+                <i class="fa fa-angle-left"></i>
+              </a>
+            </li>
+            {% else %}
+            <li>
+              <a href="javascript:;" class="disabled-link">
+                <i class="fa fa-angle-left"></i>
+              </a>
+            </li>
+            {% endif %}
+            <li>
+              <a href="{{ url_for('.all', currentPage=1, currentTeacher=currentTeacher, currentSemester=currentSemester) }}"> 首页 </a>
+            </li>
+
+            {% for page in pagination.pages %}
+            <li>
+              {% if page == pagination.current %}
+              <a class="disabled-link font-grey-salsa" href="javascript:;"> {{ page }} </a>
+              {% else %}
+              <a href="{{ url_for('.all', currentPage=page, currentTeacher=currentTeacher, currentSemester=currentSemester) }}"> {{ page }} </a>
+              {% endif %}
+            </li>
+            {% endfor %}
+
+            <li>
+              <a href="{{ url_for('.all', currentPage=pagination.page_num, currentTeacher=currentTeacher, currentSemester=currentSemester) }}"> 末页 </a>
+            </li>
+             {% if pagination.has_next %}
+            <li>
+              <a href="{{ url_for('.all', currentPage=pagination.next, currentTeacher=currentTeacher, currentSemester=currentSemester) }}">
+                <i class="fa fa-angle-right"></i>
+              </a>
+            </li>
+            {% else %}
+            <li>
+              <a href="javascript:;" class="disabled-link">
+                <i class="fa fa-angle-right"></i>
+              </a>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block page_external_script %}
+<script src="{{ url_for('static', filename='global/plugins/jquery-powertable/jquery-powertable.js') }}" type="text/javascript"></script>
+<script src="{{ url_for('static', filename='course/script/filterConditions.js') }}" type="text/javascript"></script>
+<script src="{{ url_for('static', filename='course/script/delete.js') }}" type="text/javascript"></script>
+{% endblock %}
+
+{% block page_internal_script %}
+<script type="text/javascript">
+  jQuery(document).ready(function() {
+
+    /*
+    var pt = $('#table').powertable({
+      allowMoving: false,
+      showHideHandleText: '<i class="fa fa-gg"></i>',
+      fixedColumns: ['name'],
+      fixedRows: [0],
+      showHideDisabled: ['name']
+    });
+    */
+
+    filterConditions.setActionUrl('{{ url_for('.all') }}');
+    filterConditions.init();
+
+    deleteCourse.setActionUrl('/course/delete/');
+    deleteCourse.init();
+
+  });
+</script>
+{% endblock %}
