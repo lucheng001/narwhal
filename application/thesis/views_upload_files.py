@@ -1,20 +1,23 @@
+# -*- coding: utf-8 -*-
 
 import os
-from . import  bpThesis
-from werkzeug.utils import secure_filename
-from urllib.parse import quote
 from flask_login import  login_required, current_user
 from flask import abort, render_template, current_app, flash, redirect, url_for, send_from_directory
+from werkzeug.utils import secure_filename
+from urllib.parse import quote
 from playhouse.flask_utils import get_object_or_404
-from .forms_upload_file import UploadMaterialsForm
 from .. models import Thesis
-from ..constants import CntThesisMaterials
+from ..constants import CntThesisMaterials, CntPermission, CntDepartment
+from ..utilities import permission_required
+from .forms_upload_file import UploadMaterialsForm
+from . import  bpThesis
 
 _all_ = ['uploadMaterials']
 
 
 @bpThesis.route('/upload/materrials/<category>/<int:thesisId>', methods=['GET', 'POST'])
 @login_required
+@permission_required(CntPermission.NORMAL)
 def uploadMaterials(category, thesisId):
     thesis = get_object_or_404(Thesis, (Thesis.id == thesisId))
     me = current_user
@@ -73,6 +76,7 @@ def uploadMaterials(category, thesisId):
 
 @bpThesis.route('/download/materials/<category>/<int:thesisId>', methods=['GET'])
 @login_required
+@permission_required(CntPermission.NORMAL)
 def downloadMaterials(category, thesisId):
     thesis = get_object_or_404(Thesis, (Thesis.id == thesisId))
     teacher = thesis.teacher
@@ -84,6 +88,12 @@ def downloadMaterials(category, thesisId):
     canDownload = False
     if thesis.teacher_id == me.id:
         canDownload = True
+    elif me.hasPermission(CntPermission.COLLEGE):
+        canDownload = True
+    elif me.hasPermission(CntPermission.DEPARTMENT) and CntDepartment.isDirector(thesis.department, me.userName):
+        canDownload = True
+    else:
+        canDownload = False
 
     idx1 = 0
     ext = u'unknown'

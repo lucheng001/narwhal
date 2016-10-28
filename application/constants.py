@@ -114,6 +114,7 @@ class CntPermission(object):
     USER         = 0b000001000000
     NOTICE       = 0b000010000000
     SUPPORT      = 0b000100000000
+    THESIS       = 0b001000000000
 
 
 class _CntRoleAdministrator(object):
@@ -127,7 +128,8 @@ class _CntRoleAdministrator(object):
                    CntPermission.COLLEGE |
                    CntPermission.USER |
                    CntPermission.NOTICE |
-                   CntPermission.SUPPORT)
+                   CntPermission.SUPPORT |
+                   CntPermission.THESIS)
 
 
 class _CntRoleLeader(object):
@@ -140,7 +142,8 @@ class _CntRoleLeader(object):
                    CntPermission.COLLEGE |
                    CntPermission.USER |
                    CntPermission.NOTICE |
-                   CntPermission.SUPPORT)
+                   CntPermission.SUPPORT |
+                   CntPermission.THESIS)
 
 
 class _CntRoleSecretary(object):
@@ -153,7 +156,8 @@ class _CntRoleSecretary(object):
                    CntPermission.COLLEGE |
                    CntPermission.USER|
                    CntPermission.NOTICE |
-                   CntPermission.SUPPORT)
+                   CntPermission.SUPPORT |
+                   CntPermission.THESIS)
 
 
 class _CntRoleDirector(object):

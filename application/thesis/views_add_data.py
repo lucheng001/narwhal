@@ -1,18 +1,21 @@
+# -*- coding: utf-8 -*-
 
 import re
 import os
 import shutil
-from . import bpThesis
 from flask_login import login_required, current_user
-from flask import render_template, current_app, flash, redirect, url_for, abort
-from .forms_add_student import AddStudentForm, AddStudentDataForm
+from flask import render_template, current_app, flash, redirect, url_for
 from ..models import User, Thesis
-from ..constants import CntDepartment
+from ..constants import CntDepartment, CntPermission
+from ..utilities import permission_required
+from .forms_add_student import AddStudentForm, AddStudentDataForm
+from . import bpThesis
 
 _all_ = ['addByBatch']
 
 @bpThesis.route('/add/batch', methods=['POST', 'GET'])
 @login_required
+@permission_required(CntPermission.THESIS)
 def addByBatch():
     form = AddStudentDataForm()
     if form.validate_on_submit():
@@ -35,9 +38,6 @@ def addByBatch():
             data4 = [re.sub(u'[（）]', u'', d) for d in data3]
             data = [re.sub(u'[_]', u'', d) for d in data4]
             stuNum, stuName, name, teacherName, semester, departmentName = data
-
-            if me.chineseName != teacherName:
-                abort(403)
 
             teacherID = 0
             for teacher in teachers:

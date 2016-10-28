@@ -1,22 +1,25 @@
+# -*- coding: utf-8 -*-
+
 
 import os
 import math
 import datetime
 import shutil
-from . import  bpThesis
-from urllib.parse import quote
 from flask import  render_template, request, current_app, send_from_directory, abort, flash, redirect
 from flask_login import  login_required, current_user
-from ..constants import CntThesisMaterials, CntDepartment
 from playhouse.flask_utils import get_object_or_404
-from ..utilities import Paginator
+from urllib.parse import quote
+from ..constants import CntThesisMaterials, CntDepartment, CntPermission
+from ..utilities import Paginator, permission_required
 from ..models import Thesis, User
+from . import  bpThesis
 from .forms_upload_data import UploadMaterialsForm
 
 _all_ = ['taught', 'departmentThesisList', 'archiveThesis']
 
 @bpThesis.route('/taught', methods = ['GET'])
 @login_required
+@permission_required(CntPermission.NORMAL)
 def taught():
     me = current_user
 
@@ -68,6 +71,7 @@ def taught():
 
 @bpThesis.route('/department', methods=['GET'])
 @login_required
+@permission_required(CntPermission.DEPARTMENT)
 def departmentThesisList():
     me = current_user
     department = CntDepartment.witchDepartment(me.userName)
@@ -139,6 +143,7 @@ def departmentThesisList():
 
 @bpThesis.route('/all', methods=['GET'])
 @login_required
+@permission_required(CntPermission.COLLEGE)
 def all():
     me = current_user
 
@@ -204,6 +209,7 @@ def all():
 
 @bpThesis.route('/archiveThesis/<int:thesisId>', methods=['GET', 'POST'])
 @login_required
+@permission_required(CntPermission.NORMAL)
 def archiveThesis(thesisId):
     thesis = get_object_or_404(Thesis, (Thesis.id == thesisId))
     teacher = thesis.teacher
@@ -212,6 +218,12 @@ def archiveThesis(thesisId):
     canDownload = False
     if me.id == thesis.teacher_id:
         canDownload =True
+    elif me.hasPermission(CntPermission.COLLEGE):
+        canDownload = True
+    elif me.hasPermission(CntPermission.DEPARTMENT) and CntDepartment.isDirector(thesis.department, me.userName):
+        canDownload = True
+    else:
+        canDownload = False
 
     fileString = thesis.getFolder(thesis.studentName)
     filePath = os.path.join(current_app.config['APP_THESIS_FOLDER'],
