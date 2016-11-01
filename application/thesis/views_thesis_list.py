@@ -98,10 +98,8 @@ def departmentThesisList():
 
     currentPage = request.args.get('currentPage', 1, type=int)
     currentTeacher = request.args.get('currentTeacher', 0, type=int)
-    print(currentTeacher)
     currentDepartment = department
     currentSemester = request.args.get('currentSemester', 'all')
-    print(currentSemester)
 
     condition1 = (Thesis.teacher == currentTeacher) if currentTeacher in teacherIds else None
     condition2 = (Thesis.semester == currentSemester) if currentSemester in semesterLabels else None

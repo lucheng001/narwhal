@@ -108,7 +108,7 @@ def downloadMaterials(category, thesisId):
     fileName = pattern.format(idx=idx1, ext=ext)
     encodeFileName = quote(fileName.encode('UTF-8'))
     filePath = os.path.join(current_app.config['APP_THESIS_FOLDER'],
-                            thesis.getFolderPath(me.chineseName))
+                            thesis.getFolderPath(thesis.teacher.chineseName))
 
     return send_from_directory(filePath, fileName,
                                as_attachment=True,
